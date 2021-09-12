@@ -19,7 +19,7 @@ namespace HouseProject.Application.Handlers.LoanTranches
         }
         public async Task<Result<List<LoanTranche>>> Handle(GetAllLoanTranchesQuery request, CancellationToken cancellationToken)
         {
-            return await _houseProjectDbContext.LoanTranches.ToListAsync();
+            return Result<List<LoanTranche>>.Success(await _houseProjectDbContext.LoanTranches.ToListAsync());
         }
     }
 }

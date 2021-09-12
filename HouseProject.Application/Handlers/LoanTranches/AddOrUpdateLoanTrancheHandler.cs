@@ -24,9 +24,9 @@ namespace HouseProject.Application.Handlers.LoanTranches
             {
                 _houseProjectDbContext.LoanTranches.Add(request.LoanTranche);
                 
-                var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
+                var addSuccess = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
-                if (!success) return Result<Unit>.Failure("Failed to add new loan tranche");
+                if (!addSuccess) return Result<Unit>.Failure("Failed to add new loan tranche");
 
                 return Result<Unit>.Success(Unit.Value);
             }
