@@ -1,5 +1,5 @@
 ﻿
-namespace HouseProject.Domain.Entities
+namespace HouseProject.Domain.Enum
 {
     public enum Stage
     {

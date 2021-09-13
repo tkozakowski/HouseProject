@@ -20,10 +20,15 @@ namespace HouseProject.Persistence
         }
 
         public DbSet<Application> Applications { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
         public DbSet<Document> Documents { get; set; }
-        public DbSet<Project> Projects { get; set; }
-        public DbSet<WorkStage> WorkStages { get; set; }
         public DbSet<LoanTranche> LoanTranches { get; set; }
+        public DbSet<PaymentType> PaymentTypes { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Preparation> Preparations { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<SendType> SendTypes { get; set; }
+        public DbSet<WorkStage> WorkStages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
