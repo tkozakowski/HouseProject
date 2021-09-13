@@ -1,9 +1,11 @@
-﻿namespace HouseProject.Domain.Entities
+﻿using HouseProject.Domain.Enum;
+
+namespace HouseProject.Domain.Entities
 {
     public class LoanTranche
     {
         public int Id { get; set; }
-        public string Stage { get; set; }
+        public LoanTrancheStage Stage { get; set; }
         public decimal Amount { get; set; }
     }
 }

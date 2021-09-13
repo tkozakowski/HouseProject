@@ -1,23 +1,23 @@
 ﻿using HouseProject.Domain.Enum;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace HouseProject.Domain.Entities
 {
     public class Application
     {
-        [Key]
         public int Id { get; set; }
-
-        [Required]
-        [MaxLength(250)]
-        public string Supplier { get; set; }
-        public decimal Cost { get; set; }
-        public Payment Payment { get; set; }
-
-        [DataType(DataType.DateTime)]
+        public DateTime? SendAt { get; set; }
+        public string SendBy { get; set; }
         public DateTime? ReceivedAt { get; set; }
+        public Payment? Payment { get; set; }
+        public decimal Cost { get; set; }
+
+        public string PostId { get; set; }
+        public virtual Post Post { get; set; }
+
+        public ICollection<Attachment> Attachments { get; set; }
 
     }
 }
