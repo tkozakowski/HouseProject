@@ -10,6 +10,7 @@ using FluentValidation;
 using HouseProject.Api.Middleware;
 using FluentValidation.AspNetCore;
 using HouseProject.Persistence;
+using System.Reflection;
 
 namespace HouseProject.API.Extensions
 {
@@ -32,7 +33,7 @@ namespace HouseProject.API.Extensions
                 });
             });
             services.AddMediatR(typeof(GetDocumentListHandler).Assembly);
-            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IValidator<DocumentDto>, DocumentDtoValidator>();
             services.AddScoped<ExceptionMiddleware>();
 
