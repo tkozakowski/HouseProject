@@ -23,7 +23,6 @@ namespace HouseProject.Persistence
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<LoanTranche> LoanTranches { get; set; }
-        public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Preparation> Preparations { get; set; }
         public DbSet<Project> Projects { get; set; }
@@ -32,23 +31,11 @@ namespace HouseProject.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<LoanTranche>()
-                .Property(e => e.Stage)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (LoanTrancheStage)Enum.Parse(typeof(LoanTrancheStage), v));
-            modelBuilder.Entity<Application>()
-                .Property(e => e.Payment)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (Payment)Enum.Parse(typeof(Payment), v));
 
-            modelBuilder.Entity<Project>()
-                .Property(e => e.Payment)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (Payment)Enum.Parse(typeof(Payment), v));
-
+            modelBuilder.Entity<Document>()
+                .Property(d => d.Name)
+                .HasMaxLength(100)
+                .IsRequired();
             modelBuilder.Entity<Document>()
                 .Property(e => e.Description)
                 .HasMaxLength(250);
@@ -59,15 +46,64 @@ namespace HouseProject.Persistence
                 .HasOne(d => d.Project)
                 .WithMany(p => p.Documents);
             modelBuilder.Entity<Document>()
+                .HasOne(d => d.Preparation)
+                .WithMany(p => p.Documents);
+            modelBuilder.Entity<Document>()
+                .HasOne(d => d.Post)
+                .WithMany(p => p.Documents);
+            modelBuilder.Entity<Document>()
                 .Property(d => d.Stage)
                 .HasConversion(
                     v => v.ToString(),
                     v => (Stage)Enum.Parse(typeof(Stage), v));
-            modelBuilder.Entity<Document>()
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.Name)
+                .HasMaxLength(100)
+                .IsRequired();
+            modelBuilder.Entity<Project>()
                 .Property(e => e.Payment)
                 .HasConversion(
                     v => v.ToString(),
                     v => (Payment)Enum.Parse(typeof(Payment), v));
+
+            modelBuilder.Entity<Preparation>()
+                .Property(e => e.Name)
+                .HasMaxLength(100)
+                .IsRequired();
+            modelBuilder.Entity<Preparation>()
+                .Property(e => e.Payment)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (Payment)Enum.Parse(typeof(Payment), v));
+
+            modelBuilder.Entity<SendType>()
+                .Property(e => e.Name)
+                .IsRequired();
+
+            modelBuilder.Entity<Post>()
+                .Property(e => e.Name)
+                .IsRequired();
+
+            modelBuilder.Entity<Application>()
+                .HasOne(e => e.SendType)
+                .WithMany(d => d.Applications);
+            modelBuilder.Entity<Application>()
+                .HasOne(e => e.Post)
+                .WithMany(d => d.Applications);
+
+            modelBuilder.Entity<Attachment>()
+                .Property(e => e.Name)
+                .IsRequired();
+            modelBuilder.Entity<Attachment>()
+                .HasOne(e => e.Application)
+                .WithMany(d => d.Attachments);
+
+            modelBuilder.Entity<LoanTranche>()
+                .Property(e => e.Stage)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (LoanTrancheStage)Enum.Parse(typeof(LoanTrancheStage), v));
 
         }
     }
