@@ -23,7 +23,7 @@ namespace HouseProject.Api
 
             services.AddControllers();
 
-            services.AddApplication(Configuration);
+            services.AddServices(Configuration);
             services.AddIdentityService(Configuration);
 
         }

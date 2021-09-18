@@ -8,16 +8,10 @@ namespace Infrastructure.Persistence
 {
     public class HouseProjectDbContext : DbContext
     {
-        private readonly IConfiguration _configuration;
+        public HouseProjectDbContext(DbContextOptions options) : base(options)
+        {
+        }
 
-        public HouseProjectDbContext(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
-        }
 
         public DbSet<Application> Applications { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
