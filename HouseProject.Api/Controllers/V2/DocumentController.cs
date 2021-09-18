@@ -6,9 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HouseProject.Api.Controllers
+namespace HouseProject.Api.V2.Controllers
 {
-
+    [ApiExplorerSettings(IgnoreApi =true)]
+    [ApiVersion("2.0")]
     public class DocumentController : BaseApiController
     {
 

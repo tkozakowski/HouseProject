@@ -1,13 +1,10 @@
 using HouseProject.Api.Extensions;
 using HouseProject.Api.Middleware;
-using HouseProject.API.Extensions;
-using HouseProject.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace HouseProject.Api
 {
@@ -26,7 +23,7 @@ namespace HouseProject.Api
 
             services.AddControllers();
 
-            services.AddApplicationServices(Configuration);
+            services.AddApplication(Configuration);
             services.AddIdentityService(Configuration);
 
         }

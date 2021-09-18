@@ -2,21 +2,18 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using MediatR;
-using HouseProject.Application.Core;
 using HouseProject.Application.Handlers.Documents;
-using HouseProject.Application.Validators;
-using HouseProject.Application.Dto;
-using FluentValidation;
 using HouseProject.Api.Middleware;
 using FluentValidation.AspNetCore;
 using HouseProject.Persistence;
-using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
+using HouseProject.Application.Extensions;
 
-namespace HouseProject.API.Extensions
+namespace HouseProject.Api.Extensions
 {
-    public static class ApplicationServiceExtensions
+    public static class InstallServiceExtensions
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration Configuration)
+        public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddFluentValidation();
 
@@ -33,12 +30,25 @@ namespace HouseProject.API.Extensions
                 });
             });
             services.AddMediatR(typeof(GetDocumentListHandler).Assembly);
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddScoped<IValidator<DocumentDto>, DocumentDtoValidator>();
+
+            services.AddApplicationService(Configuration);
+
             services.AddScoped<ExceptionMiddleware>();
 
 
+            services.AddApiVersioning(x => 
+            {
+                x.DefaultApiVersion = new ApiVersion(1, 0);
+                x.AssumeDefaultVersionWhenUnspecified = true;
+                x.ReportApiVersions = true;
+            });
+
             return services;
+        }
+
+        private static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration Configuration)
+        {
+            return ApplicationServiceExtension.AddApplication(services, Configuration);
         }
     }
 }
