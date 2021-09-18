@@ -1,8 +1,10 @@
-﻿using Domain.Entities;
+﻿using Domain.Common;
+using Domain.Entities;
 using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence
 {
@@ -100,6 +102,25 @@ namespace Infrastructure.Persistence
                     v => (LoanTrancheStage)Enum.Parse(typeof(LoanTrancheStage), v));
 
         }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            var entries = ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is AuditableEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));
+
+            foreach (var item in entries)
+            {
+                ((AuditableEntity)item.Entity).LastModified = DateTime.Now;
+
+                if(item.State == EntityState.Added)
+                {
+                    ((AuditableEntity)item.Entity).CreatedAt = DateTime.Now;
+                }
+            }
+            return await base.SaveChangesAsync();
+        }
+
     }
 
 }

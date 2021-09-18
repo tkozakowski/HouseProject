@@ -16,7 +16,7 @@ namespace Api.V2.Controllers
         [HttpGet]
         public async Task<ActionResult<List<DocumentDto>>> GetDocuments()
         {
-            return HandleResult(await Mediator.Send(new GetDocumentListQuery()));
+            return HandleResult(await Mediator.Send(new CosmosGetDocumentListQuery()));
         }
 
         [HttpGet("{id}")]
@@ -29,21 +29,21 @@ namespace Api.V2.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateDocument([FromBody] DocumentDto documentDto)
         {
-            return HandleResult(await Mediator.Send(new InsertDocumentCommand(documentDto)));
+            return HandleResult(await Mediator.Send(new CosmosInsertDocumentCommand(documentDto)));
         }
 
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDocument(int id, [FromBody] DocumentDto documentDto)
         {
-            return HandleResult(await Mediator.Send(new UpdateDocumentCommand { DocumentDto = documentDto, Id = id }));
+            return HandleResult(await Mediator.Send(new CosmosUpdateDocumentCommand { DocumentDto = documentDto, Id = id }));
         }
 
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDocument(int id)
         {
-            return HandleResult(await Mediator.Send(new RemoveDocumentCommand { Id = id }));
+            return HandleResult(await Mediator.Send(new CosmosRemoveDocumentCommand { Id = id }));
         }
     }
 }
