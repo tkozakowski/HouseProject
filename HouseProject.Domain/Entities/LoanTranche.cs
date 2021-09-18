@@ -1,7 +1,7 @@
-﻿using HouseProject.Domain.Common;
-using HouseProject.Domain.Enum;
+﻿using Domain.Common;
+using Domain.Enum;
 
-namespace HouseProject.Domain.Entities
+namespace Domain.Entities
 {
     public class LoanTranche: AuditableEntity
     {

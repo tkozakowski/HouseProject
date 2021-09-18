@@ -1,12 +1,12 @@
-﻿using HouseProject.Application.Command.Documents;
-using HouseProject.Application.Core;
-using HouseProject.Persistence;
+﻿using Application.Command.Documents;
+using Application.Core;
+using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HouseProject.Application.Handlers.Documents
+namespace Application.Handlers.Documents
 {
     class RemoveDocumentHandler : IRequestHandler<RemoveDocumentCommand, Result<Unit>>
     {

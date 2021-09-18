@@ -1,9 +1,9 @@
-﻿using HouseProject.Application.Core;
-using HouseProject.Application.Dto;
+﻿using Application.Core;
+using Application.Dto;
 using MediatR;
 using System.Collections.Generic;
 
-namespace HouseProject.Application.Queries.Documents
+namespace Application.Queries.Documents
 {
     public record GetDocumentListQuery : IRequest<Result<List<DocumentDto>>>;
 

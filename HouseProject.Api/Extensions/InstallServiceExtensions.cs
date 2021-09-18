@@ -2,14 +2,14 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using MediatR;
-using HouseProject.Application.Handlers.Documents;
-using HouseProject.Api.Middleware;
+using Application.Handlers.Documents;
+using Api.Middleware;
 using FluentValidation.AspNetCore;
-using HouseProject.Persistence;
 using Microsoft.AspNetCore.Mvc;
-using HouseProject.Application.Extensions;
+using Application.Extensions;
+using Infrastructure.Persistence;
 
-namespace HouseProject.Api.Extensions
+namespace Api.Extensions
 {
     public static class InstallServiceExtensions
     {

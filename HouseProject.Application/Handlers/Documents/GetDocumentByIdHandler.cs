@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using HouseProject.Application.Core;
-using HouseProject.Application.Dto;
-using HouseProject.Application.Queries.Documents;
-using HouseProject.Persistence;
+using Application.Core;
+using Application.Dto;
+using Application.Queries.Documents;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Infrastructure.Persistence;
 
-namespace HouseProject.Application.Handlers.Documents
+namespace Application.Handlers.Documents
 {
     public class GetDocumentByIdHandler : IRequestHandler<GetDocumentByIdQuery, Result<DocumentDto>>
     {

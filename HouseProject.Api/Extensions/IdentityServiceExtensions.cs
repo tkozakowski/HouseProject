@@ -1,10 +1,10 @@
-﻿using HouseProject.Application.Core;
+﻿using Application.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace HouseProject.Api.Extensions
+namespace Api.Extensions
 {
     public static class IdentityServiceExtensions
     {

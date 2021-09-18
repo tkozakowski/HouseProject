@@ -1,4 +1,4 @@
-﻿using HouseProject.Application.Core;
+﻿using Application.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using System.Text.Json;
 
-namespace HouseProject.Api.Middleware
+namespace Api.Middleware
 {
     public class ExceptionMiddleware: IMiddleware
     {

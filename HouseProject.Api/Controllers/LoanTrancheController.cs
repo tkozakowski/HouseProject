@@ -1,13 +1,12 @@
-﻿using HouseProject.API.Controllers;
-using HouseProject.Application.Command.LoanTranches;
-using HouseProject.Application.Queries.LoanTranches;
-using HouseProject.Domain.Entities;
+﻿using Application.Command.LoanTranches;
+using Application.Queries.LoanTranches;
+using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HouseProject.Api.Controllers
+namespace Api.Controllers
 {
     public class LoanTrancheController: BaseApiController
     {

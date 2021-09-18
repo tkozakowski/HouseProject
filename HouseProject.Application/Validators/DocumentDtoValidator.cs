@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using HouseProject.Application.Dto;
+using Application.Dto;
 
-namespace HouseProject.Application.Validators
+namespace Application.Validators
 {
     public class DocumentDtoValidator : AbstractValidator<DocumentDto>
     {

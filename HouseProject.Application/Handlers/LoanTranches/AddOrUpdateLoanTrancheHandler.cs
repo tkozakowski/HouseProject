@@ -1,12 +1,12 @@
-﻿using HouseProject.Application.Command.LoanTranches;
-using HouseProject.Application.Core;
-using HouseProject.Persistence;
+﻿using Application.Command.LoanTranches;
+using Application.Core;
+using Infrastructure.Persistence;
 using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HouseProject.Application.Handlers.LoanTranches
+namespace Application.Handlers.LoanTranches
 {
     public class AddOrUpdateLoanTrancheHandler : IRequestHandler<AddOrUpdateLoanTrancheCommand, Result<Unit>>
     {

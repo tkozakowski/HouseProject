@@ -1,13 +1,13 @@
-﻿using HouseProject.Application.Core;
-using HouseProject.Application.Queries.LoanTranches;
-using HouseProject.Domain.Entities;
-using HouseProject.Persistence;
+﻿using Application.Core;
+using Application.Queries.LoanTranches;
+using Domain.Entities;
+using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HouseProject.Application.Handlers.LoanTranches
+namespace Application.Handlers.LoanTranches
 {
     public class GetLoanTrancheByIdHandler : IRequestHandler<GetLoanTrancheByIdQuery, Result<LoanTranche>>
     {

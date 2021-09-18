@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using HouseProject.Application.Command.Documents;
-using HouseProject.Application.Core;
-using HouseProject.Persistence;
+using Application.Command.Documents;
+using Application.Core;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using Infrastructure.Persistence;
 
-namespace HouseProject.Application.Handlers.Documents
+namespace Application.Handlers.Documents
 {
     public class UpdateDocumentHandler : IRequestHandler<UpdateDocumentCommand, Result<Unit>>
     {

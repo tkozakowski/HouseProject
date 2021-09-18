@@ -1,8 +1,8 @@
-﻿using HouseProject.Application.Core;
-using HouseProject.Domain.Entities;
+﻿using Application.Core;
+using Domain.Entities;
 using MediatR;
 
-namespace HouseProject.Application.Command.LoanTranches
+namespace Application.Command.LoanTranches
 {
     public class AddOrUpdateLoanTrancheCommand : IRequest<Result<Unit>>
     {

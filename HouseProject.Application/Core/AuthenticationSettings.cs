@@ -1,4 +1,4 @@
-﻿namespace HouseProject.Application.Core
+﻿namespace Application.Core
 {
     public class AuthenticationSettings
     {

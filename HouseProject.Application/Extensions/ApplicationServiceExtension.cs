@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using HouseProject.Application.Dto;
-using HouseProject.Application.Validators;
+using Application.Dto;
+using Application.Validators;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace HouseProject.Application.Extensions
+namespace Application.Extensions
 {
     public class ApplicationServiceExtension
     {

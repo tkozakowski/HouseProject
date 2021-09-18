@@ -1,10 +1,10 @@
-﻿using HouseProject.Domain.Entities;
-using HouseProject.Domain.Enum;
+﻿using Domain.Entities;
+using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 
-namespace HouseProject.Persistence
+namespace Infrastructure.Persistence
 {
     public class HouseProjectDbContext : DbContext
     {

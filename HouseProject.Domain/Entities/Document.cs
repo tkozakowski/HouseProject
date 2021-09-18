@@ -1,8 +1,8 @@
-﻿using HouseProject.Domain.Common;
-using HouseProject.Domain.Enum;
+﻿using Domain.Common;
+using Domain.Enum;
 using System;
 
-namespace HouseProject.Domain.Entities
+namespace Domain.Entities
 {
     public class Document: AuditableEntity
     {

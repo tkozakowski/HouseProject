@@ -1,9 +1,9 @@
-﻿using HouseProject.Application.Core;
-using HouseProject.Domain.Entities;
+﻿using Application.Core;
+using Domain.Entities;
 using MediatR;
 using System.Collections.Generic;
 
-namespace HouseProject.Application.Queries.LoanTranches
+namespace Application.Queries.LoanTranches
 {
     public class GetAllLoanTranchesQuery: IRequest<Result<List<LoanTranche>>>
     {

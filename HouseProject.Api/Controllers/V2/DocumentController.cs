@@ -1,12 +1,12 @@
-﻿using HouseProject.API.Controllers;
-using HouseProject.Application.Command.Documents;
-using HouseProject.Application.Dto;
-using HouseProject.Application.Queries.Documents;
+﻿using Api.Controllers;
+using Application.Command.Documents;
+using Application.Dto;
+using Application.Queries.Documents;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HouseProject.Api.V2.Controllers
+namespace Api.V2.Controllers
 {
     [ApiExplorerSettings(IgnoreApi =true)]
     [ApiVersion("2.0")]

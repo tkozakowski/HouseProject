@@ -1,7 +1,7 @@
-﻿using HouseProject.Application.Core;
+﻿using Application.Core;
 using MediatR;
 
-namespace HouseProject.Application.Command.LoanTranches
+namespace Application.Command.LoanTranches
 {
     public class RemoveLoanTrancheCommand: IRequest<Result<Unit>>
     {

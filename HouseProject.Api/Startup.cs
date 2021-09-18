@@ -1,5 +1,5 @@
-using HouseProject.Api.Extensions;
-using HouseProject.Api.Middleware;
+using Api.Extensions;
+using Api.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

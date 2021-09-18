@@ -1,12 +1,12 @@
-﻿using HouseProject.API.Controllers;
-using HouseProject.Application.Command.Documents;
-using HouseProject.Application.Dto;
-using HouseProject.Application.Queries.Documents;
+﻿using Api.Controllers;
+using Application.Command.Documents;
+using Application.Dto;
+using Application.Queries.Documents;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HouseProject.Api.V1.Controllers
+namespace Api.V1.Controllers
 {
     [ApiVersion("1.0")]
     public class DocumentController : BaseApiController

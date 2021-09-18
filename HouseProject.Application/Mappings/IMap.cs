@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace HouseProject.Application.Mappings
+namespace Application.Mappings
 {
     public interface IMap
     {

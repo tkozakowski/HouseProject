@@ -1,7 +1,7 @@
-﻿using HouseProject.Domain.Common;
+﻿using Domain.Common;
 using System.Collections.Generic;
 
-namespace HouseProject.Domain.Entities
+namespace Domain.Entities
 {
     public class Post: AuditableEntity
     {

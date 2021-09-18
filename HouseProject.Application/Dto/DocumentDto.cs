@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using HouseProject.Application.Mappings;
-using HouseProject.Domain.Entities;
+using Application.Mappings;
+using Domain.Entities;
 using System;
 
-namespace HouseProject.Application.Dto
+namespace Application.Dto
 {
     public class DocumentDto: IMap
     {

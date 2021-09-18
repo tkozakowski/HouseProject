@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HouseProject.Domain.Common
+namespace Domain.Common
 {
     public abstract class AuditableEntity
     {

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Api</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HouseProject.Application\HouseProject.Application.csproj" />
+    <ProjectReference Include="..\HouseProject.Application\Application.csproj" />
   </ItemGroup>
 
 </Project>

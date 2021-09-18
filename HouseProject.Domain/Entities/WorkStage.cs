@@ -1,6 +1,6 @@
-﻿using HouseProject.Domain.Common;
+﻿using Domain.Common;
 
-namespace HouseProject.Domain.Entities
+namespace Domain.Entities
 {
     public class WorkStage: AuditableEntity
     {

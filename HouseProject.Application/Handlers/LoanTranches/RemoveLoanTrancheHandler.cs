@@ -1,16 +1,12 @@
-﻿using HouseProject.Application.Command.LoanTranches;
-using HouseProject.Application.Core;
-using HouseProject.Persistence;
+﻿using Application.Command.LoanTranches;
+using Application.Core;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Infrastructure.Persistence;
 
-namespace HouseProject.Application.Handlers.LoanTranches
+namespace Application.Handlers.LoanTranches
 {
     public class RemoveLoanTrancheHandler : IRequestHandler<RemoveLoanTrancheCommand, Result<Unit>>
     {

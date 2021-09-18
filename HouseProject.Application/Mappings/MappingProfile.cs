@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Mappings;
+using AutoMapper;
 using System;
 using System.Linq;
 using System.Reflection;
