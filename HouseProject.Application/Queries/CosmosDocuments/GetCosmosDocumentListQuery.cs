@@ -1,10 +1,10 @@
 ﻿using Application.Core;
-using Domain.Entities.Cosmos;
+using Application.Dto.Cosmos;
 using MediatR;
 using System.Collections.Generic;
 
 namespace Application.Queries.CosmosDocuments
 {
-    public record GetCosmosDocumentListQuery : IRequest<Result<List<CosmosDocument>>>;
+    public record GetCosmosDocumentListQuery : IRequest<Result<List<CosmosDocumentDto>>>;
 
 }

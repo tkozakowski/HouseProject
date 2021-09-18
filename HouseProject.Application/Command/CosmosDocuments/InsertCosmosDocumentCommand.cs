@@ -1,9 +1,9 @@
 ﻿using Application.Core;
-using Domain.Entities.Cosmos;
+using Application.Dto.Cosmos;
 using MediatR;
 
 namespace Application.Command.CosmosDocuments
 {
-    public record InsertCosmosDocumentCommand(CosmosDocument cosmosDocument): IRequest<Result<Unit>>;
+    public record InsertCosmosDocumentCommand(CosmosDocumentDto cosmosDocument): IRequest<Result<Unit>>;
 
 }

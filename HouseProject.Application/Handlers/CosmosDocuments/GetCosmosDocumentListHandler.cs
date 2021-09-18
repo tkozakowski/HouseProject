@@ -1,5 +1,7 @@
 ﻿using Application.Core;
+using Application.Dto.Cosmos;
 using Application.Queries.CosmosDocuments;
+using AutoMapper;
 using Cosmonaut;
 using Cosmonaut.Extensions;
 using Domain.Entities.Cosmos;
@@ -10,18 +12,22 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.CosmosDocuments
 {
-    public class GetCosmosDocumentListHandler : IRequestHandler<GetCosmosDocumentListQuery, Result<List<CosmosDocument>>>
+    public class GetCosmosDocumentListHandler : IRequestHandler<GetCosmosDocumentListQuery, Result<List<CosmosDocumentDto>>>
     {
         private readonly ICosmosStore<CosmosDocument> _cosmosStore;
-        public GetCosmosDocumentListHandler(ICosmosStore<CosmosDocument> cosmosStore)
+        private readonly IMapper _mapper;
+
+        public GetCosmosDocumentListHandler(ICosmosStore<CosmosDocument> cosmosStore, IMapper mapper)
         {
             _cosmosStore = cosmosStore;
+            _mapper = mapper;
         }
-        public async Task<Result<List<CosmosDocument>>> Handle(GetCosmosDocumentListQuery request, CancellationToken cancellationToken)
+        public async Task<Result<List<CosmosDocumentDto>>> Handle(GetCosmosDocumentListQuery request, CancellationToken cancellationToken)
         {
-            var response = await _cosmosStore.Query().ToListAsync();
+            var cosmosDocuments = await _cosmosStore.Query().ToListAsync();
+            var cosmosDocumentsDto = _mapper.Map<List<CosmosDocumentDto>>(cosmosDocuments);
 
-            return Result<List<CosmosDocument>>.Success(response);
+            return Result<List<CosmosDocumentDto>>.Success(cosmosDocumentsDto);
         }
     }
 }

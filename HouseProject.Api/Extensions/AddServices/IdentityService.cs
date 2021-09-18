@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Api.Extensions
+namespace Api.Extensions.AddServices
 {
-    public static class IdentityServiceExtensions
+    public static class IdentityService
     {
         public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration configuration)
         {
