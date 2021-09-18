@@ -24,7 +24,6 @@ namespace HouseProject.Api
             services.AddControllers();
 
             services.AddServices(Configuration);
-            services.AddIdentityService(Configuration);
 
         }
 

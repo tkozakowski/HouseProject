@@ -1,11 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿using Cosmonaut;
+using Cosmonaut.Extensions.Microsoft.DependencyInjection;
+using Domain.Entities.Cosmos;
+using Microsoft.Azure.Documents.Client;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 namespace Api.Extensions.AddServices
 {
-    public class CosmosService
+    public static class CosmosService
     {
+        public static IServiceCollection AddCosmos(this IServiceCollection services, IConfiguration Configuration)
+        {
+            var cosmosStoreSettings = new CosmosStoreSettings(
+                Configuration["CosmosSettings:DatabaseName"],
+                Configuration["CosmosSettings:AccountUri"],
+                Configuration["CosmosSettings:AccountKey"],
+                new ConnectionPolicy { ConnectionMode = ConnectionMode.Direct, ConnectionProtocol = Protocol.Tcp }
+                );
+
+            services.AddCosmosStore<CosmosDocument>(cosmosStoreSettings);
+            return services;
+        }
     }
 }

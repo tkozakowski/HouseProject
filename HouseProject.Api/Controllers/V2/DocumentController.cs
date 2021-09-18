@@ -1,9 +1,7 @@
 ﻿using Api.Controllers;
 using Application.Command.CosmosDocuments;
-using Application.Dto;
 using Application.Dto.Cosmos;
 using Application.Queries.CosmosDocuments;
-using Application.Queries.Documents;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,7 +31,7 @@ namespace Api.V2.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> CreateDocument([FromBody] CosmosDocumentDto documentDto)
+        public async Task<ActionResult> CreateDocument([FromBody] CreateCosmosDocumentDto documentDto)
         {
             return HandleResult(await Mediator.Send(new InsertCosmosDocumentCommand(documentDto)));
         }

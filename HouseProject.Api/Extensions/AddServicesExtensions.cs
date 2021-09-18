@@ -22,6 +22,8 @@ namespace Api.Extensions
 
             services.AddHouseDbContext(Configuration);
 
+            services.AddCosmos(Configuration);
+
             services.AddMediatR(typeof(GetDocumentListHandler).Assembly);
 
             services.AddApplication(Configuration);
