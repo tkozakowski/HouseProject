@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Application.Core;
 using Application.Dto;
 using Application.Queries.Documents;
 using MediatR;
@@ -9,10 +8,12 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Infrastructure.Persistence;
+using System.Linq;
+using Application.Core.Paginations;
 
 namespace Application.Handlers.Documents
 {
-    public class GetDocumentListHandler : IRequestHandler<GetDocumentListQuery, Result<List<DocumentDto>>>
+    public class GetDocumentListHandler : IRequestHandler<GetDocumentListQuery, PaginationResult<IEnumerable<DocumentDto>>>
     {
         private readonly HouseProjectDbContext _context;
         private readonly IMapper _mapper;
@@ -22,11 +23,16 @@ namespace Application.Handlers.Documents
             _context = context;
             _mapper = mapper;
         }
-        public async Task<Result<List<DocumentDto>>> Handle(GetDocumentListQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<IEnumerable<DocumentDto>>> Handle(GetDocumentListQuery request, CancellationToken cancellationToken)
         {
-            var result = await _context.Documents.ProjectTo<DocumentDto>(_mapper.ConfigurationProvider).ToListAsync();
+            List<DocumentDto> result = await _context.Documents.Skip((request.validPaginationFilter.PageNumber - 1) * request.validPaginationFilter.PageSize)
+                .Take(request.validPaginationFilter.PageSize).ProjectTo<DocumentDto>(_mapper.ConfigurationProvider).ToListAsync();
 
-            return Result<List<DocumentDto>>.Success(result);
+            var totalRecords = result.Count();
+
+            return HelperPaginationResult.HelperPaginationResultResponse<DocumentDto>(result, request.validPaginationFilter, totalRecords);
+
+            //return new PaginationResult<List<DocumentDto>>(result, request.validPaginationFilter.PageNumber, request.validPaginationFilter.PageSize);
         }
     }
 }

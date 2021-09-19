@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 /// </summary>
 namespace Api.V2.Controllers
 {
-    //[ApiExplorerSettings(IgnoreApi = true)]
+    [ApiExplorerSettings(IgnoreApi = true)]
     [ApiVersion("2.0")]
     public class DocumentController : BaseApiController
     {

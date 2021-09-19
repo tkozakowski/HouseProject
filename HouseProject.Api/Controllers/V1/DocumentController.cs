@@ -1,5 +1,6 @@
 ﻿using Api.Controllers;
 using Application.Command.Documents;
+using Application.Core.Paginations;
 using Application.Dto;
 using Application.Queries.Documents;
 using Microsoft.AspNetCore.Mvc;
@@ -11,15 +12,17 @@ using System.Threading.Tasks;
 /// </summary>
 namespace Api.V1.Controllers
 {
-    [ApiExplorerSettings(IgnoreApi = true)]
+    //[ApiExplorerSettings(IgnoreApi = true)]
     [ApiVersion("1.0")]
     public class DocumentController : BaseApiController
     {
 
         [HttpGet]
-        public async Task<ActionResult<List<DocumentDto>>> GetDocuments()
+        public async Task<ActionResult<List<DocumentDto>>> GetDocuments([FromQuery]PaginationFilter paginationFilters)
         {
-            return HandleResult(await Mediator.Send(new GetDocumentListQuery()));
+            var validPaginationFilter = new PaginationFilter(paginationFilters.PageNumber, paginationFilters.PageSize);
+
+            return HandleResult(await Mediator.Send(new GetDocumentListQuery(validPaginationFilter)));
         }
 
         [HttpGet("{id}")]

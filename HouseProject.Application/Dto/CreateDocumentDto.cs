@@ -1,4 +1,5 @@
-﻿using Application.Mappings;
+﻿using Application.Conversions;
+using Application.Mappings;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -9,28 +10,28 @@ namespace Application.Dto
     {
         public string Name { get; set; }
         public string Stage { get; set; }
-        public decimal Cost { get; set; }
+        public string Cost { get; set; }
         public string ReceivedAt { get; set; }
         public string Description { get; set; }
-        public string SendTypeName { get; set; }
-        public string PostTypeName { get; set; }
-        public string ProjectName { get; set; }
-        public string PreparationName { get; set; }
+        public int SendTypeName { get; set; }
+        public int PostTypeName { get; set; }
+        public int ProjectName { get; set; }
+        public int PreparationName { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Document, DocumentDto>()
+            profile.CreateMap<Document, CreateDocumentDto>()
                 .ForMember(d => d.SendTypeName, o => o.MapFrom(s => s.SendType.Name))
                 .ForMember(d => d.PostTypeName, o => o.MapFrom(s => s.Post.Name))
                 .ForMember(d => d.ProjectName, o => o.MapFrom(s => s.Project.Name))
                 .ForMember(d => d.PreparationName, o => o.MapFrom(s => s.Preparation.Name))
-                .ForMember(d => d.ReceivedAt, o => o.MapFrom(s => ConvertNullableDateTimeToString(s.ReceivedAt)));
+                .ForMember(d => d.ReceivedAt, o => o.MapFrom(s => DateTimeToString.ConvertNullableDateTimeToString(s.ReceivedAt)));
+
+            profile.CreateMap<CreateDocumentDto, Document>()
+                .ForMember(d => d.Cost, o => o.MapFrom(s => StringToDecimal.ConvertStringToDecimal(s.Cost)))
+                .ForMember(d => d.ReceivedAt, o => o.MapFrom(s => StringToDateTime.ConvertStringToDateTime(s.Cost)));
+
         }
 
-        private static string ConvertNullableDateTimeToString(DateTime? receivedAt)
-        {
-            if (receivedAt is null) return String.Empty;
-            return receivedAt.ToString();
-        }
     }
 }
