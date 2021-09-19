@@ -48,10 +48,8 @@ namespace Infrastructure.Persistence
                 .HasOne(d => d.Post)
                 .WithMany(p => p.Documents);
             modelBuilder.Entity<Document>()
-                .Property(d => d.Stage)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (Stage)Enum.Parse(typeof(Stage), v));
+                .HasOne(d => d.Stage)
+                .WithMany(p => p.Documents);                
 
             modelBuilder.Entity<Project>()
                 .Property(e => e.Name)

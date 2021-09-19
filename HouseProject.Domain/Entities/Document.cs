@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using Domain.Enum;
 using System;
 
 namespace Domain.Entities
@@ -8,7 +7,6 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Stage Stage { get; set; }
         public DateTime? ReceivedAt { get; set; }
         public decimal? Cost { get; set; }
         public string Description { get; set; }
@@ -25,5 +23,7 @@ namespace Domain.Entities
         public int? PostId { get; set; }
         public virtual Post Post { get; set; }
 
+        public int? StageId { get; set; }
+        public virtual Stage Stage { get; set; }
     }
 }

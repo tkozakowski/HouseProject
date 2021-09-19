@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Application.Mappings;
 using Domain.Entities;
-using System;
+using Application.Conversions;
 
 namespace Application.Dto
 {
@@ -25,13 +25,15 @@ namespace Application.Dto
                 .ForMember(d => d.PostTypeName, o => o.MapFrom(s => s.Post.Name))
                 .ForMember(d => d.ProjectName, o => o.MapFrom(s => s.Project.Name))
                 .ForMember(d => d.PreparationName, o => o.MapFrom(s => s.Preparation.Name))
-                .ForMember(d => d.ReceivedAt, o => o.MapFrom(s => ConvertNullableDateTimeToString(s.ReceivedAt)));
+                .ForMember(d => d.ReceivedAt, o => o.MapFrom(s => DateTimeToString.ConvertNullableDateTimeToString(s.ReceivedAt)));
+
+            profile.CreateMap<DocumentDto, Document>()
+                .ForMember(d => d.SendType, o => o.MapFrom(s => new SendType { Name = s.Name }))
+                .ForMember(d => d.Post, o => o.MapFrom(s => new Post { Name = s.Name }))
+                .ForMember(d => d.Project, o => o.MapFrom(s => new Project { Name = s.Name }))
+                .ForMember(d => d.ReceivedAt, o => o.MapFrom(s => StringToDateTime.ConvertStringToDateTime(s.ReceivedAt)))
+                .ForMember(d => d.StageId, o => o.NullSubstitute(3));
         }
 
-        private static string ConvertNullableDateTimeToString(DateTime? receivedAt)
-        {
-            if (receivedAt is null) return String.Empty;
-            return receivedAt.ToString();
-        }
     }
 }

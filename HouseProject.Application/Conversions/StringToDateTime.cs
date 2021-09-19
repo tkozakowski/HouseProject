@@ -8,14 +8,14 @@ namespace Application.Conversions
         {
             if (string.IsNullOrEmpty(date))
             {
-                return new DateTime();
+                return DateTime.Now;
             }
 
             DateTime result;
 
             var correct = DateTime.TryParse(date, out result);
 
-            return correct ? result : new DateTime();
+            return correct ? result : DateTime.Now;
         }
     }
 }

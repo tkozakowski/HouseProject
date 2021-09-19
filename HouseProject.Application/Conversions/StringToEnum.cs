@@ -7,8 +7,19 @@ namespace Application.Conversions
     {
         public static Stage ConvertStringToEnumStage(string stage)
         {
+            bool success = false;
             object result;
-            return Enum.TryParse(typeof(Stage), stage, out result) ? (Stage)result : Stage.other;
+
+            var stages = EnumToIEnumerable.GetValues<Stage>();
+            foreach (var item in stages)
+            {
+                if (item.ToString() == stage)
+                {
+                    success = Enum.TryParse(typeof(Stage), item.ToString(), out result);
+                    return success ? (Stage)result : Stage.other;
+                }
+            }
+            return Stage.other;
         }
     }
 }

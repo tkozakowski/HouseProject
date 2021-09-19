@@ -30,7 +30,7 @@ namespace Api.V1.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> CreateDocument([FromBody] CreateDocumentDto documentDto)
+        public async Task<IActionResult> CreateDocument([FromBody] CreateDocumentDto documentDto)
         {
             return HandleResult(await Mediator.Send(new InsertDocumentCommand(documentDto)));
         }
