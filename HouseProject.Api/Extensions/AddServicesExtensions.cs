@@ -24,9 +24,9 @@ namespace Api.Extensions
 
             services.AddCosmos(Configuration);
 
-            services.AddMediatR(typeof(GetDocumentListHandler).Assembly);
-
             services.AddApplication(Configuration);
+
+            services.AddMediatR(typeof(GetDocumentListHandler).Assembly);
 
             services.AddScoped<ExceptionMiddleware>();
 
