@@ -8,7 +8,7 @@ namespace Application.Dto
     public class CreateDocumentDto: IMap
     {
         public string Name { get; set; }
-        public int Stage { get; set; }
+        public int StageId { get; set; }
         public string Cost { get; set; }
         public string ReceivedAt { get; set; }
         public string Description { get; set; }
