@@ -23,11 +23,11 @@ namespace Application.Handlers.CosmosDocuments
 
         public async Task<Result<Unit>> Handle(UpdateCosmosDocumentCommand request, CancellationToken cancellationToken)
         {
-            var existingDocument = await _cosmosStore.FindAsync(request.CosmosDocumentDto.Id);
+            var document = _mapper.Map<CosmosDocument>(request.CosmosDocumentDto);
 
-            if (existingDocument is null) return Result<Unit>.Failure("Failed to update document");
+            if (document is null) return Result<Unit>.Failure("Failed to update document");
 
-            await _cosmosStore.UpdateAsync(existingDocument);
+            await _cosmosStore.UpdateAsync(document);
 
             return Result<Unit>.Success(Unit.Value);
         }

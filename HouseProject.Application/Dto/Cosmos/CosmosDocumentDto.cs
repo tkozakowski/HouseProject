@@ -9,16 +9,20 @@ namespace Application.Dto.Cosmos
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public string Stage { get; set; }
         public string ReceivedAt { get; set; }
         public string Cost { get; set; }
         public string Description { get; set; }
-
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CosmosDocument, CosmosDocumentDto>()
                 .ForMember(d => d.ReceivedAt, o => o.MapFrom(s => DateTimeToString.ConvertNullableDateTimeToString(s.ReceivedAt)))
                 .ForMember(d => d.Cost, o => o.MapFrom(s => DecimalToString.ConvertNullableDecimalToString(s.Cost)));
+
+            profile.CreateMap<CosmosDocumentDto, CosmosDocument>()
+                .ForMember(d => d.ReceivedAt, o => o.MapFrom(s => StringToDateTime.ConvertStringToDateTime(s.ReceivedAt)))
+                .ForMember(d => d.Cost, o => o.MapFrom(s => StringToDecimal.ConvertStringToDecimal(s.Cost)));
         }
 
     }

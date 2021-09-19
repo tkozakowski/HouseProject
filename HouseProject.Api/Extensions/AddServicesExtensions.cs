@@ -18,7 +18,7 @@ namespace Api.Extensions
 
             services.AddSwagger();
 
-            services.AddCORS();
+            //services.AddCORS();
 
             services.AddHouseDbContext(Configuration);
 

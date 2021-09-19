@@ -37,7 +37,7 @@ namespace Api.V2.Controllers
         }
 
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> UpdateDocument([FromBody] CosmosDocumentDto documentDto)
         {
             return HandleResult(await Mediator.Send(new UpdateCosmosDocumentCommand { CosmosDocumentDto = documentDto }));
