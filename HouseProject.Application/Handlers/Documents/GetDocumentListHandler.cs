@@ -25,14 +25,13 @@ namespace Application.Handlers.Documents
         }
         public async Task<PaginationResult<IEnumerable<DocumentDto>>> Handle(GetDocumentListQuery request, CancellationToken cancellationToken)
         {
+
             List<DocumentDto> result = await _context.Documents.Skip((request.validPaginationFilter.PageNumber - 1) * request.validPaginationFilter.PageSize)
                 .Take(request.validPaginationFilter.PageSize).ProjectTo<DocumentDto>(_mapper.ConfigurationProvider).ToListAsync();
 
-            var totalRecords = result.Count();
+            var totalRecords = _context.Documents.Count();
 
             return HelperPaginationResult.HelperPaginationResultResponse<DocumentDto>(result, request.validPaginationFilter, totalRecords);
-
-            //return new PaginationResult<List<DocumentDto>>(result, request.validPaginationFilter.PageNumber, request.validPaginationFilter.PageSize);
         }
     }
 }
