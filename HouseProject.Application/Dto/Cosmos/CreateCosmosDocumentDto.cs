@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Entities.Cosmos;
 using Application.Conversions;
+using System;
 
 namespace Application.Dto.Cosmos
 {
@@ -9,16 +10,14 @@ namespace Application.Dto.Cosmos
     {
         public string Name { get; set; }
         public string Stage { get; set; }
-        public string ReceivedAt { get; set; }
-        public string Cost { get; set; }
+        public DateTime? ReceivedAt { get; set; }
+        public decimal? Cost { get; set; }
         public string Description { get; set; }
 
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateCosmosDocumentDto, CosmosDocument>()
-                .ForMember(d => d.ReceivedAt, o => o.MapFrom(s => StringToDateTime.ConvertStringToDateTime(s.ReceivedAt)))
-                .ForMember(d => d.Cost, o => o.MapFrom(s => StringToDecimal.ConvertStringToDecimal(s.Cost)));
+            profile.CreateMap<CreateCosmosDocumentDto, CosmosDocument>();
         }
 
     }

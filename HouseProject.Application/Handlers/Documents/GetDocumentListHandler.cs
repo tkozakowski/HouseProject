@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Infrastructure.Persistence;
 using System.Linq;
 using Application.Core.Paginations;
+using Application.Extensions;
 
 namespace Application.Handlers.Documents
 {
@@ -26,8 +27,12 @@ namespace Application.Handlers.Documents
         public async Task<PaginationResult<IEnumerable<DocumentDto>>> Handle(GetDocumentListQuery request, CancellationToken cancellationToken)
         {
 
-            List<DocumentDto> result = await _context.Documents.Skip((request.validPaginationFilter.PageNumber - 1) * request.validPaginationFilter.PageSize)
-                .Take(request.validPaginationFilter.PageSize).ProjectTo<DocumentDto>(_mapper.ConfigurationProvider).ToListAsync();
+            List<DocumentDto> result = await _context.Documents
+                .OrderByPropertyName(request.validSortingFilter.SortField, request.validSortingFilter.Ascending)
+                .Skip((request.validPaginationFilter.PageNumber - 1) * request.validPaginationFilter.PageSize)
+                .Take(request.validPaginationFilter.PageSize)
+                .ProjectTo<DocumentDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
 
             var totalRecords = _context.Documents.Count();
 

@@ -1,10 +1,12 @@
 ﻿using Api.Controllers;
 using Application.Command.Documents;
 using Application.Core.Paginations;
+using Application.Core.Sortings;
 using Application.Dto;
 using Application.Queries.Documents;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 /// <summary>
@@ -18,11 +20,23 @@ namespace Api.V1.Controllers
     {
 
         [HttpGet]
-        public async Task<ActionResult<List<DocumentDto>>> GetDocuments([FromQuery]PaginationFilter paginationFilters)
+        public async Task<ActionResult<List<DocumentDto>>> GetDocuments([FromQuery]PaginationFilter paginationFilters, [FromQuery] SortingFilter sortingFilter) 
         {
             var validPaginationFilter = new PaginationFilter(paginationFilters.PageNumber, paginationFilters.PageSize);
 
-            return HandleResult(await Mediator.Send(new GetDocumentListQuery(validPaginationFilter)));
+            var validSortingFilter = new SortingFilter(sortingFilter.SortField, sortingFilter.Ascending);
+
+            return HandleResult(await Mediator.Send(new GetDocumentListQuery(validPaginationFilter, validSortingFilter)));
+        }
+
+        /// <summary>
+        /// Zwraca listę pól, po których możemy sortować
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("[action]")]
+        public IActionResult GetSortFileds()
+        {
+            return Ok(SortingHelper.GetSortFields().Select(x => x.Key));
         }
 
         [HttpGet("{id}")]
