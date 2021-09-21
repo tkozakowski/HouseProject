@@ -1,6 +1,5 @@
 ﻿using Domain.Common;
 using Domain.Enum;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Domain.Entities
@@ -12,5 +11,6 @@ namespace Domain.Entities
         public decimal Amount { get; set; }
 
         public ICollection<Materials> Materials { get; set; }
+        public ICollection<Finance> Finances { get; set; }
     }
 }

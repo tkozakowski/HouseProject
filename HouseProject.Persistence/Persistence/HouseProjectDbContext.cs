@@ -110,6 +110,9 @@ namespace Infrastructure.Persistence
                 .HasOne(e => e.WorkStage)
                 .WithMany(d => d.Executions);
 
+            modelBuilder.Entity<Finance>()
+                .HasOne(e => e.LoanTranche)
+                .WithMany(d => d.Finances);
         }
 
         public async Task<int> SaveChangesAsync()
