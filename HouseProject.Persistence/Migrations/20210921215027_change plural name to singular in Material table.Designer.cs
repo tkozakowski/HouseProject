@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HouseProject.Api.Migrations
 {
     [DbContext(typeof(HouseProjectDbContext))]
-    partial class HouseProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210921215027_change plural name to singular in Material table")]
+    partial class changepluralnametosingularinMaterialtable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -318,9 +320,6 @@ namespace HouseProject.Api.Migrations
                     b.Property<int>("Payment")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PaymentTypeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
 
@@ -339,24 +338,7 @@ namespace HouseProject.Api.Migrations
 
                     b.HasIndex("LoanTrancheId");
 
-                    b.HasIndex("PaymentTypeId");
-
                     b.ToTable("Material");
-                });
-
-            modelBuilder.Entity("Domain.Entities.PaymentType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PaymentType");
                 });
 
             modelBuilder.Entity("Domain.Entities.Post", b =>
@@ -420,15 +402,14 @@ namespace HouseProject.Api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("PaymentTypeId")
-                        .HasColumnType("int");
+                    b.Property<string>("Payment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Supplier")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PaymentTypeId");
 
                     b.ToTable("Preparations");
                 });
@@ -460,8 +441,9 @@ namespace HouseProject.Api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("PaymentTypeId")
-                        .HasColumnType("int");
+                    b.Property<string>("Payment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ReceivedAt")
                         .HasColumnType("datetime2");
@@ -470,8 +452,6 @@ namespace HouseProject.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PaymentTypeId");
 
                     b.ToTable("Projects");
                 });
@@ -637,33 +617,9 @@ namespace HouseProject.Api.Migrations
                         .WithMany("Materials")
                         .HasForeignKey("LoanTrancheId");
 
-                    b.HasOne("Domain.Entities.PaymentType", "PaymentType")
-                        .WithMany("Materials")
-                        .HasForeignKey("PaymentTypeId");
-
                     b.Navigation("Execution");
 
                     b.Navigation("LoanTranche");
-
-                    b.Navigation("PaymentType");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Preparation", b =>
-                {
-                    b.HasOne("Domain.Entities.PaymentType", "PaymentType")
-                        .WithMany("Preparations")
-                        .HasForeignKey("PaymentTypeId");
-
-                    b.Navigation("PaymentType");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Project", b =>
-                {
-                    b.HasOne("Domain.Entities.PaymentType", "PaymentType")
-                        .WithMany("Projects")
-                        .HasForeignKey("PaymentTypeId");
-
-                    b.Navigation("PaymentType");
                 });
 
             modelBuilder.Entity("Domain.Entities.Application", b =>
@@ -681,15 +637,6 @@ namespace HouseProject.Api.Migrations
                     b.Navigation("Finances");
 
                     b.Navigation("Materials");
-                });
-
-            modelBuilder.Entity("Domain.Entities.PaymentType", b =>
-                {
-                    b.Navigation("Materials");
-
-                    b.Navigation("Preparations");
-
-                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("Domain.Entities.Post", b =>

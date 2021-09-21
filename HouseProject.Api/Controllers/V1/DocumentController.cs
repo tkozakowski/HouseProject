@@ -46,6 +46,17 @@ namespace Api.V1.Controllers
             return Ok(SortingHelper.GetSortFields().Select(x => x.Key));
         }
 
+        /// <summary>
+        /// Retrieves all documents in OData protocol
+        /// </summary>
+        /// <returns></returns>
+        //[HttpGet("[action]")]
+        //public IQueryable<DocumentDto> GetAll()
+        //{
+
+        //}
+
+
         [HttpGet("{id}")]
         public async Task<ActionResult<DocumentDto>> GetDocument(int id)
         {

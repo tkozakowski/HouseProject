@@ -20,6 +20,6 @@ namespace Domain.Entities
         public int WorkStageID { get; set; }
         public virtual WorkStage WorkStage { get; set; }
 
-        public ICollection<Materials> Materials { get; set; }
+        public ICollection<Material> Materials { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using Domain.Enum;
 
 namespace Domain.Entities
 {
-    public class Materials: AuditableEntity
+    public class Material: AuditableEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -11,7 +11,6 @@ namespace Domain.Entities
         public string Unit { get; set; }
         public decimal? PriceItem { get; set; }
         public string PurchasePlace { get; set; }
-        public Payment Payment { get; set; }
         public string Photo { get; set; }
 
 
@@ -21,5 +20,7 @@ namespace Domain.Entities
         public int ExecutionId { get; set; }
         public virtual Execution Execution { get; set; }
 
+        public int? PaymentTypeId { get; set; }
+        public virtual PaymentType PaymentType { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace Domain.Entities
         public LoanTrancheStage Stage { get; set; }
         public decimal Amount { get; set; }
 
-        public ICollection<Materials> Materials { get; set; }
+        public ICollection<Material> Materials { get; set; }
         public ICollection<Finance> Finances { get; set; }
     }
 }

@@ -24,6 +24,10 @@ namespace Infrastructure.Persistence
         public DbSet<Project> Projects { get; set; }
         public DbSet<SendType> SendTypes { get; set; }
         public DbSet<WorkStage> WorkStages { get; set; }
+        public DbSet<Material> Materials { get; set; }
+        public DbSet<Execution> Executions { get; set; }
+        public DbSet<PaymentType> PaymentTypes { get; set; }
+        public DbSet<Finance> Finances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,20 +60,18 @@ namespace Infrastructure.Persistence
                 .HasMaxLength(100)
                 .IsRequired();
             modelBuilder.Entity<Project>()
-                .Property(e => e.Payment)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (Payment)Enum.Parse(typeof(Payment), v));
+                .HasOne(e => e.PaymentType)
+                .WithMany(d => d.Projects);
+
 
             modelBuilder.Entity<Preparation>()
                 .Property(e => e.Name)
                 .HasMaxLength(100)
                 .IsRequired();
             modelBuilder.Entity<Preparation>()
-                .Property(e => e.Payment)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (Payment)Enum.Parse(typeof(Payment), v));
+                .HasOne(e => e.PaymentType)
+                .WithMany(d => d.Preparations);
+
 
             modelBuilder.Entity<SendType>()
                 .Property(e => e.Name)
@@ -99,11 +101,14 @@ namespace Infrastructure.Persistence
                     v => v.ToString(),
                     v => (LoanTrancheStage)Enum.Parse(typeof(LoanTrancheStage), v));
 
-            modelBuilder.Entity<Materials>()
+            modelBuilder.Entity<Material>()
                 .HasOne(e => e.LoanTranche)
                 .WithMany(d => d.Materials);
-            modelBuilder.Entity<Materials>()
+            modelBuilder.Entity<Material>()
                 .HasOne(e => e.Execution)
+                .WithMany(d => d.Materials);
+            modelBuilder.Entity<Material>()
+                .HasOne(e => e.PaymentType)
                 .WithMany(d => d.Materials);
 
             modelBuilder.Entity<Execution>()
@@ -113,6 +118,7 @@ namespace Infrastructure.Persistence
             modelBuilder.Entity<Finance>()
                 .HasOne(e => e.LoanTranche)
                 .WithMany(d => d.Finances);
+
         }
 
         public async Task<int> SaveChangesAsync()
