@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HouseProject.Api.Migrations
 {
     [DbContext(typeof(HouseProjectDbContext))]
-    partial class HouseProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210921184300_Add Material table")]
+    partial class AddMaterialtable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,56 +164,6 @@ namespace HouseProject.Api.Migrations
                     b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Execution", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal?>("Account")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("CostPayed")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("EstimatedCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("FinishedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal?>("LaborCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("StartedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("WorkStageID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WorkStageID");
-
-                    b.ToTable("Execution");
-                });
-
             modelBuilder.Entity("Domain.Entities.LoanTranche", b =>
                 {
                     b.Property<int>("Id")
@@ -259,9 +211,6 @@ namespace HouseProject.Api.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ExecutionId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
 
@@ -290,8 +239,6 @@ namespace HouseProject.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ExecutionId");
 
                     b.HasIndex("LoanTrancheId");
 
@@ -540,30 +487,11 @@ namespace HouseProject.Api.Migrations
                     b.Navigation("Stage");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Execution", b =>
-                {
-                    b.HasOne("Domain.Entities.WorkStage", "WorkStage")
-                        .WithMany("Executions")
-                        .HasForeignKey("WorkStageID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("WorkStage");
-                });
-
             modelBuilder.Entity("Domain.Entities.Materials", b =>
                 {
-                    b.HasOne("Domain.Entities.Execution", "Execution")
-                        .WithMany("Materials")
-                        .HasForeignKey("ExecutionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.LoanTranche", "LoanTranche")
                         .WithMany("Materials")
                         .HasForeignKey("LoanTrancheId");
-
-                    b.Navigation("Execution");
 
                     b.Navigation("LoanTranche");
                 });
@@ -571,11 +499,6 @@ namespace HouseProject.Api.Migrations
             modelBuilder.Entity("Domain.Entities.Application", b =>
                 {
                     b.Navigation("Attachments");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Execution", b =>
-                {
-                    b.Navigation("Materials");
                 });
 
             modelBuilder.Entity("Domain.Entities.LoanTranche", b =>
@@ -610,11 +533,6 @@ namespace HouseProject.Api.Migrations
             modelBuilder.Entity("Domain.Entities.Stage", b =>
                 {
                     b.Navigation("Documents");
-                });
-
-            modelBuilder.Entity("Domain.Entities.WorkStage", b =>
-                {
-                    b.Navigation("Executions");
                 });
 #pragma warning restore 612, 618
         }

@@ -99,6 +99,17 @@ namespace Infrastructure.Persistence
                     v => v.ToString(),
                     v => (LoanTrancheStage)Enum.Parse(typeof(LoanTrancheStage), v));
 
+            modelBuilder.Entity<Materials>()
+                .HasOne(e => e.LoanTranche)
+                .WithMany(d => d.Materials);
+            modelBuilder.Entity<Materials>()
+                .HasOne(e => e.Execution)
+                .WithMany(d => d.Materials);
+
+            modelBuilder.Entity<Execution>()
+                .HasOne(e => e.WorkStage)
+                .WithMany(d => d.Executions);
+
         }
 
         public async Task<int> SaveChangesAsync()
