@@ -6,5 +6,6 @@ using System.Collections.Generic;
 
 namespace Application.Queries.Documents
 {
-    public record GetDocumentListQuery(PaginationFilter validPaginationFilter, SortingFilter validSortingFilter) : IRequest<PaginationResult<IEnumerable<DocumentDto>>>;
+    public record GetDocumentListQuery(PaginationFilter validPaginationFilter, SortingFilter validSortingFilter, string filterBy) 
+        : IRequest<PaginationResult<IEnumerable<DocumentDto>>>;
 }

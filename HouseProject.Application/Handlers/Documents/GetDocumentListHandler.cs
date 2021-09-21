@@ -28,13 +28,16 @@ namespace Application.Handlers.Documents
         {
 
             List<DocumentDto> result = await _context.Documents
+                .Where(x => x.Name.ToLower().Contains(request.filterBy.ToLower()) || x.Description.ToLower().Contains(request.filterBy.ToLower()))
                 .OrderByPropertyName(request.validSortingFilter.SortField, request.validSortingFilter.Ascending)
                 .Skip((request.validPaginationFilter.PageNumber - 1) * request.validPaginationFilter.PageSize)
                 .Take(request.validPaginationFilter.PageSize)
                 .ProjectTo<DocumentDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
-            var totalRecords = _context.Documents.Count();
+            var totalRecords = _context.Documents
+                .Where(x => x.Name.ToLower().Contains(request.filterBy.ToLower()) || x.Description.ToLower().Contains(request.filterBy.ToLower()))
+                .Count();
 
             return HelperPaginationResult.HelperPaginationResultResponse<DocumentDto>(result, request.validPaginationFilter, totalRecords);
         }

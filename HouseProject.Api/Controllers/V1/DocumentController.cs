@@ -18,15 +18,22 @@ namespace Api.V1.Controllers
     [ApiVersion("1.0")]
     public class DocumentController : BaseApiController
     {
-
+        /// <summary>
+        /// Przykład wykorzystania paginacji, sortowania oraz filtrowania
+        /// </summary>
+        /// <param name="paginationFilters"></param>
+        /// <param name="sortingFilter"></param>
+        /// <param name="filterBy"></param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<List<DocumentDto>>> GetDocuments([FromQuery]PaginationFilter paginationFilters, [FromQuery] SortingFilter sortingFilter) 
+        public async Task<ActionResult<List<DocumentDto>>> GetDocuments([FromQuery] PaginationFilter paginationFilters,
+            [FromQuery] SortingFilter sortingFilter, [FromQuery] string filterBy = "")
         {
             var validPaginationFilter = new PaginationFilter(paginationFilters.PageNumber, paginationFilters.PageSize);
 
             var validSortingFilter = new SortingFilter(sortingFilter.SortField, sortingFilter.Ascending);
 
-            return HandleResult(await Mediator.Send(new GetDocumentListQuery(validPaginationFilter, validSortingFilter)));
+            return HandleResult(await Mediator.Send(new GetDocumentListQuery(validPaginationFilter, validSortingFilter, filterBy)));
         }
 
         /// <summary>
