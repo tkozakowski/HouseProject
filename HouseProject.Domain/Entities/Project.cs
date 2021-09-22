@@ -1,10 +1,11 @@
 ﻿using Domain.Common;
-using Domain.Enum;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
+    [Table("Projects")]
     public class Project: AuditableEntity
     {
 

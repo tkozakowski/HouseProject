@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Api.Extensions.AddServices
+namespace Infrastructure.Extensions
 {
     public static class AddDbService
     {

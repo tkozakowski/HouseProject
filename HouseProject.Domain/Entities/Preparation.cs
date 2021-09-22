@@ -1,9 +1,11 @@
 ﻿using Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
+    [Table("Preparations")]
     public class Preparation: AuditableEntity
     {
         public int Id { get; set; }

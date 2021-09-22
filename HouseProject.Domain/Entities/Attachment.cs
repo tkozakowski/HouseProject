@@ -1,7 +1,9 @@
 ﻿using Domain.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
+    [Table("Attachments")]
     public class Attachment: AuditableEntity
     {
         public int Id { get; set; }

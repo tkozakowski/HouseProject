@@ -1,9 +1,11 @@
 ﻿using Domain.Common;
 using Domain.Enum;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
+    [Table("LoanTranches")]
     public class LoanTranche: AuditableEntity
     {
         public int Id { get; set; }

@@ -1,7 +1,9 @@
 ﻿using Domain.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
+    [Table("Finances")]
     public class Finance : AuditableEntity
     {
         public int Id { get; set; }

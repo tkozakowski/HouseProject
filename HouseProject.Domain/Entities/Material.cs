@@ -1,8 +1,9 @@
 ﻿using Domain.Common;
-using Domain.Enum;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
+    [Table("Materials")]
     public class Material: AuditableEntity
     {
         public int Id { get; set; }

@@ -3,7 +3,7 @@ using Domain.Interfaces;
 using Infrastructure.Persistence;
 using System.Linq;
 
-namespace Infrastructure.Repository
+namespace Infrastructure.Repositories
 {
     public class ODataMaterialRepository : IODataMaterialRepository
     {

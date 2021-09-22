@@ -28,6 +28,7 @@ namespace Infrastructure.Persistence
         public DbSet<Execution> Executions { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<Finance> Finances { get; set; }
+        public DbSet<Stage> Stages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,8 +1,10 @@
 ﻿using Domain.Common;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
+    [Table("Documents")]
     public class Document: AuditableEntity
     {
         public int Id { get; set; }
