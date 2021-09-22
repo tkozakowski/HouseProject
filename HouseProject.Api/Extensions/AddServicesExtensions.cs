@@ -38,7 +38,7 @@ namespace Api.Extensions
 
             services.AddVersioning();
 
-            services.AddOData();
+            //services.AddOData();
 
             return services;
         }

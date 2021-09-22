@@ -50,9 +50,9 @@ namespace HouseProject.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.EnableDependencyInjection();
-                endpoints.Filter().OrderBy().MaxTop(10);
-                endpoints.MapODataRoute("odata", "odata", GetEdmModel());
+                //endpoints.EnableDependencyInjection();
+                //endpoints.Filter().OrderBy().MaxTop(10);
+                //endpoints.MapODataRoute("odata", "odata", GetEdmModel());
                 endpoints.MapControllers();
             });
         }

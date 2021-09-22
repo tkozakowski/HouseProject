@@ -1,6 +1,8 @@
 ﻿using Domain.Common;
 using Domain.Entities;
 using Domain.Enum;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -8,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence
 {
-    public class HouseProjectDbContext : DbContext
+    public class HouseProjectDbContext : IdentityDbContext<ApplicationUser>
     {
-        public HouseProjectDbContext(DbContextOptions options) : base(options)
+        public HouseProjectDbContext(DbContextOptions<HouseProjectDbContext> options) : base(options)
         {
         }
 

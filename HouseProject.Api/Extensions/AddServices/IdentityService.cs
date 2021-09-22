@@ -1,4 +1,5 @@
 ﻿using Application.Core;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -10,32 +11,26 @@ namespace Api.Extensions.AddServices
     {
         public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration configuration)
         {
-            var authenticationSettings = new AuthenticationSettings();
-            services.AddSingleton(authenticationSettings);
-            configuration.GetSection("Authentication").Bind(authenticationSettings);
+            //var authenticationSettings = new AuthenticationSettings();
+            //services.AddSingleton(authenticationSettings);
+            //configuration.GetSection("JWT").Bind(authenticationSettings);
 
             services.AddAuthentication(opt =>
             {
-                opt.DefaultAuthenticateScheme = "Bearer";
-                opt.DefaultScheme = "Bearer";
-                opt.DefaultChallengeScheme = "Bearer";
-            }).AddJwtBearer(cfg => {
-                cfg.SaveToken = true;
-                cfg.TokenValidationParameters = new TokenValidationParameters
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(cfg =>
                 {
-                    ValidateIssuerSigningKey = true,
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
-                };
-            });
-
-
-            //services.AddAuthorization(cfg => 
-            //{
-            //    cfg.AddPolicy
-            //});
-
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"])),
+                    };
+                });
 
 
             return services;
