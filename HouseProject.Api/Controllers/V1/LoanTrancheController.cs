@@ -1,4 +1,5 @@
-﻿using Application.Command.LoanTranches;
+﻿using Api.Controllers;
+using Application.Command.LoanTranches;
 using Application.Queries.LoanTranches;
 using Domain.Entities;
 using MediatR;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Api.Controllers
+namespace Api.V1.Controllers
 {
     public class LoanTrancheController: BaseApiController
     {

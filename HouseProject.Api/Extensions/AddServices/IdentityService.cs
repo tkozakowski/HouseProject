@@ -1,5 +1,8 @@
 ﻿using Application.Core;
+using Infrastructure.Identity;
+using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +14,11 @@ namespace Api.Extensions.AddServices
     {
         public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration configuration)
         {
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<HouseProjectDbContext>()
+                .AddDefaultTokenProviders();
+
             //var authenticationSettings = new AuthenticationSettings();
             //services.AddSingleton(authenticationSettings);
             //configuration.GetSection("JWT").Bind(authenticationSettings);

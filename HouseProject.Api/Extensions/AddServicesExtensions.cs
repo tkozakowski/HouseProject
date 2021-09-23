@@ -31,7 +31,9 @@ namespace Api.Extensions
             services.AddInfrastructure(Configuration);
           
             services.AddApplication(Configuration);
-                        
+
+            services.AddIdentityService(Configuration);
+
             services.AddMediatR(typeof(GetDocumentListHandler).Assembly);
 
             services.AddScoped<ExceptionMiddleware>();
