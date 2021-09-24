@@ -23,6 +23,8 @@ namespace Application.Handlers.Documents
         public async Task<Result<Unit>> Handle(InsertDocumentCommand request, CancellationToken cancellationToken)
         {
             var document = _mapper.Map<Document>(request.documentDto);
+            
+            document.UserId = request.userId;
 
             _houseProjectContext.Documents.Add(document);
 

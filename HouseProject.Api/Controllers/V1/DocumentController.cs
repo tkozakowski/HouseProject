@@ -4,9 +4,13 @@ using Application.Core.Paginations;
 using Application.Core.Sortings;
 using Application.Dto;
 using Application.Queries.Documents;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 /// <summary>
@@ -16,8 +20,12 @@ namespace Api.V1.Controllers
 {
     //[ApiExplorerSettings(IgnoreApi = true)]
     [ApiVersion("1.0")]
+    [Authorize]
     public class DocumentController : BaseApiController
     {
+        public DocumentController() { }
+
+
         /// <summary>
         /// Przykład wykorzystania paginacji, sortowania oraz filtrowania
         /// </summary>
@@ -67,20 +75,23 @@ namespace Api.V1.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateDocument([FromBody] CreateDocumentDto documentDto)
         {
-            return HandleResult(await Mediator.Send(new InsertDocumentCommand(documentDto)));
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return HandleResult(await Mediator.Send(new InsertDocumentCommand(documentDto, userId)));
         }
 
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDocument(int id, [FromBody] DocumentDto documentDto)
         {
-            return HandleResult(await Mediator.Send(new UpdateDocumentCommand { DocumentDto = documentDto, Id = id }));
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return HandleResult(await Mediator.Send(new UpdateDocumentCommand { DocumentDto = documentDto, Id = id, UserId = userId }));
         }
 
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDocument(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return HandleResult(await Mediator.Send(new RemoveDocumentCommand { Id = id }));
         }
     }

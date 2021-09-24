@@ -26,6 +26,7 @@ namespace Application.Handlers.Documents
             if (document is null) return null;
 
             _mapper.Map(request.DocumentDto, document);
+            document.UserId = request.UserId;
 
             var success = await _context.SaveChangesAsync() > 0;
 

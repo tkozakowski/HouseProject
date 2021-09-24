@@ -40,6 +40,8 @@ namespace Api.Extensions
 
             services.AddVersioning();
 
+            services.AddAuthorization();
+
             //services.AddOData();
 
             return services;

@@ -8,5 +8,6 @@ namespace Application.Command.Documents
     {
         public int Id { get; set; }
         public DocumentDto DocumentDto { get; set; }
+        public string UserId { get; set; }
     }
 }

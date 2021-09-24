@@ -12,7 +12,9 @@ namespace Domain.Entities
         public DateTime? ReceivedAt { get; set; }
         public decimal? Cost { get; set; }
         public string Description { get; set; }
-        
+
+        public string UserId { get; set; }
+
         public int? SendTypeId { get; set; }
         public SendType SendType { get; set; }
 

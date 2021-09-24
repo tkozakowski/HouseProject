@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HouseProject.Application\Application.csproj" />
+    <ProjectReference Include="..\HouseProject.Persistence\Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

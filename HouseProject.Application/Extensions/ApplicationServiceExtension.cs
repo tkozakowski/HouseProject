@@ -16,6 +16,7 @@ namespace Application.Extensions
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IODataMaterialService, ODataMaterialService>();
             services.AddScoped<IValidator<DocumentDto>, DocumentDtoValidator>();
+            services.AddScoped<UserResolverService>();
             return services;
         }
     }
