@@ -6,16 +6,16 @@ using Domain.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Infrastructure.Persistence;
+using Application.Interfaces;
 
 namespace Application.Handlers.Documents
 {
     public class InsertDocumentHandler : IRequestHandler<InsertDocumentCommand, Result<Unit>>
     {
-        private readonly HouseProjectDbContext _houseProjectContext;
+        private readonly IHouseProjectDbContext _houseProjectContext;
         private readonly IMapper _mapper;
 
-        public InsertDocumentHandler(HouseProjectDbContext houseProjectContext, IMapper mapper)
+        public InsertDocumentHandler(IHouseProjectDbContext houseProjectContext, IMapper mapper)
         {
             _houseProjectContext = houseProjectContext;
             _mapper = mapper;

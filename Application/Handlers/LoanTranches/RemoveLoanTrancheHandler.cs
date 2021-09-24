@@ -4,14 +4,14 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
-using Infrastructure.Persistence;
+using Application.Interfaces;
 
 namespace Application.Handlers.LoanTranches
 {
     public class RemoveLoanTrancheHandler : IRequestHandler<RemoveLoanTrancheCommand, Result<Unit>>
     {
-        private readonly HouseProjectDbContext _houseProjectDbContext;
-        public RemoveLoanTrancheHandler(HouseProjectDbContext houseProjectDbContext)
+        private readonly IHouseProjectDbContext _houseProjectDbContext;
+        public RemoveLoanTrancheHandler(IHouseProjectDbContext houseProjectDbContext)
         {
             _houseProjectDbContext = houseProjectDbContext;
         }

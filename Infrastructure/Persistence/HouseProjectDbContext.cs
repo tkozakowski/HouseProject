@@ -1,4 +1,6 @@
-﻿using Domain.Common;
+﻿using Application.Interfaces;
+using Application.Services;
+using Domain.Common;
 using Domain.Entities;
 using Domain.Enum;
 using Infrastructure.Identity;
@@ -10,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence
 {
-    public class HouseProjectDbContext : IdentityDbContext<ApplicationUser>
+    public class HouseProjectDbContext : IdentityDbContext<ApplicationUser>, IHouseProjectDbContext
     {
-        //private readonly UserResolverService _userResolverService;
+        private readonly UserResolverService _userResolverService;
 
-        public HouseProjectDbContext(DbContextOptions<HouseProjectDbContext> options/*, UserResolverService userResolverService*/) : base(options)
+        public HouseProjectDbContext(DbContextOptions<HouseProjectDbContext> options, UserResolverService userResolverService) : base(options)
         {
-            //_userResolverService = userResolverService;
+            _userResolverService = userResolverService;
         }
 
 
@@ -141,12 +143,12 @@ namespace Infrastructure.Persistence
             foreach (var item in entries)
             {
                 ((AuditableEntity)item.Entity).LastModified = DateTime.Now;
-                //((AuditableEntity)item.Entity).LastModifiedBy = _userResolverService.GetUser();
+                ((AuditableEntity)item.Entity).LastModifiedBy = _userResolverService.GetUser();
 
                 if (item.State == EntityState.Added)
                 {
                     ((AuditableEntity)item.Entity).CreatedAt = DateTime.Now;
-                    //((AuditableEntity)item.Entity).CreatedBy = _userResolverService.GetUser();
+                    ((AuditableEntity)item.Entity).CreatedBy = _userResolverService.GetUser();
                 }
             }
             return await base.SaveChangesAsync();

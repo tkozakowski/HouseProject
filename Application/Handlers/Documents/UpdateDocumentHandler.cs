@@ -5,16 +5,16 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
-using Infrastructure.Persistence;
+using Application.Interfaces;
 
 namespace Application.Handlers.Documents
 {
     public class UpdateDocumentHandler : IRequestHandler<UpdateDocumentCommand, Result<Unit>>
     {
-        private readonly HouseProjectDbContext _context;
+        private readonly IHouseProjectDbContext _context;
         private readonly IMapper _mapper;
 
-        public UpdateDocumentHandler(HouseProjectDbContext context, IMapper mapper)
+        public UpdateDocumentHandler(IHouseProjectDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

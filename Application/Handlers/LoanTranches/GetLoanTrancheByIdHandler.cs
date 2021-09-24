@@ -1,7 +1,7 @@
 ﻿using Application.Core;
+using Application.Interfaces;
 using Application.Queries.LoanTranches;
 using Domain.Entities;
-using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
@@ -11,9 +11,9 @@ namespace Application.Handlers.LoanTranches
 {
     public class GetLoanTrancheByIdHandler : IRequestHandler<GetLoanTrancheByIdQuery, Result<LoanTranche>>
     {
-        private readonly HouseProjectDbContext _houseProjectDbContext;
+        private readonly IHouseProjectDbContext _houseProjectDbContext;
 
-        public GetLoanTrancheByIdHandler(HouseProjectDbContext houseProjectDbContext)
+        public GetLoanTrancheByIdHandler(IHouseProjectDbContext houseProjectDbContext)
         {
             _houseProjectDbContext = houseProjectDbContext;
         }

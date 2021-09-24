@@ -7,19 +7,19 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Infrastructure.Persistence;
 using System.Linq;
 using Application.Core.Paginations;
 using Application.Extensions;
+using Application.Interfaces;
 
 namespace Application.Handlers.Documents
 {
     public class GetDocumentListHandler : IRequestHandler<GetDocumentListQuery, PaginationResult<IEnumerable<DocumentDto>>>
     {
-        private readonly HouseProjectDbContext _context;
+        private readonly IHouseProjectDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetDocumentListHandler(HouseProjectDbContext context, IMapper mapper)
+        public GetDocumentListHandler(IHouseProjectDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

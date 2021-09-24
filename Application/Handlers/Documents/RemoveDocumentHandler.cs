@@ -1,6 +1,6 @@
 ﻿using Application.Command.Documents;
 using Application.Core;
-using Infrastructure.Persistence;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
@@ -10,9 +10,9 @@ namespace Application.Handlers.Documents
 {
     class RemoveDocumentHandler : IRequestHandler<RemoveDocumentCommand, Result<Unit>>
     {
-        private readonly HouseProjectDbContext _context;
+        private readonly IHouseProjectDbContext _context;
 
-        public RemoveDocumentHandler(HouseProjectDbContext context)
+        public RemoveDocumentHandler(IHouseProjectDbContext context)
         {
             _context = context;
         }

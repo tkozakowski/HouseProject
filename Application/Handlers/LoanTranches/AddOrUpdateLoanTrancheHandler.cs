@@ -1,6 +1,6 @@
 ﻿using Application.Command.LoanTranches;
 using Application.Core;
-using Infrastructure.Persistence;
+using Application.Interfaces;
 using MediatR;
 using System.Linq;
 using System.Threading;
@@ -10,9 +10,9 @@ namespace Application.Handlers.LoanTranches
 {
     public class AddOrUpdateLoanTrancheHandler : IRequestHandler<AddOrUpdateLoanTrancheCommand, Result<Unit>>
     {
-        private readonly HouseProjectDbContext _houseProjectDbContext;
+        private readonly IHouseProjectDbContext _houseProjectDbContext;
 
-        public AddOrUpdateLoanTrancheHandler(HouseProjectDbContext houseProjectDbContext)
+        public AddOrUpdateLoanTrancheHandler(IHouseProjectDbContext houseProjectDbContext)
         {
             _houseProjectDbContext = houseProjectDbContext;
         }

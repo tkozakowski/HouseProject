@@ -8,16 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Infrastructure.Persistence;
+using Application.Interfaces;
 
 namespace Application.Handlers.Documents
 {
     public class GetDocumentByIdHandler : IRequestHandler<GetDocumentByIdQuery, Result<DocumentDto>>
     {
-        private readonly HouseProjectDbContext _houseProjectContext;
+        private readonly IHouseProjectDbContext _houseProjectContext;
         private readonly IMapper _mapper;
 
-        public GetDocumentByIdHandler(HouseProjectDbContext houseProjectContext, IMapper mapper)
+        public GetDocumentByIdHandler(IHouseProjectDbContext houseProjectContext, IMapper mapper)
         {
             _houseProjectContext = houseProjectContext;
             _mapper = mapper;

@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Infrastructure.Persistence;
+using Application.Interfaces;
 
 namespace Application.Handlers.LoanTranches
 {
     public class GetAllLoanTranchesHandler : IRequestHandler<GetAllLoanTranchesQuery, Result<List<LoanTranche>>>
     {
-        private readonly HouseProjectDbContext _houseProjectDbContext;
-        public GetAllLoanTranchesHandler(HouseProjectDbContext houseProjectDbContext)
+        private readonly IHouseProjectDbContext _houseProjectDbContext;
+        public GetAllLoanTranchesHandler(IHouseProjectDbContext houseProjectDbContext)
         {
             _houseProjectDbContext = houseProjectDbContext;
         }
