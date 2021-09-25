@@ -21,12 +21,14 @@ namespace Api.Controllers.V1
     public class IdentityController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
 
-        public IdentityController(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        public IdentityController(UserManager<ApplicationUser> userManager, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _configuration = configuration;
+            _roleManager = roleManager;
         }
 
         [HttpPost("Register")]
@@ -55,6 +57,48 @@ namespace Api.Controllers.V1
                     Result<bool>.Failure("User creation failed", result.Errors.Select(x => x.Description)));
             }
 
+            if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+            await _userManager.AddToRoleAsync(user, UserRoles.User);
+
+
+            return Ok(Result<bool>.Success(true));
+        }
+
+
+        [HttpPost("RegisterRO")]
+        public async Task<IActionResult> RegisterRO(RegisterModel registerModel)
+        {
+            var userExists = await _userManager.FindByNameAsync(registerModel.UserName);
+
+            if (userExists != null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, Result<bool>.Failure("User already exists"));
+            }
+
+            ApplicationUser user = new ApplicationUser()
+            {
+                UserName = registerModel.UserName,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                Email = registerModel.Email,
+            };
+
+            var result = await _userManager.CreateAsync(user, registerModel.Password);
+
+            if (!result.Succeeded)
+            {
+                IEnumerable<string> a = result.Errors.Select(x => x.Description);
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    Result<bool>.Failure("User creation failed", result.Errors.Select(x => x.Description)));
+            }
+
+            if (!await _roleManager.RoleExistsAsync(UserRoles.UserRO))
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.UserRO));
+
+            await _userManager.AddToRoleAsync(user, UserRoles.UserRO);
+
+
             return Ok(Result<bool>.Success(true));
         }
 
@@ -72,6 +116,13 @@ namespace Api.Controllers.V1
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
+
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                foreach (var role in userRoles)
+                {
+                    authClaims.Add(new Claim(ClaimTypes.Role, role));
+                }
 
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 

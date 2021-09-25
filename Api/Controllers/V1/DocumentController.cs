@@ -6,7 +6,6 @@ using Application.Dto;
 using Application.Queries.Documents;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +33,7 @@ namespace Api.V1.Controllers
         /// <param name="filterBy"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = UserRoles.UserOrUserRO)]
         public async Task<ActionResult<List<DocumentDto>>> GetDocuments([FromQuery] PaginationFilter paginationFilters,
             [FromQuery] SortingFilter sortingFilter, [FromQuery] string filterBy = "")
         {
@@ -49,6 +49,7 @@ namespace Api.V1.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("[action]")]
+        [Authorize(Roles = UserRoles.UserOrUserRO)]
         public IActionResult GetSortFileds()
         {
             return Ok(SortingHelper.GetSortFields().Select(x => x.Key));
@@ -66,6 +67,7 @@ namespace Api.V1.Controllers
 
 
         [HttpGet("{id}")]
+        [Authorize(Roles = UserRoles.UserOrUserRO)]
         public async Task<ActionResult<DocumentDto>> GetDocument(int id)
         {
             return HandleResult(await Mediator.Send(new GetDocumentByIdQuery(id)));
@@ -73,6 +75,7 @@ namespace Api.V1.Controllers
 
 
         [HttpPost]
+        [Authorize(UserRoles.User)]
         public async Task<IActionResult> CreateDocument([FromBody] CreateDocumentDto documentDto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -81,6 +84,7 @@ namespace Api.V1.Controllers
 
 
         [HttpPut("{id}")]
+        [Authorize(UserRoles.User)]
         public async Task<IActionResult> UpdateDocument(int id, [FromBody] DocumentDto documentDto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -89,6 +93,7 @@ namespace Api.V1.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize(UserRoles.User)]
         public async Task<IActionResult> DeleteDocument(int id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
