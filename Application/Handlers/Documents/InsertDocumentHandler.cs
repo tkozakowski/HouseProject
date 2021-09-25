@@ -10,7 +10,7 @@ using Application.Interfaces;
 
 namespace Application.Handlers.Documents
 {
-    public class InsertDocumentHandler : IRequestHandler<InsertDocumentCommand, Result<Unit>>
+    public class InsertDocumentHandler : IRequestHandler<InsertDocumentCommand, Response<Unit>>
     {
         private readonly IHouseProjectDbContext _houseProjectContext;
         private readonly IMapper _mapper;
@@ -20,7 +20,7 @@ namespace Application.Handlers.Documents
             _houseProjectContext = houseProjectContext;
             _mapper = mapper;
         }
-        public async Task<Result<Unit>> Handle(InsertDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<Response<Unit>> Handle(InsertDocumentCommand request, CancellationToken cancellationToken)
         {
             var document = _mapper.Map<Document>(request.documentDto);
             
@@ -30,9 +30,9 @@ namespace Application.Handlers.Documents
 
             var success = await _houseProjectContext.SaveChangesAsync() > 0;
 
-            if (!success) return Result<Unit>.Failure("Failed to create document");
+            if (!success) return Response<Unit>.Failure("Failed to create document");
 
-            return Result<Unit>.Success(Unit.Value);
+            return Response<Unit>.Success(Unit.Value);
         }
     }
 }

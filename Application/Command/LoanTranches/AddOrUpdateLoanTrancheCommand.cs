@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Command.LoanTranches
 {
-    public class AddOrUpdateLoanTrancheCommand : IRequest<Result<Unit>>
+    public class AddOrUpdateLoanTrancheCommand : IRequest<Response<Unit>>
     {
         public LoanTranche LoanTranche { get; set; }
     }

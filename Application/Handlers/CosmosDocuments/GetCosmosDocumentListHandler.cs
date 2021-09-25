@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.CosmosDocuments
 {
-    public class GetCosmosDocumentListHandler : IRequestHandler<GetCosmosDocumentListQuery, Result<List<CosmosDocumentDto>>>
+    public class GetCosmosDocumentListHandler : IRequestHandler<GetCosmosDocumentListQuery, Response<List<CosmosDocumentDto>>>
     {
         private readonly ICosmosStore<CosmosDocument> _cosmosStore;
         private readonly IMapper _mapper;
@@ -22,12 +22,12 @@ namespace Application.Handlers.CosmosDocuments
             _cosmosStore = cosmosStore;
             _mapper = mapper;
         }
-        public async Task<Result<List<CosmosDocumentDto>>> Handle(GetCosmosDocumentListQuery request, CancellationToken cancellationToken)
+        public async Task<Response<List<CosmosDocumentDto>>> Handle(GetCosmosDocumentListQuery request, CancellationToken cancellationToken)
         {
             var cosmosDocuments = await _cosmosStore.Query().ToListAsync();
             var cosmosDocumentsDto = _mapper.Map<List<CosmosDocumentDto>>(cosmosDocuments);
 
-            return Result<List<CosmosDocumentDto>>.Success(cosmosDocumentsDto);
+            return Response<List<CosmosDocumentDto>>.Success(cosmosDocumentsDto);
         }
     }
 }

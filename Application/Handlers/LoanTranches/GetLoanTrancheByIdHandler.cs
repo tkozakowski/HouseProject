@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.LoanTranches
 {
-    public class GetLoanTrancheByIdHandler : IRequestHandler<GetLoanTrancheByIdQuery, Result<LoanTranche>>
+    public class GetLoanTrancheByIdHandler : IRequestHandler<GetLoanTrancheByIdQuery, Response<LoanTranche>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
 
@@ -17,13 +17,13 @@ namespace Application.Handlers.LoanTranches
         {
             _houseProjectDbContext = houseProjectDbContext;
         }
-        public async Task<Result<LoanTranche>> Handle(GetLoanTrancheByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Response<LoanTranche>> Handle(GetLoanTrancheByIdQuery request, CancellationToken cancellationToken)
         {
             var result = await _houseProjectDbContext.LoanTranches.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            if (result is null) return Result<LoanTranche>.Failure("Failed to get loan tranche");
+            if (result is null) return Response<LoanTranche>.Failure("Failed to get loan tranche");
 
-            return Result<LoanTranche>.Success(result);
+            return Response<LoanTranche>.Success(result);
         }
     }
 }

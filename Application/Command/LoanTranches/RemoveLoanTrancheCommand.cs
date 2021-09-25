@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Command.LoanTranches
 {
-    public class RemoveLoanTrancheCommand: IRequest<Result<Unit>>
+    public class RemoveLoanTrancheCommand: IRequest<Response<Unit>>
     {
         public int Id { get; set; }
     }

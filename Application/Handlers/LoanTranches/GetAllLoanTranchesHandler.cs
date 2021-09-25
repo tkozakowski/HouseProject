@@ -10,16 +10,16 @@ using Application.Interfaces;
 
 namespace Application.Handlers.LoanTranches
 {
-    public class GetAllLoanTranchesHandler : IRequestHandler<GetAllLoanTranchesQuery, Result<List<LoanTranche>>>
+    public class GetAllLoanTranchesHandler : IRequestHandler<GetAllLoanTranchesQuery, Response<List<LoanTranche>>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         public GetAllLoanTranchesHandler(IHouseProjectDbContext houseProjectDbContext)
         {
             _houseProjectDbContext = houseProjectDbContext;
         }
-        public async Task<Result<List<LoanTranche>>> Handle(GetAllLoanTranchesQuery request, CancellationToken cancellationToken)
+        public async Task<Response<List<LoanTranche>>> Handle(GetAllLoanTranchesQuery request, CancellationToken cancellationToken)
         {
-            return Result<List<LoanTranche>>.Success(await _houseProjectDbContext.LoanTranches.ToListAsync());
+            return Response<List<LoanTranche>>.Success(await _houseProjectDbContext.LoanTranches.ToListAsync());
         }
     }
 }

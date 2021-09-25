@@ -4,6 +4,6 @@ using MediatR;
 
 namespace Application.Queries.Documents
 {
-    public record GetDocumentByIdQuery(int id): IRequest<Result<DocumentDto>>;
+    public record GetDocumentByIdQuery(int id): IRequest<Response<DocumentDto>>;
 
 }

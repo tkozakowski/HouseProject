@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Command.CosmosDocuments
 {
-    public class UpdateCosmosDocumentCommand : IRequest<Result<Unit>>
+    public class UpdateCosmosDocumentCommand : IRequest<Response<Unit>>
     {
         public CosmosDocumentDto CosmosDocumentDto { get; set; }
     }

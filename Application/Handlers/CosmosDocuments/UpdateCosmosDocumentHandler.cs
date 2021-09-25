@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.CosmosDocuments
 {
-    public class UpdateCosmosDocumentHandler : IRequestHandler<UpdateCosmosDocumentCommand, Result<Unit>>
+    public class UpdateCosmosDocumentHandler : IRequestHandler<UpdateCosmosDocumentCommand, Response<Unit>>
     {
         private readonly ICosmosStore<CosmosDocument> _cosmosStore;
         private readonly IMapper _mapper;
@@ -21,15 +21,15 @@ namespace Application.Handlers.CosmosDocuments
             _mapper = mapper;
         }
 
-        public async Task<Result<Unit>> Handle(UpdateCosmosDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<Response<Unit>> Handle(UpdateCosmosDocumentCommand request, CancellationToken cancellationToken)
         {
             var document = _mapper.Map<CosmosDocument>(request.CosmosDocumentDto);
 
-            if (document is null) return Result<Unit>.Failure("Failed to update document");
+            if (document is null) return Response<Unit>.Failure("Failed to update document");
 
             await _cosmosStore.UpdateAsync(document);
 
-            return Result<Unit>.Success(Unit.Value);
+            return Response<Unit>.Success(Unit.Value);
         }
     }
 }

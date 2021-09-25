@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Application.Queries.LoanTranches
 {
-    public class GetAllLoanTranchesQuery: IRequest<Result<List<LoanTranche>>>
+    public class GetAllLoanTranchesQuery: IRequest<Response<List<LoanTranche>>>
     {
     }
 }

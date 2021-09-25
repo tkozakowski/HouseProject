@@ -4,6 +4,6 @@ using MediatR;
 
 namespace Application.Command.CosmosDocuments
 {
-    public record InsertCosmosDocumentCommand(CreateCosmosDocumentDto cosmosDocument): IRequest<Result<Unit>>;
+    public record InsertCosmosDocumentCommand(CreateCosmosDocumentDto cosmosDocument): IRequest<Response<Unit>>;
 
 }

@@ -12,7 +12,7 @@ using Application.Interfaces;
 
 namespace Application.Handlers.Documents
 {
-    public class GetDocumentByIdHandler : IRequestHandler<GetDocumentByIdQuery, Result<DocumentDto>>
+    public class GetDocumentByIdHandler : IRequestHandler<GetDocumentByIdQuery, Response<DocumentDto>>
     {
         private readonly IHouseProjectDbContext _houseProjectContext;
         private readonly IMapper _mapper;
@@ -22,12 +22,12 @@ namespace Application.Handlers.Documents
             _houseProjectContext = houseProjectContext;
             _mapper = mapper;
         }
-        public async Task<Result<DocumentDto>> Handle(GetDocumentByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Response<DocumentDto>> Handle(GetDocumentByIdQuery request, CancellationToken cancellationToken)
         {
             var result = await _houseProjectContext.Documents.Where(x => x.Id == request.id)
                 .ProjectTo<DocumentDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
 
-            return Result<DocumentDto>.Success(result);
+            return Response<DocumentDto>.Success(result);
         }
     }
 }

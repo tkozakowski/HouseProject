@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.Documents
 {
-    class RemoveDocumentHandler : IRequestHandler<RemoveDocumentCommand, Result<Unit>>
+    class RemoveDocumentHandler : IRequestHandler<RemoveDocumentCommand, Response<Unit>>
     {
         private readonly IHouseProjectDbContext _context;
 
@@ -16,7 +16,7 @@ namespace Application.Handlers.Documents
         {
             _context = context;
         }
-        public async Task<Result<Unit>> Handle(RemoveDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<Response<Unit>> Handle(RemoveDocumentCommand request, CancellationToken cancellationToken)
         {
             var document = await _context.Documents.FirstOrDefaultAsync(x => x.Id == request.Id);
 
@@ -26,9 +26,9 @@ namespace Application.Handlers.Documents
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            if (!success) return Result<Unit>.Failure("Failed to remove document");
+            if (!success) return Response<Unit>.Failure("Failed to remove document");
 
-            return Result<Unit>.Success(Unit.Value);
+            return Response<Unit>.Success(Unit.Value);
         }
     }
 }

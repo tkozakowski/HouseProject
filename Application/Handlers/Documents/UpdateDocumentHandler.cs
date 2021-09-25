@@ -9,7 +9,7 @@ using Application.Interfaces;
 
 namespace Application.Handlers.Documents
 {
-    public class UpdateDocumentHandler : IRequestHandler<UpdateDocumentCommand, Result<Unit>>
+    public class UpdateDocumentHandler : IRequestHandler<UpdateDocumentCommand, Response<Unit>>
     {
         private readonly IHouseProjectDbContext _context;
         private readonly IMapper _mapper;
@@ -19,7 +19,7 @@ namespace Application.Handlers.Documents
             _context = context;
             _mapper = mapper;
         }
-        public async Task<Result<Unit>> Handle(UpdateDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<Response<Unit>> Handle(UpdateDocumentCommand request, CancellationToken cancellationToken)
         {
             var document = await _context.Documents.FirstOrDefaultAsync(x => x.Id == request.Id);
 
@@ -30,9 +30,9 @@ namespace Application.Handlers.Documents
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            if (!success) return Result<Unit>.Failure("Failed to update document");
+            if (!success) return Response<Unit>.Failure("Failed to update document");
 
-            return Result<Unit>.Success(Unit.Value);
+            return Response<Unit>.Success(Unit.Value);
         }
     }
 }

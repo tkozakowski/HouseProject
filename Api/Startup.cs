@@ -40,7 +40,7 @@ namespace HouseProject.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HouseProject.Api v1"));
             }
-            app.UseMiddleware<ExceptionMiddleware>();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseHttpsRedirection();
 

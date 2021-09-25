@@ -36,7 +36,7 @@ namespace Api.Extensions
 
             services.AddMediatR(typeof(GetDocumentListHandler).Assembly);
 
-            services.AddScoped<ExceptionMiddleware>();
+            services.AddScoped<ErrorHandlingMiddleware>();
 
             services.AddVersioning();
 

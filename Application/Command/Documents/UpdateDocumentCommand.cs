@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Command.Documents
 {
-    public class UpdateDocumentCommand: IRequest<Result<Unit>>
+    public class UpdateDocumentCommand: IRequest<Response<Unit>>
     {
         public int Id { get; set; }
         public DocumentDto DocumentDto { get; set; }

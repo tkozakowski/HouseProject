@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Queries.CosmosDocuments
 {
-    public class GetCosmosDocumentByIdQuery: IRequest<Result<CosmosDocumentDto>>
+    public class GetCosmosDocumentByIdQuery: IRequest<Response<CosmosDocumentDto>>
     {
         public string Id { get; set; }
     }

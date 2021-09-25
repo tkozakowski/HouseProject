@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.CosmosDocuments
 {
-    public class GetCosmosDocumentByIdHandler : IRequestHandler<GetCosmosDocumentByIdQuery, Result<CosmosDocumentDto>>
+    public class GetCosmosDocumentByIdHandler : IRequestHandler<GetCosmosDocumentByIdQuery, Response<CosmosDocumentDto>>
     {
         private readonly ICosmosStore<CosmosDocument> _cosmosStore;
         private readonly IMapper _mapper;
@@ -21,12 +21,12 @@ namespace Application.Handlers.CosmosDocuments
             _mapper = mapper;
         }
 
-        public async Task<Result<CosmosDocumentDto>> Handle(GetCosmosDocumentByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Response<CosmosDocumentDto>> Handle(GetCosmosDocumentByIdQuery request, CancellationToken cancellationToken)
         {
             var cosmosDocument = await _cosmosStore.FindAsync(request.Id);
             var cosmosDocumentDto = _mapper.Map<CosmosDocumentDto>(cosmosDocument);
 
-            return Result<CosmosDocumentDto>.Success(cosmosDocumentDto);
+            return Response<CosmosDocumentDto>.Success(cosmosDocumentDto);
         }
     }
 }
