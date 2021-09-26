@@ -103,10 +103,15 @@ namespace Infrastructure.Persistence
 
             modelBuilder.Entity<Attachment>()
                 .Property(e => e.Name)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(100);
             modelBuilder.Entity<Attachment>()
                 .HasOne(e => e.Application)
                 .WithMany(d => d.Attachments);
+            modelBuilder.Entity<Attachment>()
+                .Property(e => e.Path)
+                .IsRequired()
+                .HasMaxLength(200);
 
             modelBuilder.Entity<LoanTranche>()
                 .Property(e => e.Stage)

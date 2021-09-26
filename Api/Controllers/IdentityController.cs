@@ -14,7 +14,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api.Controllers.V1
+namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
