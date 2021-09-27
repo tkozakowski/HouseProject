@@ -20,6 +20,7 @@ namespace Application.Interfaces
         DbSet<SendType> SendTypes { get; set; }
         DbSet<Stage> Stages { get; set; }
         DbSet<WorkStage> WorkStages { get; set; }
+        DbSet<AttachmentBackup> AttachmentsBackup { get; set; }
 
         Task<int> SaveChangesAsync();
     }

@@ -1,6 +1,8 @@
 ﻿using Application.Command.Attachment;
 using Application.Dto.Attachments;
+using Application.Dto.AttachmentsBackup;
 using Application.Queries.Attachments;
+using Application.Queries.AttachmentsBackup;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +42,12 @@ namespace Api.Controllers.V1
         public async Task<ActionResult> DeleteFileAsync(int fileId)
         {
             return HandleResult(await Mediator.Send(new DeleteFileByIdCommand(fileId)));
+        }
+
+        [HttpGet("[action]/{applicationId}")]
+        public async Task<ActionResult<IEnumerable<AttachmentBackupsInfoDto>>> GetAttachmentsByApplicationId(int applicationId)
+        {
+            return HandleResult(await Mediator.Send(new GetAttachmentsBackupByApplicationIdQuery(applicationId)));
         }
     }
 }
