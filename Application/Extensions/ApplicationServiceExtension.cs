@@ -17,6 +17,7 @@ namespace Application.Extensions
             services.AddScoped<IODataMaterialService, ODataMaterialService>();
             services.AddScoped<IValidator<DocumentDto>, DocumentDtoValidator>();
             services.AddScoped<UserResolverService>();
+            services.AddScoped<IAttachmentComparerService, AttachmentComparerService>();
             return services;
         }
     }

@@ -27,7 +27,6 @@ namespace Application.Handlers.AttachmentsBackup
         public async Task<Response<IEnumerable<AttachmentBackupsInfoDto>>> Handle(GetAttachmentsBackupByApplicationIdQuery request, CancellationToken cancellationToken)
         {
             var attachments = await _houseProjectDbContext.AttachmentsBackup
-                .Include(x => x.Application)
                 .Where(x => x.ApplicationId == request.applicationId)
                 .ProjectTo<AttachmentBackupsInfoDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();

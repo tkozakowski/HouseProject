@@ -1,6 +1,7 @@
 ﻿using Application.Command.Attachment;
 using Application.Dto.Attachments;
 using Application.Dto.AttachmentsBackup;
+using Application.Interfaces;
 using Application.Queries.Attachments;
 using Application.Queries.AttachmentsBackup;
 using Microsoft.AspNetCore.Authorization;
@@ -18,10 +19,24 @@ namespace Api.Controllers.V1
     [ApiController]
     public class AttachmentController : BaseApiController
     {
+        private readonly IAttachmentComparerService _attachmentComparerService;
+
+        public AttachmentController(IAttachmentComparerService attachmentComparerService)
+        {
+            _attachmentComparerService = attachmentComparerService;
+        }
+
+
         [HttpGet("[action]/{applicationId}")]
         public async Task<ActionResult<AttachmentDto>> GetAttachmentsInfoByApplicationIdAsync(int applicationId)
         {
             return HandleResult<List<AttachmentDto>>(await Mediator.Send(new GetAttachmentInfoByApplicationIdQuery(applicationId)));
+        }
+
+        [HttpGet("[action]/{applicationId}")]
+        public async Task<ActionResult<IEnumerable<AttachmentBackupsInfoDto>>> GetAttachmentsBackupInfoByApplicationIdAsync(int applicationId)
+        {
+            return HandleResult(await Mediator.Send(new GetAttachmentsBackupByApplicationIdQuery(applicationId)));
         }
 
         [HttpGet("[action]/{fileId}")]
@@ -32,8 +47,15 @@ namespace Api.Controllers.V1
             return File(attachment.Content, MediaTypeNames.Application.Octet, attachment.Name);
         }
 
+        //[HttpGet("[action]/fileId")]
+        //public async Task<ActionResult> GetBackupFileAsync(int fileId)
+        //{
+
+        //}
+
+
         [HttpPost("[action]/{applicationId}")]
-        public async Task<ActionResult> AddFileAsync(int applicationId, IFormFile formFile)
+        public async Task<ActionResult> AddFileAttachmentAsync(int applicationId, IFormFile formFile)
         {
             return HandleResult<AttachmentDto>(await Mediator.Send(new AddAttachmentToApplicationCommand(applicationId, formFile)));
         }
@@ -44,10 +66,13 @@ namespace Api.Controllers.V1
             return HandleResult(await Mediator.Send(new DeleteFileByIdCommand(fileId)));
         }
 
-        [HttpGet("[action]/{applicationId}")]
-        public async Task<ActionResult<IEnumerable<AttachmentBackupsInfoDto>>> GetAttachmentsByApplicationId(int applicationId)
+
+        [HttpGet("[action]")]
+        public async Task<ActionResult> RecoverBackupFiles()
         {
-            return HandleResult(await Mediator.Send(new GetAttachmentsBackupByApplicationIdQuery(applicationId)));
+            await _attachmentComparerService.RecoverFiles();
+
+            return NoContent();
         }
     }
 }
