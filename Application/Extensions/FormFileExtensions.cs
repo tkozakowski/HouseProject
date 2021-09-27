@@ -11,9 +11,11 @@ namespace Application.Extensions
 {
     public static class FormFileExtensions
     {
-        public static string SaveFile(this IFormFile formFile, IConfiguration configuration)
+        private const string roothPath = @"C:\HouseProject_Attachments";
+
+        public static string SaveFile(this IFormFile formFile)
         {
-            string roothPath = configuration.GetValue<string>("FilePath");
+
             if (!Directory.Exists(roothPath))
                 Directory.CreateDirectory(roothPath);
 

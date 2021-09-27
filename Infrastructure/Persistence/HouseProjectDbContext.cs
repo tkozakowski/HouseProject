@@ -24,18 +24,19 @@ namespace Infrastructure.Persistence
 
         public DbSet<Domain.Entities.Application> Applications { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<AttachmentBackup> AttachmentsBackup { get; set;}
         public DbSet<Document> Documents { get; set; }
+        public DbSet<Execution> Executions { get; set; }
+        public DbSet<Finance> Finances { get; set; }
         public DbSet<LoanTranche> LoanTranches { get; set; }
+        public DbSet<Material> Materials { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Preparation> Preparations { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<SendType> SendTypes { get; set; }
-        public DbSet<WorkStage> WorkStages { get; set; }
-        public DbSet<Material> Materials { get; set; }
-        public DbSet<Execution> Executions { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
-        public DbSet<Finance> Finances { get; set; }
         public DbSet<Stage> Stages { get; set; }
+        public DbSet<WorkStage> WorkStages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -76,7 +77,6 @@ namespace Infrastructure.Persistence
                 .HasOne(e => e.PaymentType)
                 .WithMany(d => d.Projects);
 
-
             modelBuilder.Entity<Preparation>()
                 .Property(e => e.Name)
                 .HasMaxLength(100)
@@ -84,7 +84,6 @@ namespace Infrastructure.Persistence
             modelBuilder.Entity<Preparation>()
                 .HasOne(e => e.PaymentType)
                 .WithMany(d => d.Preparations);
-
 
             modelBuilder.Entity<SendType>()
                 .Property(e => e.Name)
@@ -102,6 +101,18 @@ namespace Infrastructure.Persistence
                 .WithMany(d => d.Applications);
 
             modelBuilder.Entity<Attachment>()
+                .Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+            modelBuilder.Entity<Attachment>()
+                .HasOne(e => e.Application)
+                .WithMany(d => d.Attachments);
+            modelBuilder.Entity<Attachment>()
+                .Property(e => e.Path)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            modelBuilder.Entity<Domain.Entities.AttachmentBackup>()
                 .Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);

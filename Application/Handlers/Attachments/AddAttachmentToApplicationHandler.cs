@@ -25,8 +25,8 @@ namespace Application.Handlers.Attachments
             _houseProjectDbContext = houseProjectDbContext;
         }
 
-        static IServiceProvider services = null;
-        private IConfiguration Configuration => services.GetService(typeof(IConfiguration)) as IConfiguration; // <-- do testów
+        //static IServiceProvider services = null;
+        //private IConfiguration Configuration => services.GetService(typeof(IConfiguration)) as IConfiguration; // <-- do testów
 
 
         public async Task<Response<AttachmentDto>> Handle(AddAttachmentToApplicationCommand request, CancellationToken cancellationToken)
@@ -39,7 +39,7 @@ namespace Application.Handlers.Attachments
             {
                 Name = request.file.FileName,
                 Application = application,
-                Path = request.file.SaveFile(Configuration)
+                Path = request.file.SaveFile()
             };
 
             _houseProjectDbContext.Attachments.Add(attachment);

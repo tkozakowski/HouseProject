@@ -96,7 +96,6 @@ namespace Api.V1.Controllers
         [Authorize(UserRoles.User)]
         public async Task<IActionResult> DeleteDocument(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return HandleResult(await Mediator.Send(new RemoveDocumentCommand { Id = id }));
         }
     }

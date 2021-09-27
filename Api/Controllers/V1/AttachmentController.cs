@@ -4,32 +4,42 @@ using Application.Queries.Attachments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace Api.Controllers.V1
 {
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     [ApiVersion("1.0")]
     [ApiController]
     public class AttachmentController : BaseApiController
     {
-        [HttpPost("[action]")]
-        public async Task<ActionResult<AttachmentDto>> GetInfoAsync(int id)
+        [HttpGet("[action]/{applicationId}")]
+        public async Task<ActionResult<AttachmentDto>> GetAttachmentsInfoByApplicationIdAsync(int applicationId)
         {
-            return HandleResult<AttachmentDto>(await Mediator.Send(new GetAttachmentInfoByApplicationIdQuery() { ApplicationId = id }));
+            return HandleResult<List<AttachmentDto>>(await Mediator.Send(new GetAttachmentInfoByApplicationIdQuery(applicationId)));
         }
 
-        [HttpPost("[action]")]
-        public async Task<ActionResult<DownloadAttachmentDto>> DownloadFileAsync(int id)
+        [HttpGet("[action]/{fileId}")]
+        public async Task<ActionResult<DownloadAttachmentDto>> GetFileAsync(int fileId)
         {
-            return HandleResult<DownloadAttachmentDto>(await Mediator.Send(new DownloadAttachmentByIdQuery { Id = id }));
+            var attachment = await Mediator.Send(new DownloadFileByIdQuery(fileId));
+
+            return File(attachment.Content, MediaTypeNames.Application.Octet, attachment.Name);
         }
 
-        [HttpPost("[action]")]
-        public async Task<ActionResult> AddFileAsync(int id, [FromBody] IFormFile formFile)
+        [HttpPost("[action]/{applicationId}")]
+        public async Task<ActionResult> AddFileAsync(int applicationId, IFormFile formFile)
         {
-            return HandleResult<AttachmentDto>(await Mediator.Send(new AddAttachmentToApplicationCommand(id, formFile)));
+            return HandleResult<AttachmentDto>(await Mediator.Send(new AddAttachmentToApplicationCommand(applicationId, formFile)));
+        }
+
+        [HttpDelete("[action]/{fileId}")]
+        public async Task<ActionResult> DeleteFileAsync(int fileId)
+        {
+            return HandleResult(await Mediator.Send(new DeleteFileByIdCommand(fileId)));
         }
     }
 }
