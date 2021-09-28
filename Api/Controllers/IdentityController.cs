@@ -31,7 +31,7 @@ namespace Api.Controllers
             _roleManager = roleManager;
         }
 
-        [HttpPost("Register")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Register(RegisterModel registerModel)
         {
             var userExists = await _userManager.FindByNameAsync(registerModel.UserName);
@@ -67,7 +67,7 @@ namespace Api.Controllers
         }
 
 
-        [HttpPost("RegisterRO")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> RegisterRO(RegisterModel registerModel)
         {
             var userExists = await _userManager.FindByNameAsync(registerModel.UserName);

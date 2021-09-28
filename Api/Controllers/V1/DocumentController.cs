@@ -1,5 +1,6 @@
 ﻿using Api.Controllers;
 using Application.Command.Documents;
+using Application.Core.Attributes;
 using Application.Core.Paginations;
 using Application.Core.Sortings;
 using Application.Dto;
@@ -75,7 +76,8 @@ namespace Api.V1.Controllers
 
 
         [HttpPost]
-        //[Authorize(UserRoles.User)]
+        [ValidateFilterAttributes]
+        [Authorize(Roles = UserRoles.User)]
         public async Task<IActionResult> CreateDocument([FromBody] CreateDocumentDto documentDto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -84,7 +86,7 @@ namespace Api.V1.Controllers
 
 
         [HttpPut("{id}")]
-        [Authorize(UserRoles.User)]
+        [Authorize(Roles = UserRoles.User)]
         public async Task<IActionResult> UpdateDocument(int id, [FromBody] DocumentDto documentDto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -93,7 +95,7 @@ namespace Api.V1.Controllers
 
 
         [HttpDelete("{id}")]
-        [Authorize(UserRoles.User)]
+        [Authorize(Roles = UserRoles.User)]
         public async Task<IActionResult> DeleteDocument(int id)
         {
             return HandleResult(await Mediator.Send(new RemoveDocumentCommand { Id = id }));
