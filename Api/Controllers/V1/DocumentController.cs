@@ -50,7 +50,7 @@ namespace Api.V1.Controllers
         /// <returns></returns>
         [HttpGet("[action]")]
         [Authorize(Roles = UserRoles.UserOrUserRO)]
-        public IActionResult GetSortFileds()
+        public IActionResult GetSortFields()
         {
             return Ok(SortingHelper.GetSortFields().Select(x => x.Key));
         }
@@ -75,7 +75,7 @@ namespace Api.V1.Controllers
 
 
         [HttpPost]
-        [Authorize(UserRoles.User)]
+        //[Authorize(UserRoles.User)]
         public async Task<IActionResult> CreateDocument([FromBody] CreateDocumentDto documentDto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

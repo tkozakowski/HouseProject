@@ -3,11 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 using Application.Handlers.Documents;
 using Api.Middleware;
-using FluentValidation.AspNetCore;
 using Application.Extensions;
 using Api.Extensions.AddServices;
 using Infrastructure.Extensions;
-using Microsoft.AspNet.OData.Extensions;
 
 namespace Api.Extensions
 {
@@ -21,15 +19,13 @@ namespace Api.Extensions
                     opt.JsonSerializerOptions.WriteIndented = true;
                 });
 
-            services.AddFluentValidation();
-
             services.AddSwagger();
 
             //services.AddCORS();
 
 
             services.AddInfrastructure(Configuration);
-          
+
             services.AddApplication(Configuration);
 
             services.AddIdentityService(Configuration);
