@@ -9,7 +9,12 @@ namespace Api.Extensions.AddServices
         {
 
             services.AddHealthChecks()
-                .AddDbContextCheck<HouseProjectDbContext>();
+                .AddDbContextCheck<HouseProjectDbContext>("Sql database");
+
+            services.AddHealthChecksUI()
+                .AddInMemoryStorage();
+
+
             return services;
         }
     }

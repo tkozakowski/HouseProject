@@ -1,17 +1,22 @@
 using Api.Extensions;
+using Api.HealthChecks;
 using Api.Middleware;
 using Application.Dto;
 using Application.Dto.Materials;
+using HealthChecks.UI.Client;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OData.Edm;
+using Newtonsoft.Json;
 using System;
+using System.Linq;
 
 namespace HouseProject.Api
 {
@@ -41,13 +46,6 @@ namespace HouseProject.Api
             }
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
-            app.UseHealthChecks("/health", new HealthCheckOptions 
-            {
-                ResponseWriter = async (context, report) => 
-                {
-                    context.Response.ContentType = IMime
-                }
-            });
 
             app.UseHttpsRedirection();
 
@@ -63,6 +61,12 @@ namespace HouseProject.Api
                 //endpoints.Filter().OrderBy().MaxTop(10);
                 //endpoints.MapODataRoute("odata", "odata", GetEdmModel());
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoints.MapHealthChecksUI();
             });
         }
 
