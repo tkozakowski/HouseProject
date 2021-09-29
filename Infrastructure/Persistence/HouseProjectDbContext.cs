@@ -14,9 +14,9 @@ namespace Infrastructure.Persistence
 {
     public class HouseProjectDbContext : IdentityDbContext<ApplicationUser>, IHouseProjectDbContext
     {
-        private readonly UserResolverService _userResolverService;
+        private readonly UserContextAccessorService _userResolverService;
 
-        public HouseProjectDbContext(DbContextOptions<HouseProjectDbContext> options, UserResolverService userResolverService) : base(options)
+        public HouseProjectDbContext(DbContextOptions<HouseProjectDbContext> options, UserContextAccessorService userResolverService) : base(options)
         {
             _userResolverService = userResolverService;
         }

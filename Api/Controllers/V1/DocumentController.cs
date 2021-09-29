@@ -35,7 +35,7 @@ namespace Api.V1.Controllers
         /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = UserRoles.UserOrUserRO)]
-        public async Task<ActionResult<List<DocumentDto>>> GetDocuments([FromQuery] PaginationFilter paginationFilters,
+        public async Task<ActionResult<List<DocumentDto>>> GetDocumentsAsync([FromQuery] PaginationFilter paginationFilters,
             [FromQuery] SortingFilter sortingFilter, [FromQuery] string filterBy = "")
         {
             var validPaginationFilter = new PaginationFilter(paginationFilters.PageNumber, paginationFilters.PageSize);
@@ -69,7 +69,7 @@ namespace Api.V1.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Roles = UserRoles.UserOrUserRO)]
-        public async Task<ActionResult<DocumentDto>> GetDocument(int id)
+        public async Task<ActionResult<DocumentDto>> GetDocumentAsync(int id)
         {
             return HandleResult(await Mediator.Send(new GetDocumentByIdQuery(id)));
         }

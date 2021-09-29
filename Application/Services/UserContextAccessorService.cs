@@ -2,11 +2,11 @@
 
 namespace Application.Services
 {
-    public class UserResolverService
+    public class UserContextAccessorService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserResolverService(IHttpContextAccessor httpContextAccessor)
+        public UserContextAccessorService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }

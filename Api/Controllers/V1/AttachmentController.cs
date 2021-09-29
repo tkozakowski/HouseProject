@@ -48,7 +48,7 @@ namespace Api.Controllers.V1
         }
 
         //[HttpGet("[action]/fileId")]
-        //public async Task<ActionResult> GetBackupFileAsync(int fileId)
+        //public async Task<ActionResult> GetBackupAttachmentAsync(int fileId)
         //{
 
         //}

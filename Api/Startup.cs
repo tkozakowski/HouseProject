@@ -5,6 +5,7 @@ using Application.Dto.Materials;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,9 +27,7 @@ namespace HouseProject.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddServices(Configuration);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +40,14 @@ namespace HouseProject.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HouseProject.Api v1"));
             }
             app.UseMiddleware<ErrorHandlingMiddleware>();
+
+            app.UseHealthChecks("/health", new HealthCheckOptions 
+            {
+                ResponseWriter = async (context, report) => 
+                {
+                    context.Response.ContentType = IMime
+                }
+            });
 
             app.UseHttpsRedirection();
 

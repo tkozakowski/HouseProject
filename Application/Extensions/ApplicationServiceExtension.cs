@@ -18,7 +18,7 @@ namespace Application.Extensions
                 opt.RegisterValidatorsFromAssemblyContaining<DocumentDtoValidator>();
             });
             services.AddScoped<IODataMaterialService, ODataMaterialService>();
-            services.AddScoped<UserResolverService>();
+            services.AddScoped<UserContextAccessorService>();
             services.AddScoped<IAttachmentComparerService, AttachmentComparerService>();
             return services;
         }

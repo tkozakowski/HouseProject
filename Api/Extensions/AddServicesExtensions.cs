@@ -6,6 +6,7 @@ using Api.Middleware;
 using Application.Extensions;
 using Api.Extensions.AddServices;
 using Infrastructure.Extensions;
+using System.Reflection;
 
 namespace Api.Extensions
 {
@@ -37,6 +38,9 @@ namespace Api.Extensions
             services.AddVersioning();
 
             services.AddAuthorization();
+
+            services.AddHealthCheck();
+
 
             //services.AddOData();
 

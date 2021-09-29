@@ -13,10 +13,10 @@ namespace Application.Dto
         public string Cost { get; set; }
         public DateTime? ReceivedAt { get; set; }
         public string Description { get; set; }
-        //public int? SendTypeId { get; set; }
-        //public int? ProjectId { get; set; }
-        //public int? PreparationId { get; set; }
-        //public int? PostId { get; set; }
+        public int? SendTypeId { get; set; }
+        public int? ProjectId { get; set; }
+        public int? PreparationId { get; set; }
+        public int? PostId { get; set; }
 
         public void Mapping(Profile profile)
         {
