@@ -4,6 +4,7 @@ using Application.Interfaces;
 using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,11 +15,13 @@ namespace Application.Services
     {
         private readonly IMediator _mediator;
         private readonly IHouseProjectDbContext _houseProjectDbContext;
+        private readonly ILogger _logger;
 
-        public AttachmentComparerService(IMediator mediator, IHouseProjectDbContext houseProjectDbContext)
+        public AttachmentComparerService(IMediator mediator, IHouseProjectDbContext houseProjectDbContext, ILogger<AttachmentComparerService> logger)
         {
             _mediator = mediator;
             _houseProjectDbContext = houseProjectDbContext;
+            _logger = logger;
         }
         public async Task RecoverFiles()
         {
@@ -41,6 +44,8 @@ namespace Application.Services
                     var diffs = attachmentsBackup.Where(ab => !attachments.Any(a => a.Name == ab.Name));
                     foreach (var diff in diffs)
                     {
+                        _logger.LogDebug($"Recover {diff} file");
+
                         await _mediator.Send(new AddAttachmentToApplicationCommand(
                             diff.ApplicationId.Value, ByteArrayToIFormFile.ConvertByteArrayToIFormFile(diff.File, diff.Name)));
                     }

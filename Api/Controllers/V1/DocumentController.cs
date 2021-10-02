@@ -6,6 +6,7 @@ using Application.Core.Sortings;
 using Application.Dto;
 using Application.Queries.Documents;
 using Infrastructure.Identity;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace Api.V1.Controllers
 
 
         /// <summary>
-        /// Przykład wykorzystania paginacji, sortowania oraz filtrowania
+        /// An example of using pagination, sorting and filtering
         /// </summary>
         /// <param name="paginationFilters"></param>
         /// <param name="sortingFilter"></param>
@@ -46,7 +47,7 @@ namespace Api.V1.Controllers
         }
 
         /// <summary>
-        /// Zwraca listę pól, po których możemy sortować
+        /// Returns a list of fields that we can sort by
         /// </summary>
         /// <returns></returns>
         [HttpGet("[action]")]
@@ -60,11 +61,13 @@ namespace Api.V1.Controllers
         /// Retrieves all documents in OData protocol
         /// </summary>
         /// <returns></returns>
-        //[HttpGet("[action]")]
-        //public IQueryable<DocumentDto> GetAll()
-        //{
+        [HttpGet("[action]")]
+        [Authorize(Roles = UserRoles.UserOrUserRO)]
+        [EnableQuery]
+        public IQueryable<DocumentDto> GetAll()
+        {
 
-        //}
+        }
 
 
         [HttpGet("{id}")]

@@ -11,6 +11,7 @@ using System.Linq;
 using Application.Core.Paginations;
 using Application.Extensions;
 using Application.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Handlers.Documents
 {
@@ -18,11 +19,13 @@ namespace Application.Handlers.Documents
     {
         private readonly IHouseProjectDbContext _context;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public GetDocumentListHandler(IHouseProjectDbContext context, IMapper mapper)
+        public GetDocumentListHandler(IHouseProjectDbContext context, IMapper mapper, ILogger<GetDocumentByIdHandler> logger)
         {
             _context = context;
             _mapper = mapper;
+            _logger = logger;
         }
         public async Task<PaginationResult<IEnumerable<DocumentDto>>> Handle(GetDocumentListQuery request, CancellationToken cancellationToken)
         {
@@ -38,6 +41,8 @@ namespace Application.Handlers.Documents
             var totalRecords = _context.Documents
                 .Where(x => x.Name.ToLower().Contains(request.filterBy.ToLower()) || x.Description.ToLower().Contains(request.filterBy.ToLower()))
                 .Count();
+
+            _logger.LogDebug($"Get {result.Count()} results from {totalRecords} records");
 
             return HelperPaginationResult.HelperPaginationResultResponse<DocumentDto>(result, request.validPaginationFilter, totalRecords);
         }

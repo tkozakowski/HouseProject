@@ -18,9 +18,6 @@ namespace Api.Extensions.AddServices
                 .AddEntityFrameworkStores<HouseProjectDbContext>()
                 .AddDefaultTokenProviders();
 
-            //var authenticationSettings = new AuthenticationSettings();
-            //services.AddSingleton(authenticationSettings);
-            //configuration.GetSection("JWT").Bind(authenticationSettings);
 
             services.AddAuthentication(opt =>
             {
