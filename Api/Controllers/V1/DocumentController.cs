@@ -61,13 +61,13 @@ namespace Api.V1.Controllers
         /// Retrieves all documents in OData protocol
         /// </summary>
         /// <returns></returns>
-        [HttpGet("[action]")]
-        [Authorize(Roles = UserRoles.UserOrUserRO)]
-        [EnableQuery]
-        public IQueryable<DocumentDto> GetAll()
-        {
+        //[HttpGet("[action]")]
+        //[Authorize(Roles = UserRoles.UserOrUserRO)]
+        //[EnableQuery]
+        //public IQueryable<DocumentDto> GetAll()
+        //{
 
-        }
+        //}
 
 
         [HttpGet("{id}")]

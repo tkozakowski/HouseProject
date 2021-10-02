@@ -18,7 +18,7 @@ namespace Api.Controllers
         }
 
         /// <summary>
-        /// Zwraca listę z materiałami w standardzie OData
+        ///Retrieves all materials in OData protocol
         /// </summary>
         [HttpGet]
         [EnableQuery]
