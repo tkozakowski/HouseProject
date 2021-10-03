@@ -1,14 +1,10 @@
 ﻿using Application.Core;
 using Application.Dto.Attachments;
-using Application.Interfaces;
 using Application.Queries.Attachments;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Domain.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

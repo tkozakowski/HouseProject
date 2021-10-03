@@ -18,11 +18,11 @@ namespace Infrastructure.Repositories
             _houseProjectDbContext = houseProjectDbContext;
         }
 
-        public async Task<List<Domain.Entities.Application>> GetAllAsync()
-            => await _houseProjectDbContext.Applications.ToListAsync();
+        public async Task<List<Domain.Entities.SendApplication>> GetAllAsync()
+            => await _houseProjectDbContext.SendApplications.ToListAsync();
 
-        public async Task<Domain.Entities.Application> GetByIdAsync(int id)
-            => await _houseProjectDbContext.Applications.FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<Domain.Entities.SendApplication> GetByIdAsync(int id)
+            => await _houseProjectDbContext.SendApplications.FirstOrDefaultAsync(x => x.Id == id);
 
     }
 }

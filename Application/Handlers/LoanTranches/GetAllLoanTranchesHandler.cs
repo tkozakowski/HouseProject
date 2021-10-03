@@ -2,11 +2,9 @@
 using Application.Queries.LoanTranches;
 using Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
 using Domain.Interfaces;
 
 namespace Application.Handlers.LoanTranches

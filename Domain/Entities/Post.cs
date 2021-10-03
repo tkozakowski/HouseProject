@@ -11,6 +11,6 @@ namespace Domain.Entities
         public string Name { get; set; }
 
         public ICollection<Document> Documents { get; set; }
-        public ICollection<Application> Applications { get; set; }
+        public ICollection<SendApplication> Applications { get; set; }
     }
 }

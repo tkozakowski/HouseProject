@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
-    [Table("Applications")]
-    public class Application: AuditableEntity
+    [Table("SendApplications")]
+    public class SendApplication: AuditableEntity
     {
         public int Id { get; set; }
         public DateTime? SendAt { get; set; }

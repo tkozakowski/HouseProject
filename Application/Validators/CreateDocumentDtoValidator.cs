@@ -13,10 +13,11 @@ namespace Application.Validators
             {
                 if(!(int.TryParse(x, out int value))|| value < 0)
                 {
-                    context.AddFailure($"{x} is not a valid number or less than 0");
+                    context.AddFailure($"{x} for Cost is not a valid number or less than 0");
                 }
             });
             RuleFor(x => x.StageId).GreaterThan(0);
+            RuleFor(x => x.PostId).GreaterThan(0);
         }
     }
 }

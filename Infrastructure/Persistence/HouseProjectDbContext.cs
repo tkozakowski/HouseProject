@@ -22,7 +22,6 @@ namespace Infrastructure.Persistence
         }
 
 
-        public DbSet<Domain.Entities.Application> Applications { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<AttachmentBackup> AttachmentsBackup { get; set;}
         public DbSet<Document> Documents { get; set; }
@@ -33,6 +32,7 @@ namespace Infrastructure.Persistence
         public DbSet<Post> Posts { get; set; }
         public DbSet<Preparation> Preparations { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<SendApplication> SendApplications { get; set; }
         public DbSet<SendType> SendTypes { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<Stage> Stages { get; set; }
@@ -93,10 +93,10 @@ namespace Infrastructure.Persistence
                 .Property(e => e.Name)
                 .IsRequired();
 
-            modelBuilder.Entity<Domain.Entities.Application>()
+            modelBuilder.Entity<SendApplication>()
                 .HasOne(e => e.SendType)
                 .WithMany(d => d.Applications);
-            modelBuilder.Entity<Domain.Entities.Application>()
+            modelBuilder.Entity<SendApplication>()
                 .HasOne(e => e.Post)
                 .WithMany(d => d.Applications);
 
@@ -112,7 +112,7 @@ namespace Infrastructure.Persistence
                 .IsRequired()
                 .HasMaxLength(200);
 
-            modelBuilder.Entity<Domain.Entities.AttachmentBackup>()
+            modelBuilder.Entity<AttachmentBackup>()
                 .Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);

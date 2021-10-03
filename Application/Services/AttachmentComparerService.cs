@@ -29,7 +29,7 @@ namespace Application.Services
         }
         public async Task RecoverFiles()
         {
-            List<Domain.Entities.Application> applications = await _applicationRepository.GetAllAsync();
+            List<Domain.Entities.SendApplication> applications = await _applicationRepository.GetAllAsync();
 
             if (applications is null) return;
 

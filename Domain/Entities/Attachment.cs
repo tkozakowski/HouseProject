@@ -11,6 +11,6 @@ namespace Domain.Entities
         public string Path { get; set; }
 
         public int? ApplicationId { get; set; }
-        public virtual Application Application { get; set; }
+        public virtual SendApplication Application { get; set; }
     }
 }

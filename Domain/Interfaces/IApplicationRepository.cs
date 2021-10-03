@@ -6,7 +6,7 @@ namespace Domain.Interfaces
 {
     public interface IApplicationRepository
     {
-        public Task<Application> GetByIdAsync(int id);
-        public Task<List<Application>> GetAllAsync();
+        public Task<SendApplication> GetByIdAsync(int id);
+        public Task<List<SendApplication>> GetAllAsync();
     }
 }
