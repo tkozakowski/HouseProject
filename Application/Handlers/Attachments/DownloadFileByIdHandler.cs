@@ -1,10 +1,8 @@
 ﻿using Application.Dto.Attachments;
-using Application.Interfaces;
 using Application.Queries.Attachments;
+using Domain.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,16 +10,16 @@ namespace Application.Handlers.Attachments
 {
     public class DownloadFileByIdHandler : IRequestHandler<DownloadFileByIdQuery, DownloadAttachmentDto>
     {
-        private readonly IHouseProjectDbContext _houseProjectDbContext;
+        private readonly IAttachmentRepository _attachmentRepository;
 
-        public DownloadFileByIdHandler(IHouseProjectDbContext houseProjectDbContext)
+        public DownloadFileByIdHandler(IAttachmentRepository attachmentRepository)
         {
-            _houseProjectDbContext = houseProjectDbContext;
+            _attachmentRepository = attachmentRepository;
         }
 
         public async Task<DownloadAttachmentDto> Handle(DownloadFileByIdQuery request, CancellationToken cancellationToken)
         {
-            var attachment = await _houseProjectDbContext.Attachments.Where(x => x.Id == request.attachmentId).FirstOrDefaultAsync();
+            var attachment = await _attachmentRepository.GetByIdAsync(request.attachmentId);
 
             var downloadAttachmentDto = new DownloadAttachmentDto
             {

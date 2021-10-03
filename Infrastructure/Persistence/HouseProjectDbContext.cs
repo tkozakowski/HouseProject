@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence
 {
-    public class HouseProjectDbContext : IdentityDbContext<ApplicationUser>, IHouseProjectDbContext
+    public class HouseProjectDbContext : IdentityDbContext<ApplicationUser>
     {
         private readonly UserContextAccessorService _userResolverService;
 

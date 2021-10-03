@@ -1,13 +1,10 @@
 ﻿using Application.Core;
 using Application.Dto.AttachmentsBackup;
-using Application.Interfaces;
 using Application.Queries.AttachmentsBackup;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
+using Domain.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,23 +12,22 @@ namespace Application.Handlers.AttachmentsBackup
 {
     public class GetAttachmentsBackupByApplicationIdHandler : IRequestHandler<GetAttachmentsBackupByApplicationIdQuery, Response<IEnumerable<AttachmentBackupsInfoDto>>>
     {
-        private readonly IHouseProjectDbContext _houseProjectDbContext;
+        private readonly IAttachmentRepository _attachmentRepository;
         private readonly IMapper _mapper;
 
-        public GetAttachmentsBackupByApplicationIdHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
+        public GetAttachmentsBackupByApplicationIdHandler(IMapper mapper, IAttachmentRepository attachmentRepository)
         {
-            _houseProjectDbContext = houseProjectDbContext;
             _mapper = mapper;
+            _attachmentRepository = attachmentRepository;
         }
 
         public async Task<Response<IEnumerable<AttachmentBackupsInfoDto>>> Handle(GetAttachmentsBackupByApplicationIdQuery request, CancellationToken cancellationToken)
         {
-            var attachments = await _houseProjectDbContext.AttachmentsBackup
-                .Where(x => x.ApplicationId == request.applicationId)
-                .ProjectTo<AttachmentBackupsInfoDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+            var attachments = await _attachmentRepository.GetAttachmentsBackupByApplicationIdAsync(request.applicationId);
 
-            return Response<IEnumerable<AttachmentBackupsInfoDto>>.Success(attachments);
+            var attachmentBackupsInfoDto = _mapper.Map<List<AttachmentBackupsInfoDto>>(attachments);
+
+            return Response<IEnumerable<AttachmentBackupsInfoDto>>.Success(attachmentBackupsInfoDto);
         }
     }
 }

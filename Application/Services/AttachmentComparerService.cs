@@ -3,7 +3,6 @@ using Application.Conversions;
 using Application.Interfaces;
 using Domain.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,26 +14,31 @@ namespace Application.Services
     {
         private readonly IMediator _mediator;
         private readonly IAttachmentRepository _attachmentRepository;
+        private readonly IApplicationRepository _applicationRepository;
         private readonly ILogger _logger;
 
-        public AttachmentComparerService(IMediator mediator, ILogger<AttachmentComparerService> logger, IAttachmentRepository attachmentRepository)
+        public AttachmentComparerService(IMediator mediator,
+                                         ILogger<AttachmentComparerService> logger,
+                                         IAttachmentRepository attachmentRepository,
+                                         IApplicationRepository applicationRepository)
         {
             _mediator = mediator;
             _attachmentRepository = attachmentRepository;
             _logger = logger;
+            _applicationRepository = applicationRepository;
         }
         public async Task RecoverFiles()
         {
-            List<Domain.Entities.Application> applications = await _houseProjectDbContext.Applications.ToListAsync();
+            List<Domain.Entities.Application> applications = await _applicationRepository.GetAllAsync();
 
             if (applications is null) return;
 
             foreach (var application in applications)
             {
-                var attachments = await _attachmentRepository.GetAttachmentsByApplicationId(application.Id);
+                var attachments = await _attachmentRepository.GetAttachmentsByApplicationIdAsync(application.Id);
                 if (attachments is null) break;
 
-                var attachmentsBackup = await _attachmentRepository.GetAttachmentsBackupByApplicationId(application.Id);
+                var attachmentsBackup = await _attachmentRepository.GetAttachmentsBackupByApplicationIdAsync(application.Id);
                 if (attachmentsBackup is null) break;
 
                 if (attachmentsBackup.Count == attachments.Count) break;

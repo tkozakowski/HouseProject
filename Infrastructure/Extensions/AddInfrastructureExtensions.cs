@@ -1,6 +1,4 @@
-﻿using Application.Interfaces;
-using Domain.Interfaces;
-using Infrastructure.Persistence;
+﻿using Domain.Interfaces;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +11,11 @@ namespace Infrastructure.Extensions
         {
             services.AddHouseDbContext(Configuration);
             services.AddCosmos(Configuration);
+            services.AddScoped<IApplicationRepository, ApplicationRepository>();
+            services.AddScoped<IAttachmentRepository, AttachmentRepository>();
+            services.AddScoped<ICosmosDocumentRepository, CosmosDocumentRepository>();
+            services.AddScoped<IDocumentRepository, DocumentRepository>();
+            services.AddScoped<ILoanTrancheRepository, LoanTrancheRepository>();
             services.AddScoped<IODataMaterialRepository, ODataMaterialRepository>();
             
             return services;

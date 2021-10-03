@@ -4,6 +4,7 @@ using Application.Interfaces;
 using Application.Queries.Attachments;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Domain.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -15,23 +16,24 @@ namespace Application.Handlers.Attachments
 {
     public class GetAttachmentInfoByApplicationIdHandler : IRequestHandler<GetAttachmentInfoByApplicationIdQuery, Response<List<AttachmentDto>>>
     {
-        private readonly IHouseProjectDbContext _houseProjectDbContext;
+        private readonly IAttachmentRepository _attachmentRepository;
         private readonly IMapper _mapper;
 
-        public GetAttachmentInfoByApplicationIdHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
+        public GetAttachmentInfoByApplicationIdHandler(IAttachmentRepository attachmentRepository, IMapper mapper)
         {
-            _houseProjectDbContext = houseProjectDbContext;
+            _attachmentRepository = attachmentRepository;
             _mapper = mapper;
         }
+
+
+
         public async Task<Response<List<AttachmentDto>>> Handle(GetAttachmentInfoByApplicationIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _houseProjectDbContext
-                .Attachments.Include(a => a.Application)
-                .Where(x => x.ApplicationId == request.applicationId)
-                .ProjectTo<AttachmentDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+            var attachments = await _attachmentRepository.GetAttachmentsByApplicationIdAsync(request.applicationId);
 
-            return Response<List<AttachmentDto>>.Success(result);
+            var attachmentsDto = _mapper.Map<List<AttachmentDto>>(attachments);
+
+            return Response<List<AttachmentDto>>.Success(attachmentsDto);
         }
     }
 }

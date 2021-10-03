@@ -1,9 +1,8 @@
 ﻿using Application.Core;
-using Application.Interfaces;
 using Application.Queries.LoanTranches;
 using Domain.Entities;
+using Domain.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,15 +10,16 @@ namespace Application.Handlers.LoanTranches
 {
     public class GetLoanTrancheByIdHandler : IRequestHandler<GetLoanTrancheByIdQuery, Response<LoanTranche>>
     {
-        private readonly IHouseProjectDbContext _houseProjectDbContext;
+        private readonly ILoanTrancheRepository _loanTrancheRepository;
 
-        public GetLoanTrancheByIdHandler(IHouseProjectDbContext houseProjectDbContext)
+        public GetLoanTrancheByIdHandler(ILoanTrancheRepository loanTrancheRepository)
         {
-            _houseProjectDbContext = houseProjectDbContext;
+            _loanTrancheRepository = loanTrancheRepository;
         }
+
         public async Task<Response<LoanTranche>> Handle(GetLoanTrancheByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _houseProjectDbContext.LoanTranches.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var result = await _loanTrancheRepository.GetByIdAsync(request.Id);
 
             if (result is null) return Response<LoanTranche>.Failure("Failed to get loan tranche");
 

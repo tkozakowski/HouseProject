@@ -6,9 +6,12 @@ namespace Domain.Interfaces
 {
     public interface IAttachmentRepository
     {
-        public Task<IEnumerable<Attachment>> GetAll();
+        public Task<IEnumerable<Attachment>> GetAllAsync();
+        public Task<Attachment> GetByIdAsync(int id);
+        public Task<bool> AddAsync(Attachment attachment);
+        public Task DeleteAsync(Attachment attachment);
         public Task AddBackupAsync(AttachmentBackup attachment);
-        Task<List<Attachment>> GetAttachmentsByApplicationId(int applicationId);
-        Task<List<AttachmentBackup>> GetAttachmentsBackupByApplicationId(int applicationId);
+        public Task<List<Attachment>> GetAttachmentsByApplicationIdAsync(int applicationId);
+        public Task<List<AttachmentBackup>> GetAttachmentsBackupByApplicationIdAsync(int applicationId);
     }
 }

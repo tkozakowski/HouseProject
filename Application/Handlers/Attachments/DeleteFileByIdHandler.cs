@@ -1,8 +1,7 @@
 ﻿using Application.Command.Attachment;
 using Application.Core;
-using Application.Interfaces;
+using Domain.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,21 +10,20 @@ namespace Application.Handlers.Attachments
 {
     public class DeleteFileByIdHandler : IRequestHandler<DeleteFileByIdCommand, Response<Unit>>
     {
-        private readonly IHouseProjectDbContext _houseProjectDbContext;
+        private readonly IAttachmentRepository _attachmentRepository;
 
-        public DeleteFileByIdHandler(IHouseProjectDbContext houseProjectDbContext)
+        public DeleteFileByIdHandler(IAttachmentRepository attachmentRepository)
         {
-            _houseProjectDbContext = houseProjectDbContext;
+            _attachmentRepository = attachmentRepository;
         }
+
         public async Task<Response<Unit>> Handle(DeleteFileByIdCommand request, CancellationToken cancellationToken)
         {
-            var attachment = await _houseProjectDbContext.Attachments.FirstOrDefaultAsync(x => x.Id == request.attachmentId);
+            var attachment = await _attachmentRepository.GetByIdAsync(request.attachmentId);
 
             if (attachment is null) return Response<Unit>.Failure("Failed to remove attachment");
 
-            _houseProjectDbContext.Attachments.Remove(attachment);
-
-            await _houseProjectDbContext.SaveChangesAsync();
+            await _attachmentRepository.DeleteAsync(attachment);
 
             File.Delete(attachment.Path);
 
