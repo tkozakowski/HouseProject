@@ -1,7 +1,7 @@
 ﻿using Application.Command.Attachment;
 using Application.Conversions;
 using Application.Interfaces;
-using Domain.Entities;
+using Domain.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class AttachmentComparerService : IAttachmentComparerService
+    public class AttachmentComparerService : IAttachmentService
     {
         private readonly IMediator _mediator;
-        private readonly IHouseProjectDbContext _houseProjectDbContext;
+        private readonly IAttachmentRepository _attachmentRepository;
         private readonly ILogger _logger;
 
-        public AttachmentComparerService(IMediator mediator, IHouseProjectDbContext houseProjectDbContext, ILogger<AttachmentComparerService> logger)
+        public AttachmentComparerService(IMediator mediator, ILogger<AttachmentComparerService> logger, IAttachmentRepository attachmentRepository)
         {
             _mediator = mediator;
-            _houseProjectDbContext = houseProjectDbContext;
+            _attachmentRepository = attachmentRepository;
             _logger = logger;
         }
         public async Task RecoverFiles()
@@ -31,10 +31,10 @@ namespace Application.Services
 
             foreach (var application in applications)
             {
-                var attachments = await GetAttachmentsByApplicationId(application.Id);
+                var attachments = await _attachmentRepository.GetAttachmentsByApplicationId(application.Id);
                 if (attachments is null) break;
 
-                var attachmentsBackup = await GetAttachmentsBackupByApplicationId(application.Id);
+                var attachmentsBackup = await _attachmentRepository.GetAttachmentsBackupByApplicationId(application.Id);
                 if (attachmentsBackup is null) break;
 
                 if (attachmentsBackup.Count == attachments.Count) break;
@@ -53,15 +53,6 @@ namespace Application.Services
             }
 
             await Task.CompletedTask;
-        }
-
-        public async Task<List<Attachment>> GetAttachmentsByApplicationId(int id)
-        {
-            return await _houseProjectDbContext.Attachments.Where(x => x.ApplicationId == id).ToListAsync();
-        }
-        public async Task<List<AttachmentBackup>> GetAttachmentsBackupByApplicationId(int id)
-        {
-            return await _houseProjectDbContext.AttachmentsBackup.Where(x => x.ApplicationId == id).ToListAsync();
         }
 
     }

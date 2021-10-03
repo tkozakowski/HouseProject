@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces
+namespace Domain.Interfaces
 {
-    public interface IAttachmentComparerService
+    public interface IAttachmentRepository
     {
-        public Task RecoverFiles();
+        public Task<IEnumerable<Attachment>> GetAll();
+        public Task AddBackupAsync(AttachmentBackup attachment);
         Task<List<Attachment>> GetAttachmentsByApplicationId(int applicationId);
         Task<List<AttachmentBackup>> GetAttachmentsBackupByApplicationId(int applicationId);
     }

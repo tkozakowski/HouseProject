@@ -2,6 +2,7 @@
 using Application.Extensions;
 using Application.Interfaces;
 using Domain.Entities;
+using Domain.Interfaces;
 using MediatR;
 using System.Text;
 using System.Threading;
@@ -11,12 +12,13 @@ namespace Application.Handlers.AttachmentsBackup
 {
     public class AddAttachmentBackupToApplicationHandler : IRequestHandler<AddAttachmentBackupToApplicationCommand, Unit>
     {
-        private readonly IHouseProjectDbContext _houseProjectDbContext;
+        private readonly IAttachmentRepository _attachmentRepository;
 
-        public AddAttachmentBackupToApplicationHandler(IHouseProjectDbContext houseProjectDbContext)
+        public AddAttachmentBackupToApplicationHandler(IAttachmentRepository attachmentRepository)
         {
-            _houseProjectDbContext = houseProjectDbContext;
+            _attachmentRepository = attachmentRepository;
         }
+
         public async Task<Unit> Handle(AddAttachmentBackupToApplicationCommand request, CancellationToken cancellationToken)
         {
             var attachmentBackup = new AttachmentBackup
@@ -26,9 +28,7 @@ namespace Application.Handlers.AttachmentsBackup
                 Name = request.formFile.FileName,
             };
 
-            _houseProjectDbContext.AttachmentsBackup.Add(attachmentBackup);
-
-            await _houseProjectDbContext.SaveChangesAsync();
+            await _attachmentRepository.AddBackupAsync(attachmentBackup);
 
             return Unit.Value;
         }

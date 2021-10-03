@@ -2,35 +2,32 @@
 using Application.Command.Documents;
 using Application.Core;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
+using Domain.Interfaces;
 
 namespace Application.Handlers.Documents
 {
     public class UpdateDocumentHandler : IRequestHandler<UpdateDocumentCommand, Response<Unit>>
     {
-        private readonly IHouseProjectDbContext _context;
+        private readonly IDocumentRepository _documentRepository ;
         private readonly IMapper _mapper;
 
-        public UpdateDocumentHandler(IHouseProjectDbContext context, IMapper mapper)
+        public UpdateDocumentHandler(IMapper mapper, IDocumentRepository documentRepository)
         {
-            _context = context;
             _mapper = mapper;
+            _documentRepository = documentRepository;
         }
         public async Task<Response<Unit>> Handle(UpdateDocumentCommand request, CancellationToken cancellationToken)
         {
-            var document = await _context.Documents.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var existingDocument = await _documentRepository.GetByIdAsync(request.Id);
 
-            if (document is null) return null;
+            if (existingDocument is null) return null;
 
-            _mapper.Map(request.DocumentDto, document);
-            document.UserId = request.UserId;
+            _mapper.Map(request.DocumentDto, existingDocument);
+            existingDocument.UserId = request.UserId;
 
-            var success = await _context.SaveChangesAsync() > 0;
-
-            if (!success) return Response<Unit>.Failure("Failed to update document");
+            await _documentRepository.UpdateAsync(existingDocument);
 
             return Response<Unit>.Success(Unit.Value);
         }

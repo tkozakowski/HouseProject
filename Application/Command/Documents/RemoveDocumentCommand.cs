@@ -1,4 +1,5 @@
 ﻿using Application.Core;
+using Domain.Entities;
 using MediatR;
 
 namespace Application.Command.Documents

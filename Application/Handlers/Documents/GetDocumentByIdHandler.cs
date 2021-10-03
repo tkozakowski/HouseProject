@@ -1,31 +1,29 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Application.Core;
 using Application.Dto;
 using Application.Queries.Documents;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
+using Domain.Interfaces;
 
 namespace Application.Handlers.Documents
 {
     public class GetDocumentByIdHandler : IRequestHandler<GetDocumentByIdQuery, Response<DocumentDto>>
     {
-        private readonly IHouseProjectDbContext _houseProjectContext;
         private readonly IMapper _mapper;
+        private readonly IDocumentRepository _documentRepository;
 
-        public GetDocumentByIdHandler(IHouseProjectDbContext houseProjectContext, IMapper mapper)
+        public GetDocumentByIdHandler(IMapper mapper, IDocumentRepository documentRepository)
         {
-            _houseProjectContext = houseProjectContext;
             _mapper = mapper;
+            _documentRepository = documentRepository;
         }
         public async Task<Response<DocumentDto>> Handle(GetDocumentByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _houseProjectContext.Documents.Where(x => x.Id == request.id)
-                .ProjectTo<DocumentDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            var document = await _documentRepository.GetByIdAsync(request.id);
+
+            var result = _mapper.Map<DocumentDto>(document);
 
             return Response<DocumentDto>.Success(result);
         }

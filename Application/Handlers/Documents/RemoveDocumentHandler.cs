@@ -1,8 +1,7 @@
 ﻿using Application.Command.Documents;
 using Application.Core;
-using Application.Interfaces;
+using Domain.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,23 +9,18 @@ namespace Application.Handlers.Documents
 {
     class RemoveDocumentHandler : IRequestHandler<RemoveDocumentCommand, Response<Unit>>
     {
-        private readonly IHouseProjectDbContext _context;
+        private readonly IDocumentRepository _documentRepository;
 
-        public RemoveDocumentHandler(IHouseProjectDbContext context)
+        public RemoveDocumentHandler(IDocumentRepository documentRepository)
         {
-            _context = context;
+            _documentRepository = documentRepository;
         }
+
         public async Task<Response<Unit>> Handle(RemoveDocumentCommand request, CancellationToken cancellationToken)
         {
-            var document = await _context.Documents.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var document = await _documentRepository.GetByIdAsync(request.Id);
 
-            if (document is null) return null;
-
-            _context.Documents.Remove(document);
-
-            var success = await _context.SaveChangesAsync() > 0;
-
-            if (!success) return Response<Unit>.Failure("Failed to remove document");
+            await _documentRepository.RemoveAsync(document);
 
             return Response<Unit>.Success(Unit.Value);
         }

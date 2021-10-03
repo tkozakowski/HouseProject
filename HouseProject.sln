@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{F86FE5F8-8B37-43EC-A978-8DA423D46B38}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{83520CF4-1AA4-40B2-9C2A-040D0F010FC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CADD07CD-EAD0-4DC3-BBAE-5859503E7D27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{48E3DBC6-215B-4B99-8EF6-0C99B042CABB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,9 +39,20 @@ Global
 		{F86FE5F8-8B37-43EC-A978-8DA423D46B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F86FE5F8-8B37-43EC-A978-8DA423D46B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F86FE5F8-8B37-43EC-A978-8DA423D46B38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48E3DBC6-215B-4B99-8EF6-0C99B042CABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48E3DBC6-215B-4B99-8EF6-0C99B042CABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48E3DBC6-215B-4B99-8EF6-0C99B042CABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48E3DBC6-215B-4B99-8EF6-0C99B042CABB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{19CD7BAB-1082-495C-9BDA-62DE0AFD1E12} = {83520CF4-1AA4-40B2-9C2A-040D0F010FC2}
+		{9E43739C-9FC8-4BDE-AE92-012F1A912F0C} = {83520CF4-1AA4-40B2-9C2A-040D0F010FC2}
+		{961DF519-E327-4CB2-914D-67F3A9C0F011} = {83520CF4-1AA4-40B2-9C2A-040D0F010FC2}
+		{F86FE5F8-8B37-43EC-A978-8DA423D46B38} = {83520CF4-1AA4-40B2-9C2A-040D0F010FC2}
+		{48E3DBC6-215B-4B99-8EF6-0C99B042CABB} = {CADD07CD-EAD0-4DC3-BBAE-5859503E7D27}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A41474B8-BA3F-4730-B165-24C9B5D135CA}

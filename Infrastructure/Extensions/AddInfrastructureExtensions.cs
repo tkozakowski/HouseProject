@@ -12,7 +12,6 @@ namespace Infrastructure.Extensions
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddHouseDbContext(Configuration);
-            services.AddScoped<IHouseProjectDbContext, HouseProjectDbContext>();
             services.AddCosmos(Configuration);
             services.AddScoped<IODataMaterialRepository, ODataMaterialRepository>();
             

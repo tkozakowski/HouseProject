@@ -19,7 +19,7 @@ namespace Application.Extensions
             });
             services.AddScoped<IODataMaterialService, ODataMaterialService>();
             services.AddScoped<UserContextAccessorService>();
-            services.AddScoped<IAttachmentComparerService, AttachmentComparerService>();
+            services.AddScoped<IAttachmentService, AttachmentComparerService>();
             return services;
         }
     }

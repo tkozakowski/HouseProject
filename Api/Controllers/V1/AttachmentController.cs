@@ -19,9 +19,9 @@ namespace Api.Controllers.V1
     [ApiController]
     public class AttachmentController : BaseApiController
     {
-        private readonly IAttachmentComparerService _attachmentComparerService;
+        private readonly IAttachmentService _attachmentComparerService;
 
-        public AttachmentController(IAttachmentComparerService attachmentComparerService)
+        public AttachmentController(IAttachmentService attachmentComparerService)
         {
             _attachmentComparerService = attachmentComparerService;
         }
