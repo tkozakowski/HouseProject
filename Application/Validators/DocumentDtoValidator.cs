@@ -13,7 +13,7 @@ namespace Application.Validators
             {
                 if (!(int.TryParse(x, out int value)) || value < 0)
                 {
-                    context.AddFailure($"{x} is not a valid number or less than 0");
+                    context.AddFailure($"Cost {x} is not a valid number or less than 0");
                 }
             });
         }

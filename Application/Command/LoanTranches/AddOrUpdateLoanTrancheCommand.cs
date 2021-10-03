@@ -1,11 +1,11 @@
 ﻿using Application.Core;
-using Domain.Entities;
+using Application.Dto.LoanTranche;
 using MediatR;
 
 namespace Application.Command.LoanTranches
 {
     public class AddOrUpdateLoanTrancheCommand : IRequest<Response<Unit>>
     {
-        public LoanTranche LoanTranche { get; set; }
+        public LoanTrancheDto LoanTrancheDto { get; set; }
     }
 }

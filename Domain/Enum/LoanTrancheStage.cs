@@ -2,6 +2,6 @@
 {
     public enum LoanTrancheStage
     {
-        I, II, III
+        None, I, II, III
     }
 }
