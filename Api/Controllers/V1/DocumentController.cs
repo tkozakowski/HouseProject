@@ -84,6 +84,7 @@ namespace Api.V1.Controllers
         public async Task<IActionResult> CreateDocument([FromBody] CreateDocumentDto documentDto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             return HandleResult(await Mediator.Send(new InsertDocumentCommand(documentDto, userId)));
         }
 
