@@ -8,7 +8,7 @@ namespace Domain.Interfaces
     {
         public Task<Document> GetByIdAsync(int id);
         public Task<IEnumerable<Document>> GetAllAsync(int pageNumber, int pageSize, string sortField, bool ascending, string filterBy);
-        public Task<Document> AddAsync(Document document);
+        public Task<bool> AddAsync(Document document);
         public Task RemoveAsync(Document document);
         public Task UpdateAsync(Document document);
         public int TotalRecords(string filterBy);

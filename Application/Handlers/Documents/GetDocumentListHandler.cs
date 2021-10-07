@@ -18,7 +18,7 @@ namespace Application.Handlers.Documents
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public GetDocumentListHandler(IDocumentRepository documentRepository, IMapper mapper, ILogger<GetDocumentByIdHandler> logger)
+        public GetDocumentListHandler(IDocumentRepository documentRepository, IMapper mapper, ILogger<GetDocumentDetailHandler> logger)
         {
             _documentRepository = documentRepository;
             _mapper = mapper;

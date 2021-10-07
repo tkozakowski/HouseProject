@@ -19,15 +19,17 @@ namespace Application.Handlers.Documents
             _documentRepository = documentRepository;
             _mapper = mapper;
         }
+        public InsertDocumentHandler() {}
+
         public async Task<Response<Unit>> Handle(InsertDocumentCommand request, CancellationToken cancellationToken)
         {
-            var document = _mapper.Map<Document>(request.documentDto);
+            var document = _mapper.Map<Document>(request.CreateDocumentDto);
 
-            document.UserId = request.userId;
+            document.UserId = request.UserId;
 
-            var newDocument = await _documentRepository.AddAsync(document);
+            var success = await _documentRepository.AddAsync(document);
 
-            if (newDocument.Id > 0) return Response<Unit>.Success(Unit.Value);
+            if (success) return Response<Unit>.Success(Unit.Value);
 
             return Response<Unit>.Failure("Failed to create document");
         }

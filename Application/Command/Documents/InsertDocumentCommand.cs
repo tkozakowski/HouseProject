@@ -4,6 +4,10 @@ using MediatR;
 
 namespace Application.Command.Documents
 {
-    public record InsertDocumentCommand(CreateDocumentDto documentDto, string userId): IRequest<Response<Unit>>;
+    public class InsertDocumentCommand: IRequest<Response<Unit>>
+    {
+        public CreateDocumentDto CreateDocumentDto { get; set; }
+        public string UserId { get; set; }
+    }
 
 }

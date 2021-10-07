@@ -74,7 +74,7 @@ namespace Api.V1.Controllers
         [Authorize(Roles = UserRoles.UserOrUserRO)]
         public async Task<ActionResult<DocumentDto>> GetDocumentAsync(int id)
         {
-            return HandleResult(await Mediator.Send(new GetDocumentByIdQuery(id)));
+            return HandleResult(await Mediator.Send(new GetDocumentDetailQuery(id)));
         }
 
 
@@ -85,7 +85,7 @@ namespace Api.V1.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return HandleResult(await Mediator.Send(new InsertDocumentCommand(documentDto, userId)));
+            return HandleResult(await Mediator.Send(new InsertDocumentCommand { CreateDocumentDto = documentDto, UserId = userId }));
         }
 
 

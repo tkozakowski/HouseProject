@@ -9,17 +9,17 @@ using Domain.Interfaces;
 
 namespace Application.Handlers.Documents
 {
-    public class GetDocumentByIdHandler : IRequestHandler<GetDocumentByIdQuery, Response<DocumentDto>>
+    public class GetDocumentDetailHandler : IRequestHandler<GetDocumentDetailQuery, Response<DocumentDto>>
     {
         private readonly IMapper _mapper;
         private readonly IDocumentRepository _documentRepository;
 
-        public GetDocumentByIdHandler(IMapper mapper, IDocumentRepository documentRepository)
+        public GetDocumentDetailHandler(IMapper mapper, IDocumentRepository documentRepository)
         {
             _mapper = mapper;
             _documentRepository = documentRepository;
         }
-        public async Task<Response<DocumentDto>> Handle(GetDocumentByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Response<DocumentDto>> Handle(GetDocumentDetailQuery request, CancellationToken cancellationToken)
         {
             var document = await _documentRepository.GetByIdAsync(request.id);
 
