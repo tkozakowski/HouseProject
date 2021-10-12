@@ -2,8 +2,8 @@
 using Application.Attachments.Command.DeleteAttachment;
 using Application.Attachments.Query.DownloadFile;
 using Application.Attachments.Query.GetAttachmentInfo;
+using Application.AttachmentsBackup.Query.Get;
 using Application.Dto.Attachments;
-using Application.Dto.AttachmentsBackup;
 using Application.Interfaces;
 using Application.Queries.AttachmentsBackup;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +29,7 @@ namespace Api.Controllers.V1
 
 
         [HttpGet("[action]/{applicationId}")]
-        public async Task<ActionResult<AttachmentDto>> GetAttachmentsInfoByApplicationIdAsync(int applicationId)
+        public async Task<ActionResult<GetAttachmentDto>> GetAttachmentsInfoByApplicationIdAsync(int applicationId)
         {
             return HandleResult<List<GetAttachmentDto>>(await Mediator.Send(new GetAttachmentInfoDetailQuery(applicationId)));
         }
@@ -41,7 +41,7 @@ namespace Api.Controllers.V1
         }
 
         [HttpGet("[action]/{fileId}")]
-        public async Task<ActionResult<DownloadAttachmentDto>> GetFileAsync(int fileId)
+        public async Task<ActionResult<DownloadFileDto>> GetFileAsync(int fileId)
         {
             var attachment = await Mediator.Send(new DownloadFileDetailQuery(fileId));
 

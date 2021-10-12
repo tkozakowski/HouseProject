@@ -2,16 +2,16 @@
 using AutoMapper;
 using Domain.Entities;
 
-namespace Application.Dto.Attachments
+namespace Application.AttachmentsBackup.Query.Get
 {
-    public class AttachmentDto: IMap
+    public class AttachmentBackupsInfoDto: IMap
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Attachment, AttachmentDto>();
+            profile.CreateMap<AttachmentBackup, AttachmentBackupsInfoDto>();
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Attachments.Query.DownloadFile
 {
-    public class DownloadFileDetailHandler : IRequestHandler<DownloadFileDetailQuery, DownloadAttachmentDto>
+    public class DownloadFileDetailHandler : IRequestHandler<DownloadFileDetailQuery, DownloadFileDto>
     {
         private readonly IAttachmentRepository _attachmentRepository;
 
@@ -16,11 +16,11 @@ namespace Application.Attachments.Query.DownloadFile
             _attachmentRepository = attachmentRepository;
         }
 
-        public async Task<DownloadAttachmentDto> Handle(DownloadFileDetailQuery request, CancellationToken cancellationToken)
+        public async Task<DownloadFileDto> Handle(DownloadFileDetailQuery request, CancellationToken cancellationToken)
         {
             var attachment = await _attachmentRepository.GetByIdAsync(request.attachmentId);
 
-            var downloadAttachmentDto = new DownloadAttachmentDto
+            var downloadAttachmentDto = new DownloadFileDto
             {
                 Name = attachment.Name,
                 Content = File.ReadAllBytes(attachment.Path)

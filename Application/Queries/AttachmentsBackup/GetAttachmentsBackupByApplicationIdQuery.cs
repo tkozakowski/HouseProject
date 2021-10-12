@@ -1,5 +1,5 @@
-﻿using Application.Core;
-using Application.Dto.AttachmentsBackup;
+﻿using Application.AttachmentsBackup.Query.Get;
+using Application.Core;
 using MediatR;
 using System.Collections.Generic;
 

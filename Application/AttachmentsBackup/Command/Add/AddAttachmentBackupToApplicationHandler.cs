@@ -1,6 +1,5 @@
 ﻿using Application.Command.AttachmentBackup;
 using Application.Extensions;
-using Application.Interfaces;
 using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
@@ -8,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Handlers.AttachmentsBackup
+namespace Application.AttachmentsBackup.Command.Add
 {
     public class AddAttachmentBackupToApplicationHandler : IRequestHandler<AddAttachmentBackupToApplicationCommand, Unit>
     {

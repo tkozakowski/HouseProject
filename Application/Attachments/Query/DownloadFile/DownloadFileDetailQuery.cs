@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Attachments.Query.DownloadFile
 {
-    public record DownloadFileDetailQuery(int attachmentId) : IRequest<DownloadAttachmentDto>
+    public record DownloadFileDetailQuery(int attachmentId) : IRequest<DownloadFileDto>
     {
     }
 }

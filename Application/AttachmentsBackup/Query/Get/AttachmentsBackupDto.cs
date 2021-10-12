@@ -1,4 +1,4 @@
-﻿namespace Application.Dto.AttachmentsBackup
+﻿namespace Application.AttachmentsBackup.Query.Get
 {
     public class AttachmentsBackupDto: AttachmentBackupsInfoDto
     {

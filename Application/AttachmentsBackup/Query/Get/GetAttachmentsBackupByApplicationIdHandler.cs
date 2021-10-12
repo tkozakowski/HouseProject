@@ -1,5 +1,4 @@
 ﻿using Application.Core;
-using Application.Dto.AttachmentsBackup;
 using Application.Queries.AttachmentsBackup;
 using AutoMapper;
 using Domain.Interfaces;
@@ -8,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Handlers.AttachmentsBackup
+namespace Application.AttachmentsBackup.Query.Get
 {
     public class GetAttachmentsBackupByApplicationIdHandler : IRequestHandler<GetAttachmentsBackupByApplicationIdQuery, Response<IEnumerable<AttachmentBackupsInfoDto>>>
     {
