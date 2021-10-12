@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
-using Application.Handlers.Documents;
 using Api.Middleware;
 using Application.Extensions;
 using Api.Extensions.AddServices;
 using Infrastructure.Extensions;
-using System.Reflection;
+using Application.Document.Query.GetDocuments;
 
 namespace Api.Extensions
 {

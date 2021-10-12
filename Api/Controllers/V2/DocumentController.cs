@@ -1,6 +1,8 @@
 ﻿using Api.Controllers;
-using Application.Command.CosmosDocuments;
-using Application.Dto.Cosmos;
+using Application.CosmosDocuments.Command.Create;
+using Application.CosmosDocuments.Command.Remove;
+using Application.CosmosDocuments.Command.Update;
+using Application.CosmosDocuments.Query.GetDetail;
 using Application.Queries.CosmosDocuments;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -18,29 +20,29 @@ namespace Api.V2.Controllers
     {
 
         [HttpGet]
-        public async Task<ActionResult<List<CosmosDocumentDto>>> GetDocuments()
+        public async Task<ActionResult<List<GetCosmosDocumentDto>>> GetDocuments()
         {
             return HandleResult(await Mediator.Send(new GetCosmosDocumentListQuery()));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CosmosDocumentDto>> GetDocument(string id)
+        public async Task<ActionResult<GetCosmosDocumentDto>> GetDocument(string id)
         {
-            return HandleResult(await Mediator.Send(new GetCosmosDocumentByIdQuery { Id = id}));
+            return HandleResult(await Mediator.Send(new GetCosmosDocumentByIdQuery(id)));
         }
 
 
         [HttpPost]
         public async Task<ActionResult> CreateDocument([FromBody] CreateCosmosDocumentDto documentDto)
         {
-            return HandleResult(await Mediator.Send(new InsertCosmosDocumentCommand(documentDto)));
+            return HandleResult(await Mediator.Send(new InsertCosmosDocumentCommand { CosmosDocument = documentDto }));
         }
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateDocument([FromBody] CosmosDocumentDto documentDto)
+        public async Task<IActionResult> UpdateDocument([FromBody] UpdateCosmosDocumentDto documentDto)
         {
-            return HandleResult(await Mediator.Send(new UpdateCosmosDocumentCommand { CosmosDocumentDto = documentDto }));
+            return HandleResult(await Mediator.Send(new UpdateCosmosDocumentCommand { UpdateCosmosDocumentDto = documentDto }));
         }
 
 

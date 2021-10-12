@@ -1,4 +1,4 @@
-﻿using Application.Command.Attachment;
+﻿using Application.Attachments.Command.AddAttachment;
 using Application.Conversions;
 using Application.Interfaces;
 using Domain.Interfaces;
@@ -50,8 +50,7 @@ namespace Application.Services
                     {
                         _logger.LogDebug($"Recover {diff} file");
 
-                        await _mediator.Send(new AddAttachmentToApplicationCommand(
-                            diff.ApplicationId.Value, ByteArrayToIFormFile.ConvertByteArrayToIFormFile(diff.File, diff.Name)));
+                        await _mediator.Send(new AddAttachmentToApplicationCommand { ApplicationId = diff.ApplicationId.Value, File = ByteArrayToIFormFile.ConvertByteArrayToIFormFile(diff.File, diff.Name) });
                     }
                 }
             }
