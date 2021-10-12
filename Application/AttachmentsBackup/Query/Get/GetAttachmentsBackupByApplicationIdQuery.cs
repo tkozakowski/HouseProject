@@ -1,9 +1,8 @@
-﻿using Application.AttachmentsBackup.Query.Get;
-using Application.Core;
+﻿using Application.Core;
 using MediatR;
 using System.Collections.Generic;
 
-namespace Application.Queries.AttachmentsBackup
+namespace Application.AttachmentsBackup.Query.Get
 {
     public record GetAttachmentsBackupByApplicationIdQuery(int applicationId) : IRequest<Response<IEnumerable<AttachmentBackupsInfoDto>>>
     {

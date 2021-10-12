@@ -1,5 +1,4 @@
 ﻿using Application.Core;
-using Application.Queries.AttachmentsBackup;
 using AutoMapper;
 using Domain.Interfaces;
 using MediatR;

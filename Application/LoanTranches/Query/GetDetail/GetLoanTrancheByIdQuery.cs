@@ -2,7 +2,7 @@
 using Application.Dto.LoanTranche;
 using MediatR;
 
-namespace Application.Queries.LoanTranches
+namespace Application.LoanTranches.Query.GetDetail
 {
     public class GetLoanTrancheByIdQuery: IRequest<Response<LoanTrancheDto>>
     {

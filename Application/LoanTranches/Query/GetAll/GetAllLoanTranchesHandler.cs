@@ -1,6 +1,4 @@
 ﻿using Application.Core;
-using Application.Queries.LoanTranches;
-using Domain.Entities;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,7 +7,7 @@ using Domain.Interfaces;
 using Application.Dto.LoanTranche;
 using AutoMapper;
 
-namespace Application.Handlers.LoanTranches
+namespace Application.LoanTranches.Query.GetAll
 {
     public class GetAllLoanTranchesHandler : IRequestHandler<GetAllLoanTranchesQuery, Response<List<LoanTrancheDto>>>
     {

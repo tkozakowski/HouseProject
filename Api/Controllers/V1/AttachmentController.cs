@@ -5,7 +5,6 @@ using Application.Attachments.Query.GetAttachmentInfo;
 using Application.AttachmentsBackup.Query.Get;
 using Application.Dto.Attachments;
 using Application.Interfaces;
-using Application.Queries.AttachmentsBackup;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

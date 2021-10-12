@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Application.Command.AttachmentBackup
+namespace Application.AttachmentsBackup.Command.Add
 {
     public record AddAttachmentBackupToApplicationCommand(int applicationId, IFormFile formFile) : IRequest<Unit>
     {

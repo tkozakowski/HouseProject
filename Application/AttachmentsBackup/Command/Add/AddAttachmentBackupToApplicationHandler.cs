@@ -1,5 +1,4 @@
-﻿using Application.Command.AttachmentBackup;
-using Application.Extensions;
+﻿using Application.Extensions;
 using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;

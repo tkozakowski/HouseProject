@@ -3,7 +3,7 @@ using Application.Dto.LoanTranche;
 using MediatR;
 using System.Collections.Generic;
 
-namespace Application.Queries.LoanTranches
+namespace Application.LoanTranches.Query.GetAll
 {
     public class GetAllLoanTranchesQuery: IRequest<Response<List<LoanTrancheDto>>>
     {

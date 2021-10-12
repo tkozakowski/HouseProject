@@ -1,21 +1,19 @@
 ﻿using Application.Core;
 using Application.Dto.LoanTranche;
-using Application.Queries.LoanTranches;
 using AutoMapper;
-using Domain.Entities;
 using Domain.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Handlers.LoanTranches
+namespace Application.LoanTranches.Query.GetDetail
 {
-    public class GetLoanTrancheByIdHandler : IRequestHandler<GetLoanTrancheByIdQuery, Response<LoanTrancheDto>>
+    public class GetLoanTrancheDetailHandler : IRequestHandler<GetLoanTrancheByIdQuery, Response<LoanTrancheDto>>
     {
         private readonly ILoanTrancheRepository _loanTrancheRepository;
         private readonly IMapper _mapper;
 
-        public GetLoanTrancheByIdHandler(ILoanTrancheRepository loanTrancheRepository, IMapper mapper)
+        public GetLoanTrancheDetailHandler(ILoanTrancheRepository loanTrancheRepository, IMapper mapper)
         {
             _loanTrancheRepository = loanTrancheRepository;
             _mapper = mapper;

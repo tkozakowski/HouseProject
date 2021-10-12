@@ -1,11 +1,10 @@
-﻿using Application.Command.LoanTranches;
-using Application.Core;
+﻿using Application.Core;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain.Interfaces;
 
-namespace Application.Handlers.LoanTranches
+namespace Application.LoanTranches.Command.Remove
 {
     public class RemoveLoanTrancheHandler : IRequestHandler<RemoveLoanTrancheCommand, Response<Unit>>
     {

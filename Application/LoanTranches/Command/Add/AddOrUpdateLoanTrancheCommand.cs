@@ -2,7 +2,7 @@
 using Application.Dto.LoanTranche;
 using MediatR;
 
-namespace Application.Command.LoanTranches
+namespace Application.LoanTranches.Command.Add
 {
     public class AddOrUpdateLoanTrancheCommand : IRequest<Response<Unit>>
     {
