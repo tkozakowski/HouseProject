@@ -41,7 +41,7 @@ namespace UnitTests.Handlers.Documents
                 Description = "test description",
             };
 
-            var documentDto = new DocumentDto
+            var documentDto = new GetDocumentDto
             {
                 Name = document.Name,
                 ReceivedAt = document.ReceivedAt,
@@ -51,7 +51,7 @@ namespace UnitTests.Handlers.Documents
 
             _documentRepositoryMock.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(document);
 
-            _mapperMock.Setup(x => x.Map<DocumentDto>(document)).Returns(documentDto);
+            _mapperMock.Setup(x => x.Map<GetDocumentDto>(document)).Returns(documentDto);
 
 
             //Act

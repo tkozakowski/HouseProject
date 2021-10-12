@@ -1,12 +1,14 @@
 ﻿using Api.Controllers;
-using Application.Command.Documents;
 using Application.Core.Attributes;
 using Application.Core.Paginations;
 using Application.Core.Sortings;
-using Application.Dto;
-using Application.Queries.Documents;
+using Application.Document.Query.GetDocuments;
+using Application.Documents.Command.InsertDocument;
+using Application.Documents.Command.RemoveDocument;
+using Application.Documents.Command.UpdateDocument;
+using Application.Documents.Query.Details;
+using Application.Documents.Query.GetDocumentDetails;
 using Infrastructure.Identity;
-using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -36,7 +38,7 @@ namespace Api.V1.Controllers
         /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = UserRoles.UserOrUserRO)]
-        public async Task<ActionResult<List<DocumentDto>>> GetDocumentsAsync([FromQuery] PaginationFilter paginationFilters,
+        public async Task<ActionResult<List<GetDocumentDto>>> GetDocumentsAsync([FromQuery] PaginationFilter paginationFilters,
             [FromQuery] SortingFilter sortingFilter, [FromQuery] string filterBy = "")
         {
             var validPaginationFilter = new PaginationFilter(paginationFilters.PageNumber, paginationFilters.PageSize);
@@ -72,7 +74,7 @@ namespace Api.V1.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Roles = UserRoles.UserOrUserRO)]
-        public async Task<ActionResult<DocumentDto>> GetDocumentAsync(int id)
+        public async Task<ActionResult<DocumentDetailsDto>> GetDocumentAsync(int id)
         {
             return HandleResult(await Mediator.Send(new GetDocumentDetailQuery(id)));
         }
@@ -91,7 +93,7 @@ namespace Api.V1.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = UserRoles.User)]
-        public async Task<IActionResult> UpdateDocument(int id, [FromBody] DocumentDto documentDto)
+        public async Task<IActionResult> UpdateDocument(int id, [FromBody] UpdateDocumentDto documentDto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return HandleResult(await Mediator.Send(new UpdateDocumentCommand { DocumentDto = documentDto, Id = id, UserId = userId }));

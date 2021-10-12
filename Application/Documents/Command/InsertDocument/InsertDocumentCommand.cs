@@ -1,8 +1,7 @@
 ﻿using Application.Core;
-using Application.Dto;
 using MediatR;
 
-namespace Application.Command.Documents
+namespace Application.Documents.Command.InsertDocument
 {
     public class InsertDocumentCommand: IRequest<Response<Unit>>
     {

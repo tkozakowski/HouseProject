@@ -4,8 +4,8 @@ using Application.Dto;
 using MediatR;
 using System.Collections.Generic;
 
-namespace Application.Queries.Documents
+namespace Application.Document.Query.GetDocuments
 {
     public record GetDocumentListQuery(PaginationFilter validPaginationFilter, SortingFilter validSortingFilter, string filterBy) 
-        : IRequest<PaginationResult<IEnumerable<DocumentDto>>>;
+        : IRequest<PaginationResult<IEnumerable<GetDocumentDto>>>;
 }

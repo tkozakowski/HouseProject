@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using Application.Command.Documents;
 using Application.Core;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain.Interfaces;
 
-namespace Application.Handlers.Documents
+namespace Application.Documents.Command.UpdateDocument
 {
     public class UpdateDocumentHandler : IRequestHandler<UpdateDocumentCommand, Response<Unit>>
     {

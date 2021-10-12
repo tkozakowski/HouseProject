@@ -1,12 +1,11 @@
-﻿using AutoMapper;
-using Application.Mappings;
+﻿using Application.Conversions;
+using AutoMapper;
 using Domain.Entities;
-using Application.Conversions;
 using System;
 
-namespace Application.Dto
+namespace Application.Documents.Query.GetDocumentDetails
 {
-    public class DocumentDto: IMap
+    public class DocumentDetailsDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -23,7 +22,7 @@ namespace Application.Dto
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Document, DocumentDto>()
+            profile.CreateMap<Domain.Entities.Document, DocumentDetailsDto>()
                 .ForMember(d => d.Cost, o => o.MapFrom(s => DecimalToString.ConvertNullableDecimalToString(s.Cost)))
                 .ForMember(d => d.SendTypeName, o => o.MapFrom(s => s.SendType.Name))
                 .ForMember(d => d.PostTypeName, o => o.MapFrom(s => s.Post.Name))
@@ -32,7 +31,7 @@ namespace Application.Dto
                 .ForMember(d => d.StageName, o => o.MapFrom(s => s.Stage.Name))
                 .ForMember(d => d.CreationDate, o => o.MapFrom(s => s.CreatedAt));
 
-            profile.CreateMap<DocumentDto, Document>()
+            profile.CreateMap<DocumentDetailsDto, Domain.Entities.Document>()
                 .ForMember(d => d.SendType, o => o.MapFrom(s => new SendType { Name = s.Name }))
                 .ForMember(d => d.Post, o => o.MapFrom(s => new Post { Name = s.Name }))
                 .ForMember(d => d.Project, o => o.MapFrom(s => new Project { Name = s.Name }))

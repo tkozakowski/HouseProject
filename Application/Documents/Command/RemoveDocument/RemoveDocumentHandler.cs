@@ -1,11 +1,10 @@
-﻿using Application.Command.Documents;
-using Application.Core;
+﻿using Application.Core;
 using Domain.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Handlers.Documents
+namespace Application.Documents.Command.RemoveDocument
 {
     class RemoveDocumentHandler : IRequestHandler<RemoveDocumentCommand, Response<Unit>>
     {

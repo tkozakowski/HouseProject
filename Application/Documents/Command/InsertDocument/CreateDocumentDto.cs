@@ -1,10 +1,9 @@
 ﻿using Application.Conversions;
 using Application.Mappings;
 using AutoMapper;
-using Domain.Entities;
 using System;
 
-namespace Application.Dto
+namespace Application.Documents.Command.InsertDocument
 {
     public class CreateDocumentDto: IMap
     {
@@ -20,10 +19,8 @@ namespace Application.Dto
 
         public void Mapping(Profile profile)
         {
-
-            profile.CreateMap<CreateDocumentDto, Document>()
+            profile.CreateMap<CreateDocumentDto, Domain.Entities.Document>()
                 .ForMember(d => d.Cost, o => o.MapFrom(s => StringToDecimal.ConvertStringToDecimal(s.Cost)));       
-
         }
 
     }

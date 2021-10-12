@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using Application.Dto;
+using Application.Document.Query.GetDocuments;
 
 namespace Application.Validators
 {
-    public class DocumentDtoValidator : AbstractValidator<DocumentDto>
+    public class DocumentDtoValidator : AbstractValidator<GetDocumentDto>
     {
         public DocumentDtoValidator()
         {

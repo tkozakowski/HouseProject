@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
 using Application.Core;
-using Application.Dto;
-using Application.Queries.Documents;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain.Interfaces;
+using Application.Documents.Query.GetDocumentDetails;
 
-namespace Application.Handlers.Documents
+namespace Application.Documents.Query.Details
 {
-    public class GetDocumentDetailHandler : IRequestHandler<GetDocumentDetailQuery, Response<DocumentDto>>
+    public class GetDocumentDetailHandler : IRequestHandler<GetDocumentDetailQuery, Response<DocumentDetailsDto>>
     {
         private readonly IMapper _mapper;
         private readonly IDocumentRepository _documentRepository;
@@ -19,13 +18,13 @@ namespace Application.Handlers.Documents
             _mapper = mapper;
             _documentRepository = documentRepository;
         }
-        public async Task<Response<DocumentDto>> Handle(GetDocumentDetailQuery request, CancellationToken cancellationToken)
+        public async Task<Response<DocumentDetailsDto>> Handle(GetDocumentDetailQuery request, CancellationToken cancellationToken)
         {
             var document = await _documentRepository.GetByIdAsync(request.id);
 
-            var result = _mapper.Map<DocumentDto>(document);
+            var result = _mapper.Map<DocumentDetailsDto>(document);
 
-            return Response<DocumentDto>.Success(result);
+            return Response<DocumentDetailsDto>.Success(result);
         }
     }
 }

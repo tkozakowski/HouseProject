@@ -1,8 +1,7 @@
 ﻿using Application.Core;
-using Domain.Entities;
 using MediatR;
 
-namespace Application.Command.Documents
+namespace Application.Documents.Command.RemoveDocument
 {
     public class RemoveDocumentCommand: IRequest<Response<Unit>>
     {

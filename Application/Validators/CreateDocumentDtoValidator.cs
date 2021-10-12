@@ -1,4 +1,4 @@
-﻿using Application.Dto;
+﻿using Application.Documents.Command.InsertDocument;
 using FluentValidation;
 
 namespace Application.Validators

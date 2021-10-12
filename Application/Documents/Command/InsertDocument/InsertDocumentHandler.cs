@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
-using Application.Command.Documents;
 using Application.Core;
-using Domain.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain.Interfaces;
 
-namespace Application.Handlers.Documents
+namespace Application.Documents.Command.InsertDocument
 {
     public class InsertDocumentHandler : IRequestHandler<InsertDocumentCommand, Response<Unit>>
     {
@@ -23,7 +21,7 @@ namespace Application.Handlers.Documents
 
         public async Task<Response<Unit>> Handle(InsertDocumentCommand request, CancellationToken cancellationToken)
         {
-            var document = _mapper.Map<Document>(request.CreateDocumentDto);
+            var document = _mapper.Map<Domain.Entities.Document>(request.CreateDocumentDto);
 
             document.UserId = request.UserId;
 
