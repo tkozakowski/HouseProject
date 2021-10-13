@@ -1,6 +1,4 @@
-﻿using Application.Command.Documents;
-using Application.Dto;
-using Application.Handlers.Documents;
+﻿using Application.Documents.Command.CreateDocument;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
@@ -19,13 +17,13 @@ namespace UnitTests.Handlers.Documents
         private readonly Mock<IMediator> _mediatorMock;
         private string userId = "031eca6d-8300-4cb0-b0c8-3d7eecf9b718";
         private Mock<IDocumentRepository> _documentRepositoryMock;
-        private Mock<InsertDocumentHandler> _insertDocumentHandlerMock;
+        private Mock<CreateDocumentHandler> _insertDocumentHandlerMock;
         public InsertDocumentHandlerTests()
         {
             _mapperMock = new Mock<IMapper>();
             _mediatorMock = new Mock<IMediator>();
             _documentRepositoryMock = new Mock<IDocumentRepository>();
-            _insertDocumentHandlerMock = new Mock<InsertDocumentHandler>(_documentRepositoryMock.Object, _mapperMock.Object);
+            _insertDocumentHandlerMock = new Mock<CreateDocumentHandler>(_documentRepositoryMock.Object, _mapperMock.Object);
         }
 
         [Fact]
@@ -51,7 +49,7 @@ namespace UnitTests.Handlers.Documents
 
             _mapperMock.Setup(x => x.Map<Document>(createDocumentDto)).Returns(document);
 
-            var request = new InsertDocumentCommand { CreateDocumentDto = createDocumentDto, UserId = userId };
+            var request = new CreateDocumentCommand { CreateDocumentDto = createDocumentDto, UserId = userId };
 
             //Act -> add new post
             var result = await _insertDocumentHandlerMock.Object.Handle(request, CancellationToken.None);

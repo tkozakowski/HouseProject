@@ -1,6 +1,5 @@
-﻿using Application.Dto;
-using Application.Handlers.Documents;
-using Application.Queries.Documents;
+﻿using Application.Document.Query.GetDocuments;
+using Application.Documents.Query.Details;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
