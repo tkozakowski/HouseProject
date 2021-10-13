@@ -87,7 +87,7 @@ namespace Api.V1.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return HandleResult(await Mediator.Send(new InsertDocumentCommand { CreateDocumentDto = documentDto, UserId = userId }));
+            return HandleResult(await Mediator.Send(new CreateDocumentCommand { CreateDocumentDto = documentDto, UserId = userId }));
         }
 
 

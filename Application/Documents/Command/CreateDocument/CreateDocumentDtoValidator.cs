@@ -1,7 +1,6 @@
-﻿using Application.Documents.Command.InsertDocument;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace Application.Validators
+namespace Application.Documents.Command.CreateDocument
 {
     public class CreateDocumentDtoValidator : AbstractValidator<CreateDocumentDto>
     {

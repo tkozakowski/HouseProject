@@ -3,7 +3,7 @@ using Application.Mappings;
 using AutoMapper;
 using System;
 
-namespace Application.Documents.Command.InsertDocument
+namespace Application.Documents.Command.CreateDocument
 {
     public class CreateDocumentDto: IMap
     {

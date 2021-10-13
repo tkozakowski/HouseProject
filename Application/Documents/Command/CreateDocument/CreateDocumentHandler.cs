@@ -5,21 +5,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using Domain.Interfaces;
 
-namespace Application.Documents.Command.InsertDocument
+namespace Application.Documents.Command.CreateDocument
 {
-    public class InsertDocumentHandler : IRequestHandler<InsertDocumentCommand, Response<Unit>>
+    public class CreateDocumentHandler : IRequestHandler<CreateDocumentCommand, Response<Unit>>
     {
         private readonly IDocumentRepository _documentRepository;
         private readonly IMapper _mapper;
 
-        public InsertDocumentHandler(IDocumentRepository documentRepository, IMapper mapper)
+        public CreateDocumentHandler(IDocumentRepository documentRepository, IMapper mapper)
         {
             _documentRepository = documentRepository;
             _mapper = mapper;
         }
-        public InsertDocumentHandler() {}
+        public CreateDocumentHandler() {}
 
-        public async Task<Response<Unit>> Handle(InsertDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<Response<Unit>> Handle(CreateDocumentCommand request, CancellationToken cancellationToken)
         {
             var document = _mapper.Map<Domain.Entities.Document>(request.CreateDocumentDto);
 

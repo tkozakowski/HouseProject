@@ -4,7 +4,7 @@ using System.Reflection;
 using Application.Services;
 using Application.Interfaces;
 using FluentValidation.AspNetCore;
-using Application.Validators;
+using Application.Documents.Command.CreateDocument;
 
 namespace Application.Extensions
 {
@@ -15,7 +15,7 @@ namespace Application.Extensions
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddFluentValidation(opt => 
             {
-                opt.RegisterValidatorsFromAssemblyContaining<DocumentDtoValidator>();
+                opt.RegisterValidatorsFromAssemblyContaining<CreateDocumentDtoValidator>();
             });
             services.AddScoped<IODataMaterialService, ODataMaterialService>();
             services.AddScoped<UserContextAccessorService>();
