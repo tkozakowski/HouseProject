@@ -3,7 +3,7 @@ using Application.Core.Attributes;
 using Application.Core.Paginations;
 using Application.Core.Sortings;
 using Application.Document.Query.GetDocuments;
-using Application.Documents.Command.InsertDocument;
+using Application.Documents.Command.CreateDocument;
 using Application.Documents.Command.RemoveDocument;
 using Application.Documents.Command.UpdateDocument;
 using Application.Documents.Query.Details;
@@ -24,9 +24,9 @@ namespace Api.V1.Controllers
     //[ApiExplorerSettings(IgnoreApi = true)]
     [ApiVersion("1.0")]
     [Authorize]
-    public class DocumentController : BaseApiController
+    public class DocumentsController : BaseApiController
     {
-        public DocumentController() { }
+        public DocumentsController() { }
 
 
         /// <summary>
@@ -37,7 +37,8 @@ namespace Api.V1.Controllers
         /// <param name="filterBy"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = UserRoles.UserOrUserRO)]
+        //[Authorize(Roles = UserRoles.UserOrUserRO)]
+        [AllowAnonymous]
         public async Task<ActionResult<List<GetDocumentDto>>> GetDocumentsAsync([FromQuery] PaginationFilter paginationFilters,
             [FromQuery] SortingFilter sortingFilter, [FromQuery] string filterBy = "")
         {
@@ -46,6 +47,7 @@ namespace Api.V1.Controllers
             var validSortingFilter = new SortingFilter(sortingFilter.SortField, sortingFilter.Ascending);
 
             return HandleResult(await Mediator.Send(new GetDocumentListQuery(validPaginationFilter, validSortingFilter, filterBy)));
+            //return Ok(await Mediator.Send(new GetDocumentListQuery(validPaginationFilter, validSortingFilter, filterBy)));
         }
 
         /// <summary>

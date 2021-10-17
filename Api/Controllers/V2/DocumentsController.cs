@@ -16,7 +16,7 @@ namespace Api.V2.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
     [ApiVersion("2.0")]
-    public class DocumentController : BaseApiController
+    public class DocumentsController : BaseApiController
     {
 
         [HttpGet]

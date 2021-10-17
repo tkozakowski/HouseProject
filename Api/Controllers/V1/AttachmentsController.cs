@@ -17,11 +17,11 @@ namespace Api.Controllers.V1
     //[Authorize]
     [ApiVersion("1.0")]
     [ApiController]
-    public class AttachmentController : BaseApiController
+    public class AttachmentsController : BaseApiController
     {
         private readonly IAttachmentService _attachmentComparerService;
 
-        public AttachmentController(IAttachmentService attachmentComparerService)
+        public AttachmentsController(IAttachmentService attachmentComparerService)
         {
             _attachmentComparerService = attachmentComparerService;
         }
