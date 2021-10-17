@@ -18,25 +18,8 @@ using Xunit;
 
 namespace EndToEndTests.Controllers
 {
-    public class DocumentsControllerTests
+    public class DocumentsControllerTests: IntegrationTest
     {
-        private readonly TestServer _server;
-        private readonly HttpClient _httpClient;
-        public DocumentsControllerTests()
-        {
-            //Arrange
-            var projectDir = Helper.GetProjectPath("", typeof(Startup).GetTypeInfo().Assembly);
-            _server = new TestServer(new WebHostBuilder()
-                .UseEnvironment("Development")
-                .UseContentRoot(projectDir)
-                .UseConfiguration(new ConfigurationBuilder()
-                    .SetBasePath(projectDir)
-                    .AddJsonFile("appsettings.json")
-                    .Build()
-                )
-                .UseStartup<Startup>());
-            _httpClient = _server.CreateClient();
-        }
 
         [Fact]
         public async Task GetDocumentsAsync_GivenValidRequest_ShouldReturnNotEmptyCollection()
