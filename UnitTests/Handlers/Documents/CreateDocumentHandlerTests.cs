@@ -2,7 +2,7 @@
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
-using MediatR;
+using FluentAssertions;
 using Moq;
 using System;
 using System.Threading;
@@ -11,23 +11,21 @@ using Xunit;
 
 namespace UnitTests.Handlers.Documents
 {
-    public class InsertDocumentHandlerTests
+    public class CreateDocumentHandlerTests
     {
         private readonly Mock<IMapper> _mapperMock;
-        private readonly Mock<IMediator> _mediatorMock;
         private string userId = "031eca6d-8300-4cb0-b0c8-3d7eecf9b718";
         private Mock<IDocumentRepository> _documentRepositoryMock;
-        private Mock<CreateDocumentHandler> _insertDocumentHandlerMock;
-        public InsertDocumentHandlerTests()
+        private CreateDocumentHandler _createDocumentHandler;
+        public CreateDocumentHandlerTests()
         {
             _mapperMock = new Mock<IMapper>();
-            _mediatorMock = new Mock<IMediator>();
             _documentRepositoryMock = new Mock<IDocumentRepository>();
-            _insertDocumentHandlerMock = new Mock<CreateDocumentHandler>(_documentRepositoryMock.Object, _mapperMock.Object);
+            _createDocumentHandler = new CreateDocumentHandler(_documentRepositoryMock.Object, _mapperMock.Object);
         }
 
         [Fact]
-        public async Task Handle_GivenValidRequest_ShouldInsertDocument()
+        public async Task CreateDocumentHandler_GivenValidRequest_ShouldAddDocument()
         {
             //Arrange
 
@@ -52,10 +50,17 @@ namespace UnitTests.Handlers.Documents
             var request = new CreateDocumentCommand { CreateDocumentDto = createDocumentDto, UserId = userId };
 
             //Act -> add new post
-            var result = await _insertDocumentHandlerMock.Object.Handle(request, CancellationToken.None);
+            await _createDocumentHandler.Handle(request, CancellationToken.None);
 
             //Assert
             _documentRepositoryMock.Verify(x => x.AddAsync(document), Times.Once);
+
+            document.Should().NotBeNull();
+            document.Name.Length.Should().BeLessOrEqualTo(100);
+            document.Name.Length.Should().BeGreaterOrEqualTo(0);
+            document.Name.Should().NotBeEmpty();
+            document.Cost.Value.Should().BeGreaterOrEqualTo(0);
+
         }
 
     }

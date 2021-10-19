@@ -43,8 +43,11 @@ namespace Infrastructure.Repositories
             return await _houseProjectContext.SaveChangesAsync() > 0;
         }
 
-        public async Task RemoveAsync(Document document)
+        public async Task RemoveAsync(int id)
         {
+            var document = await GetByIdAsync(id);
+            if (document is null) return;
+
             _houseProjectContext.Remove(document);
 
             await _houseProjectContext.SaveChangesAsync();

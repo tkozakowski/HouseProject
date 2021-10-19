@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Documents.Command.RemoveDocument
 {
-    class RemoveDocumentHandler : IRequestHandler<RemoveDocumentCommand, Response<Unit>>
+    public class RemoveDocumentHandler : IRequestHandler<RemoveDocumentCommand, Response<Unit>>
     {
         private readonly IDocumentRepository _documentRepository;
 
@@ -17,9 +17,7 @@ namespace Application.Documents.Command.RemoveDocument
 
         public async Task<Response<Unit>> Handle(RemoveDocumentCommand request, CancellationToken cancellationToken)
         {
-            var document = await _documentRepository.GetByIdAsync(request.Id);
-
-            await _documentRepository.RemoveAsync(document);
+            await _documentRepository.RemoveAsync(request.Id);
 
             return Response<Unit>.Success(Unit.Value);
         }

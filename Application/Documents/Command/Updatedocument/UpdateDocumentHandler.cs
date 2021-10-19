@@ -23,7 +23,7 @@ namespace Application.Documents.Command.UpdateDocument
 
             if (existingDocument is null) return null;
 
-            _mapper.Map(request.DocumentDto, existingDocument);
+            _mapper.Map(request.UpdateDocumentDto, existingDocument);
             existingDocument.UserId = request.UserId;
 
             await _documentRepository.UpdateAsync(existingDocument);

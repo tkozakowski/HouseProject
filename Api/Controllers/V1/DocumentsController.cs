@@ -98,7 +98,7 @@ namespace Api.V1.Controllers
         public async Task<IActionResult> UpdateDocument(int id, [FromBody] UpdateDocumentDto documentDto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return HandleResult(await Mediator.Send(new UpdateDocumentCommand { DocumentDto = documentDto, Id = id, UserId = userId }));
+            return HandleResult(await Mediator.Send(new UpdateDocumentCommand { UpdateDocumentDto = documentDto, Id = id, UserId = userId }));
         }
 
 
