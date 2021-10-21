@@ -3,26 +3,30 @@ using Application.Core;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain.Interfaces;
 using Application.Documents.Query.GetDocumentDetails;
+using Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using AutoMapper.QueryableExtensions;
 
 namespace Application.Documents.Query.Details
 {
     public class GetDocumentDetailHandler : IRequestHandler<GetDocumentDetailQuery, Response<DocumentDetailsDto>>
     {
         private readonly IMapper _mapper;
-        private readonly IDocumentRepository _documentRepository;
+        private readonly IHouseProjectDbContext _houseProjectDbContext;
 
-        public GetDocumentDetailHandler(IMapper mapper, IDocumentRepository documentRepository)
+        public GetDocumentDetailHandler(IMapper mapper, IHouseProjectDbContext houseProjectDbContext)
         {
             _mapper = mapper;
-            _documentRepository = documentRepository;
+            _houseProjectDbContext = houseProjectDbContext;
         }
+
         public async Task<Response<DocumentDetailsDto>> Handle(GetDocumentDetailQuery request, CancellationToken cancellationToken)
         {
-            var document = await _documentRepository.GetByIdAsync(request.id);
 
-            var result = _mapper.Map<DocumentDetailsDto>(document);
+            var result = await _houseProjectDbContext.Documents.Where(x => x.Id == request.id)
+                .ProjectTo<DocumentDetailsDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
 
             return Response<DocumentDetailsDto>.Success(result);
         }

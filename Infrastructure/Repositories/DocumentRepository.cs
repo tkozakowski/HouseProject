@@ -35,10 +35,10 @@ namespace Infrastructure.Repositories
 
         public async Task<Document> GetByIdAsync(int id)
             => await _houseProjectContext.Documents.FirstOrDefaultAsync(x => x.Id == id);
-        
+
         public async Task<bool> AddAsync(Document document)
         {
-            var createdDocument = await _houseProjectContext.AddAsync(document);
+            await _houseProjectContext.AddAsync(document);
 
             return await _houseProjectContext.SaveChangesAsync() > 0;
         }

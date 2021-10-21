@@ -63,7 +63,7 @@ namespace Api.Controllers.V1
         [HttpDelete("[action]/{fileId}")]
         public async Task<ActionResult> DeleteFileAsync(int fileId)
         {
-            return HandleResult(await Mediator.Send(new DeleteFileByIdCommand { AttachmentId = fileId }));
+            return HandleResult(await Mediator.Send(new DeleteFileInDbByIdCommand { AttachmentId = fileId }));
         }
 
 

@@ -3,19 +3,19 @@ using Application.Core;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain.Interfaces;
+using Application.Interfaces;
 
 namespace Application.Documents.Command.CreateDocument
 {
     public class CreateDocumentHandler : IRequestHandler<CreateDocumentCommand, Response<Unit>>
     {
-        private readonly IDocumentRepository _documentRepository;
         private readonly IMapper _mapper;
+        private readonly IHouseProjectDbContext _houseDbContext;
 
-        public CreateDocumentHandler(IDocumentRepository documentRepository, IMapper mapper)
+        public CreateDocumentHandler(IMapper mapper, IHouseProjectDbContext houseDbContext)
         {
-            _documentRepository = documentRepository;
             _mapper = mapper;
+            _houseDbContext = houseDbContext;
         }
         public CreateDocumentHandler() {}
 
@@ -25,7 +25,9 @@ namespace Application.Documents.Command.CreateDocument
 
             document.UserId = request.UserId;
 
-            var success = await _documentRepository.AddAsync(document);
+            _houseDbContext.Documents.Add(document);
+
+            var success = await _houseDbContext.SaveChangesAsync() > 0;
 
             if (success) return Response<Unit>.Success(Unit.Value);
 

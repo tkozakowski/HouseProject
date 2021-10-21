@@ -6,33 +6,34 @@ using System.Threading.Tasks;
 using System.Linq;
 using Application.Core.Paginations;
 using Microsoft.Extensions.Logging;
-using Domain.Interfaces;
+using Application.Interfaces;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Document.Query.GetDocuments
 {
     public class GetDocumentListHandler : IRequestHandler<GetDocumentListQuery, PaginationResult<IEnumerable<GetDocumentDto>>>
     {
-        private readonly IDocumentRepository _documentRepository;
+        private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public GetDocumentListHandler(IDocumentRepository documentRepository, IMapper mapper, ILogger<GetDocumentListHandler> logger)
+        public GetDocumentListHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper, ILogger logger)
         {
-            _documentRepository = documentRepository;
+            _houseProjectDbContext = houseProjectDbContext;
             _mapper = mapper;
             _logger = logger;
         }
+
         public async Task<PaginationResult<IEnumerable<GetDocumentDto>>> Handle(GetDocumentListQuery request, CancellationToken cancellationToken)
         {
 
-            var documents = await _documentRepository.GetAllAsync(request.validPaginationFilter.PageNumber, request.validPaginationFilter.PageSize, 
-                request.validSortingFilter.SortField, request.validSortingFilter.Ascending, request.filterBy);
+            var documentsDto = await _houseProjectDbContext.Documents.ProjectTo<GetDocumentDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
 
-            var documentsDto = _mapper.Map<IEnumerable<GetDocumentDto>>(documents);
+            var totalRecords = _houseProjectDbContext.Documents.Where(x => x.Name.ToLower().Contains(request.filterBy.ToLower()) || x.Description.ToLower().Contains(request.filterBy.ToLower())).Count();
 
-            var totalRecords = _documentRepository.TotalRecords(request.filterBy);
-
-            _logger.LogDebug($"Get {documents.Count()} results from {totalRecords} records");
+            _logger.LogDebug($"Get {documentsDto.Count()} results from {totalRecords} records");
 
             return HelperPaginationResult.HelperPaginationResultResponse<GetDocumentDto>(documentsDto, request.validPaginationFilter, totalRecords);
         }

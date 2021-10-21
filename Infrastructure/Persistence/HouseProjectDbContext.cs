@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence
 {
-    public class HouseProjectDbContext : IdentityDbContext<ApplicationUser>
+    public class HouseProjectDbContext : IdentityDbContext<ApplicationUser>, IHouseProjectDbContext
     {
         private readonly UserContextAccessorService _userResolverService;
 
@@ -23,7 +23,7 @@ namespace Infrastructure.Persistence
 
 
         public DbSet<Attachment> Attachments { get; set; }
-        public DbSet<AttachmentBackup> AttachmentsBackup { get; set;}
+        public DbSet<AttachmentBackup> AttachmentsBackup { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<Execution> Executions { get; set; }
         public DbSet<Finance> Finances { get; set; }

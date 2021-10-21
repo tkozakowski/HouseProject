@@ -1,33 +1,33 @@
-﻿using Application.AttachmentsBackup.Command.Add;
-using Application.Core;
+﻿using Application.Core;
 using Application.Extensions;
+using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
-using Domain.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Attachments.Command.AddAttachment
 {
-    public class AddAttachmentToApplicationHandler : IRequestHandler<AddAttachmentToApplicationCommand, Response<AddAttachmentDto>>
+    public class AddAttachmentToApplicationHandler : IRequestHandler<AddAttachmentToApplicationCommand, Response<Unit>>
     {
-        private readonly IMapper _mapper;
-        private readonly IAttachmentRepository _attachmentRepository;
-        private readonly IApplicationRepository _applicationRepository;
-        private readonly IMediator _mediator;
 
-        public AddAttachmentToApplicationHandler(IMapper mapper, IMediator mediator, IAttachmentRepository attachmentRepository, IApplicationRepository applicationRepository)
+        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
+        private readonly IHouseProjectDbContext _houseProjectDbContext;
+
+        public AddAttachmentToApplicationHandler(IMapper mapper, IMediator mediator, IHouseProjectDbContext houseProjectDbContext)
         {
             _mapper = mapper;
             _mediator = mediator;
-            _attachmentRepository = attachmentRepository;
-            _applicationRepository = applicationRepository;
+            _houseProjectDbContext = houseProjectDbContext;
         }
 
-        public async Task<Response<AddAttachmentDto>> Handle(AddAttachmentToApplicationCommand request, CancellationToken cancellationToken)
+
+        public async Task<Response<Unit>> Handle(AddAttachmentToApplicationCommand request, CancellationToken cancellationToken)
         {
-            var application = await _applicationRepository.GetByIdAsync(request.ApplicationId);
+            var application = await _houseProjectDbContext.SendApplications.FirstOrDefaultAsync(x => x.Id == request.ApplicationId);
 
             if (application is null) return null;
 
@@ -39,15 +39,12 @@ namespace Application.Attachments.Command.AddAttachment
             };
 
 
-            var success = await _attachmentRepository.AddAsync(attachment);
+            _houseProjectDbContext.Attachments.Add(attachment);
+            var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
-            if (!success) return Response<AddAttachmentDto>.Failure("Failed to add new attachment");
+            if (!success) return Response<Unit>.Failure("Failed to add new attachment");
 
-            await _mediator.Send(new AddAttachmentBackupToApplicationCommand(request.ApplicationId, request.File));
-
-            var attachmentDto = _mapper.Map<AddAttachmentDto>(attachment);
-
-            return Response<AddAttachmentDto>.Success(attachmentDto);
+            return Response<Unit>.Success(Unit.Value);
         }
     }
 }
