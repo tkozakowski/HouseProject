@@ -3,7 +3,6 @@ using Application.Extensions;
 using Application.Interfaces;
 using Domain.Entities;
 using MediatR;
-using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,9 +29,7 @@ namespace Application.AttachmentsSmall.Command.Add
 
             _houseProjectDbContext.AttachmentsBackup.Add(attachmentBackup);
 
-            var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
-
-            
+            var success = await _houseProjectDbContext.SaveChangesAsync() > 0;          
 
             if (!success) return Response<Unit>.Failure("Failed to add attachment to backup");
 

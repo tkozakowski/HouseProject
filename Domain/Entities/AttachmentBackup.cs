@@ -9,6 +9,7 @@ namespace Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public byte[] File { get; set; }
+        public bool IsDeleted { get; set; }
 
         public int? ApplicationId { get; set; }
         public virtual SendApplication Application { get; set; }

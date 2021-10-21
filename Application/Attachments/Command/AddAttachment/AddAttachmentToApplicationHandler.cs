@@ -1,7 +1,6 @@
 ﻿using Application.Core;
 using Application.Extensions;
 using Application.Interfaces;
-using AutoMapper;
 using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -12,18 +11,12 @@ namespace Application.Attachments.Command.AddAttachment
 {
     public class AddAttachmentToApplicationHandler : IRequestHandler<AddAttachmentToApplicationCommand, Response<Unit>>
     {
-
-        private readonly IMapper _mapper;
-        private readonly IMediator _mediator;
         private readonly IHouseProjectDbContext _houseProjectDbContext;
 
-        public AddAttachmentToApplicationHandler(IMapper mapper, IMediator mediator, IHouseProjectDbContext houseProjectDbContext)
+        public AddAttachmentToApplicationHandler(IHouseProjectDbContext houseProjectDbContext)
         {
-            _mapper = mapper;
-            _mediator = mediator;
             _houseProjectDbContext = houseProjectDbContext;
         }
-
 
         public async Task<Response<Unit>> Handle(AddAttachmentToApplicationCommand request, CancellationToken cancellationToken)
         {

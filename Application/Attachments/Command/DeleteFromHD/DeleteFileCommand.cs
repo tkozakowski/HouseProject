@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Attachments.Command.DeleteFromHD
 {
-    public class DeleteFileFromHDCommand: IRequest<Response<Unit>>
+    public class DeleteFileCommand: IRequest<Response<Unit>>
     {
         public int AttachmentId { get; set; }
     }

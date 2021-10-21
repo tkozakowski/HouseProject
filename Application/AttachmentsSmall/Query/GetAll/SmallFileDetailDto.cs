@@ -2,7 +2,7 @@
 using AutoMapper;
 using Domain.Entities;
 
-namespace Application.AttachmentsDb.Query.Get
+namespace Application.AttachmentsSmall.Query.GetAll
 {
     public class SmallFileDetailDto: IMap
     {

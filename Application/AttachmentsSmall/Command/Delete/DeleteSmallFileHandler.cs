@@ -22,7 +22,7 @@ namespace Application.AttachmentsSmall.Command.DeleteFromDb
 
             if (attachment is null) return Response<Unit>.Failure("Failed to remove attachment");
 
-            _houseProjectDbContext.AttachmentsBackup.Remove(attachment);
+            attachment.IsDeleted = true;
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
             if (!success) return Response<Unit>.Failure("Failed to remove file");
