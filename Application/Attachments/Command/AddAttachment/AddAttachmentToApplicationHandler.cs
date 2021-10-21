@@ -20,7 +20,8 @@ namespace Application.Attachments.Command.AddAttachment
 
         public async Task<Response<Unit>> Handle(AddAttachmentToApplicationCommand request, CancellationToken cancellationToken)
         {
-            var application = await _houseProjectDbContext.SendApplications.FirstOrDefaultAsync(x => x.Id == request.ApplicationId);
+            var application = await _houseProjectDbContext.SendApplications
+                .FirstOrDefaultAsync(x => x.Id == request.ApplicationId);
 
             if (application is null) return null;
 

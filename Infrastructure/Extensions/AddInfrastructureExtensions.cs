@@ -13,8 +13,6 @@ namespace Infrastructure.Extensions
             services.AddCosmos(Configuration);
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
             services.AddScoped<IAttachmentRepository, AttachmentRepository>();
-            services.AddScoped<ICosmosDocumentRepository, CosmosDocumentRepository>();
-            services.AddScoped<IDocumentRepository, DocumentRepository>();
             services.AddScoped<ILoanTrancheRepository, LoanTrancheRepository>();
             services.AddScoped<IODataMaterialRepository, ODataMaterialRepository>();
             

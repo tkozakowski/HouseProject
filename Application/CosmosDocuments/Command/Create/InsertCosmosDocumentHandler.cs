@@ -1,8 +1,10 @@
 ﻿using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
+using Cosmonaut;
 using Domain.Entities.Cosmos;
-using Domain.Interfaces;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,20 +12,23 @@ namespace Application.CosmosDocuments.Command.Create
 {
     public class InsertCosmosDocumentHandler : IRequestHandler<InsertCosmosDocumentCommand, Response<Unit>>
     {
-        private readonly ICosmosDocumentRepository _cosmosDocumentRepository;
+        private readonly ICosmosStore<CosmosDocument> _cosmosStore;
+        private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
 
-        public InsertCosmosDocumentHandler(IMapper mapper, ICosmosDocumentRepository cosmosDocumentRepository)
+        public InsertCosmosDocumentHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
         {
+            _houseProjectDbContext = houseProjectDbContext;
             _mapper = mapper;
-            _cosmosDocumentRepository = cosmosDocumentRepository;
         }
 
         public async Task<Response<Unit>> Handle(InsertCosmosDocumentCommand request, CancellationToken cancellationToken)
         {
             var cosmosDocument = _mapper.Map<CosmosDocument>(request.CosmosDocument);
-            
-            await _cosmosDocumentRepository.AddAsync(cosmosDocument); 
+
+            cosmosDocument.Id = Guid.NewGuid().ToString();
+
+            await _cosmosStore.AddAsync(cosmosDocument);
 
             return Response<Unit>.Success(Unit.Value);
         }

@@ -1,4 +1,6 @@
 ﻿using Application.Core;
+using Cosmonaut;
+using Domain.Entities.Cosmos;
 using Domain.Interfaces;
 using MediatR;
 using System.Threading;
@@ -8,20 +10,20 @@ namespace Application.CosmosDocuments.Command.Remove
 {
     public class RemoveCosmosDocumentHandler : IRequestHandler<RemoveCosmosDocumentCommand, Response<Unit>>
     {
-        private readonly ICosmosDocumentRepository _cosmosDocumentRepository;
+        private readonly ICosmosStore<CosmosDocument> _cosmosStore;
 
-        public RemoveCosmosDocumentHandler(ICosmosDocumentRepository cosmosDocumentRepository)
+        public RemoveCosmosDocumentHandler()
         {
-            _cosmosDocumentRepository = cosmosDocumentRepository;
+
         }
 
         public async Task<Response<Unit>> Handle(RemoveCosmosDocumentCommand request, CancellationToken cancellationToken)
         {
-            var cosmosDocument = await _cosmosDocumentRepository.GetByIdAsync(request.Id);
 
-            if (cosmosDocument is null) return null;
+            var result = await _cosmosStore.RemoveByIdAsync(request.Id);
 
-            await _cosmosDocumentRepository.RemoveAsync(cosmosDocument);
+            if (!result.IsSuccess)
+                return Response<Unit>.Failure("Failed to remove document");
 
             return Response<Unit>.Success(Unit.Value);
         }

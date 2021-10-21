@@ -20,6 +20,7 @@ namespace Application.Extensions
             services.AddScoped<IODataMaterialService, ODataMaterialService>();
             services.AddScoped<UserContextAccessorService>();
             services.AddScoped<IAttachmentService, AttachmentComparerService>();
+            services.AddScoped<IHouseProjectDbContext, IHouseProjectDbContext>();
             return services;
         }
     }
