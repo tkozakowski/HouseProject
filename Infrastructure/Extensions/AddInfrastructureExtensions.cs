@@ -12,7 +12,6 @@ namespace Infrastructure.Extensions
             services.AddHouseDbContext(Configuration);
             services.AddCosmos(Configuration);
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
-            services.AddScoped<IAttachmentRepository, AttachmentRepository>();
             services.AddScoped<ILoanTrancheRepository, LoanTrancheRepository>();
             services.AddScoped<IODataMaterialRepository, ODataMaterialRepository>();
             

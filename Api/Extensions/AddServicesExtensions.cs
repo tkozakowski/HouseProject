@@ -5,7 +5,7 @@ using Api.Middleware;
 using Application.Extensions;
 using Api.Extensions.AddServices;
 using Infrastructure.Extensions;
-using Application.Document.Query.GetDocuments;
+using System.Reflection;
 
 namespace Api.Extensions
 {
@@ -30,7 +30,7 @@ namespace Api.Extensions
 
             services.AddIdentityService(Configuration);
 
-            services.AddMediatR(typeof(GetDocumentListHandler).Assembly);
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddScoped<ErrorHandlingMiddleware>();
 

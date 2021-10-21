@@ -1,62 +1,59 @@
-﻿using Application.Attachments.Command.AddAttachment;
-using Application.Conversions;
-using Application.Interfaces;
-using Domain.Interfaces;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿//using Application.Attachments.Command.AddAttachment;
+//using Application.Conversions;
+//using Application.Interfaces;
+//using Domain.Interfaces;
+//using MediatR;
+//using Microsoft.EntityFrameworkCore;
+//using Microsoft.Extensions.Logging;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
 
-namespace Application.Services
-{
-    public class AttachmentComparerService : IAttachmentService
-    {
-        private readonly IMediator _mediator;
-        private readonly IAttachmentRepository _attachmentRepository;
-        private readonly IApplicationRepository _applicationRepository;
-        private readonly ILogger _logger;
+//namespace Application.Services
+//{
+//    public class AttachmentComparerService : IAttachmentService
+//    {
+//        private readonly IMediator _mediator;
+//        private readonly IHouseProjectDbContext _houseProjectDbContext;
+//        private readonly ILogger _logger;
 
-        public AttachmentComparerService(IMediator mediator,
-                                         ILogger<AttachmentComparerService> logger,
-                                         IAttachmentRepository attachmentRepository,
-                                         IApplicationRepository applicationRepository)
-        {
-            _mediator = mediator;
-            _attachmentRepository = attachmentRepository;
-            _logger = logger;
-            _applicationRepository = applicationRepository;
-        }
-        public async Task RecoverFiles()
-        {
-            List<Domain.Entities.SendApplication> applications = await _applicationRepository.GetAllAsync();
+//        public AttachmentComparerService(IMediator mediator, IHouseProjectDbContext houseProjectDbContext, ILogger logger)
+//        {
+//            _mediator = mediator;
+//            _houseProjectDbContext = houseProjectDbContext;
+//            _logger = logger;
+//        }
 
-            if (applications is null) return;
+//        public async Task RecoverFiles()
+//        {
+//            List<Domain.Entities.SendApplication> applications = await _houseProjectDbContext.SendApplications.ToListAsync();
 
-            foreach (var application in applications)
-            {
-                var attachments = await _attachmentRepository.GetAttachmentsByApplicationIdAsync(application.Id);
-                if (attachments is null) break;
+//            if (applications is null) return;
 
-                var attachmentsBackup = await _attachmentRepository.GetAttachmentsBackupByApplicationIdAsync(application.Id);
-                if (attachmentsBackup is null) break;
+//            foreach (var application in applications)
+//            {
+//                var attachments = await _attachmentRepository.GetAttachmentsByApplicationIdAsync(application.Id);
+//                if (attachments is null) break;
 
-                if (attachmentsBackup.Count == attachments.Count) break;
+//                var attachmentsBackup = await _attachmentRepository.GetAttachmentsBackupByApplicationIdAsync(application.Id);
+//                if (attachmentsBackup is null) break;
 
-                if (attachmentsBackup.Count > attachments.Count)
-                {
-                    var diffs = attachmentsBackup.Where(ab => !attachments.Any(a => a.Name == ab.Name));
-                    foreach (var diff in diffs)
-                    {
-                        _logger.LogDebug($"Recover {diff} file");
+//                if (attachmentsBackup.Count == attachments.Count) break;
 
-                        await _mediator.Send(new AddAttachmentToApplicationCommand { ApplicationId = diff.ApplicationId.Value, File = ByteArrayToIFormFile.ConvertByteArrayToIFormFile(diff.File, diff.Name) });
-                    }
-                }
-            }
+//                if (attachmentsBackup.Count > attachments.Count)
+//                {
+//                    var diffs = attachmentsBackup.Where(ab => !attachments.Any(a => a.Name == ab.Name));
+//                    foreach (var diff in diffs)
+//                    {
+//                        _logger.LogDebug($"Recover {diff} file");
 
-            await Task.CompletedTask;
-        }
+//                        await _mediator.Send(new AddAttachmentToApplicationCommand { ApplicationId = diff.ApplicationId.Value, File = ByteArrayToIFormFile.ConvertByteArrayToIFormFile(diff.File, diff.Name) });
+//                    }
+//                }
+//            }
 
-    }
-}
+//            await Task.CompletedTask;
+//        }
+
+//    }
+//}
