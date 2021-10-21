@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Documents.Command.RemoveDocument
 {
-    class RemoveDocumentHandler : IRequestHandler<RemoveDocumentCommand, Response<Unit>>
+    public class RemoveDocumentHandler : IRequestHandler<RemoveDocumentCommand, Response<Unit>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
 

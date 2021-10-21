@@ -53,8 +53,8 @@ namespace UnitTests.Handlers.Documents
     //        _mapperMock.Setup(x => x.Map<GetDocumentDto>(document)).Returns(documentDto);
 
 
-    //        //Act
-    //        var result = await _getDocumentDetailHandler.Handle(_request, CancellationToken.None);
+            //Act
+            await _getDocumentDetailHandler.Handle(_request, CancellationToken.None);
 
     //        //Assert
     //        _documentRepositoryMock.Verify(x => x.GetByIdAsync(1), Times.Once);
