@@ -14,90 +14,90 @@ using Xunit;
 
 namespace UnitTests.Handlers.Documents
 {
-    public class UpdateDocumentHandlerTests
-    {
-        private readonly string userId = "9aeb84c8-0d2b-4f4d-9c3d-dc4356ddda85";
-        private readonly int id = 1;
-        private readonly Mock<IDocumentRepository> _documentRepositoryMock;
-        private readonly UpdateDocumentHandler _updateDocumentHandler;
-        private readonly Mock<IMapper> _mapperMock;
+    //public class UpdateDocumentHandlerTests
+    //{
+    //    private readonly string userId = "9aeb84c8-0d2b-4f4d-9c3d-dc4356ddda85";
+    //    private readonly int id = 1;
+    //    private readonly Mock<IDocumentRepository> _documentRepositoryMock;
+    //    private readonly UpdateDocumentHandler _updateDocumentHandler;
+    //    private readonly Mock<IMapper> _mapperMock;
 
-        private UpdateDocumentCommand _updateDocumentCommand;
+    //    private UpdateDocumentCommand _updateDocumentCommand;
 
-        public UpdateDocumentHandlerTests()
-        {
-            _documentRepositoryMock = new Mock<IDocumentRepository>();
-            _mapperMock = new Mock<IMapper>();
+    //    public UpdateDocumentHandlerTests()
+    //    {
+    //        _documentRepositoryMock = new Mock<IDocumentRepository>();
+    //        _mapperMock = new Mock<IMapper>();
 
-            _updateDocumentHandler = new UpdateDocumentHandler(_mapperMock.Object, _documentRepositoryMock.Object);
-        }
+    //        _updateDocumentHandler = new UpdateDocumentHandler(_mapperMock.Object, _documentRepositoryMock.Object);
+    //    }
 
-        [Fact]
-        public async Task UpdateDocumentHandler_GivenValidRequest_GetExistingDocument()
-        {
-            //Arrange
-            var updateDocumentDto = new UpdateDocumentDto
-            {
-                Cost = "1",
-                Description = "description",
-                Name = "name",
-                ReceivedAt = DateTime.Now
-            };
+    //    [Fact]
+    //    public async Task UpdateDocumentHandler_GivenValidRequest_GetExistingDocument()
+    //    {
+    //        //Arrange
+    //        var updateDocumentDto = new UpdateDocumentDto
+    //        {
+    //            Cost = "1",
+    //            Description = "description",
+    //            Name = "name",
+    //            ReceivedAt = DateTime.Now
+    //        };
 
-            var document = new Document
-            {
-                Cost = decimal.Parse(updateDocumentDto.Cost),
-                Description = updateDocumentDto.Description,
-                Name = updateDocumentDto.Name,
-                ReceivedAt = updateDocumentDto.ReceivedAt
-            };
-
-
-            _updateDocumentCommand = new UpdateDocumentCommand { Id = id, UpdateDocumentDto = updateDocumentDto, UserId = userId };
-
-            //Act
-            await _updateDocumentHandler.Handle(_updateDocumentCommand, CancellationToken.None);
-
-            //Assert
-            _documentRepositoryMock.Verify(x => x.GetByIdAsync(id), Times.Once);
-
-        }
+    //        var document = new Document
+    //        {
+    //            Cost = decimal.Parse(updateDocumentDto.Cost),
+    //            Description = updateDocumentDto.Description,
+    //            Name = updateDocumentDto.Name,
+    //            ReceivedAt = updateDocumentDto.ReceivedAt
+    //        };
 
 
-        [Fact]
-        public async Task UpdateDocumentHandler_GivenValidRequest_UpdateDocument()
-        {
-            //Arrange
-            var updateDocumentDto = new UpdateDocumentDto
-            {
-                Cost = "1",
-                Description = "description",
-                Name = "name",
-                ReceivedAt = DateTime.Now
-            };
+    //        _updateDocumentCommand = new UpdateDocumentCommand { Id = id, UpdateDocumentDto = updateDocumentDto, UserId = userId };
 
-            var document = new Document
-            {
-                Cost = decimal.Parse(updateDocumentDto.Cost),
-                Description = updateDocumentDto.Description,
-                Name = updateDocumentDto.Name,
-                ReceivedAt = updateDocumentDto.ReceivedAt
-            };
+    //        //Act
+    //        await _updateDocumentHandler.Handle(_updateDocumentCommand, CancellationToken.None);
 
-            _updateDocumentCommand = new UpdateDocumentCommand { Id = id, UpdateDocumentDto = updateDocumentDto, UserId = userId };
+    //        //Assert
+    //        _documentRepositoryMock.Verify(x => x.GetByIdAsync(id), Times.Once);
 
-            _mapperMock.Setup(x => x.Map<Document>(updateDocumentDto));
+    //    }
 
-            //Act
-            await _updateDocumentHandler.Handle(_updateDocumentCommand, CancellationToken.None);
 
-            //Assert
-            //_documentRepositoryMock.Verify(x => x.UpdateAsync(document), Times.Once); ??????
+    //    [Fact]
+    //    public async Task UpdateDocumentHandler_GivenValidRequest_UpdateDocument()
+    //    {
+    //        //Arrange
+    //        var updateDocumentDto = new UpdateDocumentDto
+    //        {
+    //            Cost = "1",
+    //            Description = "description",
+    //            Name = "name",
+    //            ReceivedAt = DateTime.Now
+    //        };
 
-            document.Name.Should().NotBeEmpty();
-            document.Name.Length.Should().BeGreaterThan(0);
-            document.Name.Length.Should().BeLessOrEqualTo(100);
-            document.Cost.Value.Should().BeGreaterThan(0);
-        }
-    }
+    //        var document = new Document
+    //        {
+    //            Cost = decimal.Parse(updateDocumentDto.Cost),
+    //            Description = updateDocumentDto.Description,
+    //            Name = updateDocumentDto.Name,
+    //            ReceivedAt = updateDocumentDto.ReceivedAt
+    //        };
+
+    //        _updateDocumentCommand = new UpdateDocumentCommand { Id = id, UpdateDocumentDto = updateDocumentDto, UserId = userId };
+
+    //        _mapperMock.Setup(x => x.Map<Document>(updateDocumentDto));
+
+    //        //Act
+    //        await _updateDocumentHandler.Handle(_updateDocumentCommand, CancellationToken.None);
+
+    //        //Assert
+    //        //_documentRepositoryMock.Verify(x => x.UpdateAsync(document), Times.Once); ??????
+
+    //        document.Name.Should().NotBeEmpty();
+    //        document.Name.Length.Should().BeGreaterThan(0);
+    //        document.Name.Length.Should().BeLessOrEqualTo(100);
+    //        document.Cost.Value.Should().BeGreaterThan(0);
+    //    }
+    //}
 }
