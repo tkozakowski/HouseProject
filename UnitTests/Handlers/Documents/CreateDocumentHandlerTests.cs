@@ -1,10 +1,11 @@
 ﻿using Application.Documents.Command.CreateDocument;
 using AutoMapper;
 using Domain.Entities;
-using Domain.Interfaces;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -15,53 +16,58 @@ namespace UnitTests.Handlers.Documents
     {
         private readonly Mock<IMapper> _mapperMock;
         private string userId = "031eca6d-8300-4cb0-b0c8-3d7eecf9b718";
-        private Mock<IDocumentRepository> _documentRepositoryMock;
-        private CreateDocumentHandler _createDocumentHandler;
+
         public CreateDocumentHandlerTests()
         {
             _mapperMock = new Mock<IMapper>();
-            _documentRepositoryMock = new Mock<IDocumentRepository>();
-            _createDocumentHandler = new CreateDocumentHandler(_documentRepositoryMock.Object, _mapperMock.Object);
         }
 
         [Fact]
         public async Task CreateDocumentHandler_GivenValidRequest_ShouldAddDocument()
         {
             //Arrange
+            var factory = new ConnectionFactory();
 
-    //        var createDocumentDto = new CreateDocumentDto()
-    //        {
-    //            Name = "test name",
-    //            ReceivedAt = new DateTime(2021, 10, 6),
-    //            Cost = "10",
-    //            Description = "test description",
-    //        };
+            var context = factory.CreateContextForInMemory();
 
-    //        var document = new Document()
-    //        {
-    //            Name = createDocumentDto.Name,
-    //            ReceivedAt = createDocumentDto.ReceivedAt,
-    //            Cost = decimal.Parse(createDocumentDto.Cost),
-    //            Description = createDocumentDto.Description
-    //        };
 
-    //        _mapperMock.Setup(x => x.Map<Document>(createDocumentDto)).Returns(document);
+            var createDocumentDto = new CreateDocumentDto()
+            {
+                Name = "test name",
+                ReceivedAt = new DateTime(2021, 10, 6),
+                Cost = "10",
+                Description = "test description",
+            };
 
-    //        var request = new CreateDocumentCommand { CreateDocumentDto = createDocumentDto, UserId = userId };
+            var document = new Document()
+            {
+                Name = createDocumentDto.Name,
+                ReceivedAt = createDocumentDto.ReceivedAt,
+                Cost = decimal.Parse(createDocumentDto.Cost),
+                Description = createDocumentDto.Description
+            };
 
-            //Act -> add new post
-            await _createDocumentHandler.Handle(request, CancellationToken.None);
+            _mapperMock.Setup(x => x.Map<Document>(createDocumentDto)).Returns(document);
+
+            var createDocumentCommand = new CreateDocumentCommand { CreateDocumentDto = createDocumentDto, UserId = userId };
+
+            CreateDocumentHandler createDocumentHandler = new(_mapperMock.Object, context);
+
+            //Act->add new post
+            await createDocumentHandler.Handle(createDocumentCommand, CancellationToken.None);
 
             //Assert
-            _documentRepositoryMock.Verify(x => x.AddAsync(document), Times.Once);
+            var documentsInMemory = await context.Documents.ToListAsync();
+            documentsInMemory.Count.Should().BeInRange(1, 1);
 
-            document.Should().NotBeNull();
-            document.Name.Length.Should().BeLessOrEqualTo(100);
-            document.Name.Length.Should().BeGreaterOrEqualTo(0);
-            document.Name.Should().NotBeEmpty();
-            document.Cost.Value.Should().BeGreaterOrEqualTo(0);
+            var addedDocument = documentsInMemory.Last();
+            addedDocument.Should().NotBeNull();
+            addedDocument.Name.Length.Should().BeLessOrEqualTo(100);
+            addedDocument.Name.Length.Should().BeGreaterOrEqualTo(0);
+            addedDocument.Name.Should().NotBeEmpty();
+            addedDocument.Cost.Value.Should().BeGreaterOrEqualTo(0);
 
         }
 
-    //}
+    }
 }

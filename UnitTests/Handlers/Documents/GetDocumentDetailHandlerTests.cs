@@ -54,7 +54,7 @@ namespace UnitTests.Handlers.Documents
 
 
             //Act
-            await _getDocumentDetailHandler.Handle(_request, CancellationToken.None);
+            //await _getDocumentDetailHandler.Handle(_request, CancellationToken.None);
 
     //        //Assert
     //        _documentRepositoryMock.Verify(x => x.GetByIdAsync(1), Times.Once);
