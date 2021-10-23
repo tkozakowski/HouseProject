@@ -1,69 +1,77 @@
-﻿using Application.Document.Query.GetDocuments;
+﻿using Application.Core;
+using Application.Document.Query.GetDocuments;
 using Application.Documents.Query.Details;
+using Application.Documents.Query.GetDocumentDetails;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using UnitTests.Handlers.Helpers;
 using Xunit;
 
 namespace UnitTests.Handlers.Documents
 {
-    //public class GetDocumentDetailHandlerTests
-    //{
+    public class GetDocumentDetailHandlerTests
+    {
 
-    //    private readonly Mock<IMapper> _mapperMock;
-    //    private readonly Mock<IDocumentRepository> _documentRepositoryMock;
-    //    private readonly GetDocumentDetailHandler _getDocumentDetailHandler;
-    //    private readonly GetDocumentDetailQuery _request;
+        private readonly Mock<IMapper> _mapperMock;
 
-    //    public GetDocumentDetailHandlerTests()
-    //    {
-    //        _mapperMock = new Mock<IMapper>();
-    //        _documentRepositoryMock = new Mock<IDocumentRepository>();
-    //        _getDocumentDetailHandler = new GetDocumentDetailHandler(_mapperMock.Object, _documentRepositoryMock.Object);
-    //        _request = new GetDocumentDetailQuery(1);
-    //    }
+        public GetDocumentDetailHandlerTests()
+        {
+            _mapperMock = new Mock<IMapper>();
+        }
 
-    //    [Fact]
-    //    public async Task Handle_GivenValidRequest_ShouldReturnDocument()
-    //    {
-    //        //Arrange
-    //        var document = new Document
-    //        {
-    //            Name = "test name",
-    //            ReceivedAt = new DateTime(2021, 10, 6),
-    //            Cost = 10,
-    //            Description = "test description",
-    //        };
+        [Fact]
+        public async Task Handle_GivenValidRequest_ShouldReturnDocument()
+        {
 
-    //        var documentDto = new GetDocumentDto
-    //        {
-    //            Name = document.Name,
-    //            ReceivedAt = document.ReceivedAt,
-    //            Cost = document.Cost.ToString(),
-    //            Description = document.Description
-    //        };
+            //Arrange
+            var factory = new ConnectionFactory();
+            var context = factory.CreateContextForInMemory();
 
-    //        _documentRepositoryMock.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(document);
+            var document = new Document
+            {
+                Id = 1,
+                Name = "test name",
+                ReceivedAt = new DateTime(2021, 10, 6),
+                Cost = 10,
+                Description = "test description",
+            };
 
-    //        _mapperMock.Setup(x => x.Map<GetDocumentDto>(document)).Returns(documentDto);
+            var getDocumentDto = new DocumentDetailsDto
+            {
+                Id = document.Id,
+                Name = document.Name,
+                ReceivedAt = document.ReceivedAt,
+                Cost = document.Cost.ToString(),
+                Description = document.Description
+            };
 
+            context.Documents.Add(document);
+            await context.SaveChangesAsync();
+
+            var addedDocument = await context.Documents.FirstOrDefaultAsync(x => x.Id == 1);
+            _mapperMock.Setup(x => x.Map<DocumentDetailsDto>(addedDocument)).Returns(getDocumentDto);
+
+            var getDocumentDetailHandler = new GetDocumentDetailHandler(_mapperMock.Object, context);
+
+            var responseDocument = Response<DocumentDetailsDto>.Success(getDocumentDto);
+
+            var getDocumentDetailQuery = new GetDocumentDetailQuery(1);
 
             //Act
-            //await _getDocumentDetailHandler.Handle(_request, CancellationToken.None);
+            var handleResult = await getDocumentDetailHandler.Handle(getDocumentDetailQuery, CancellationToken.None);
 
-    //        //Assert
-    //        _documentRepositoryMock.Verify(x => x.GetByIdAsync(1), Times.Once);
-    //        documentDto.Should().NotBeNull();
-    //        documentDto.Name.Should().NotBeNull();
-    //        documentDto.Name.Should().BeEquivalentTo(document.Name);
-    //        documentDto.Description.Should().NotBeNull();
-    //        documentDto.Description.Should().BeEquivalentTo(document.Description);
-    //    }
+            //Assert
+            handleResult.Should().BeOfType<Response<DocumentDetailsDto>>();
 
-    //}
+            handleResult.Should().BeEquivalentTo(responseDocument);
+        }
+
+    }
 }

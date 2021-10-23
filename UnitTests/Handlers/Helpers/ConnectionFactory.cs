@@ -8,6 +8,7 @@ namespace UnitTests.Handlers
     {
         private bool disposedValue = false;
         private readonly FakeUserContextAccessor _userResolverService;
+        public readonly string UserId = "031eca6d-8300-4cb0-b0c8-3d7eecf9b718";
 
         public ConnectionFactory()
         {

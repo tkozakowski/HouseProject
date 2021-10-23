@@ -28,6 +28,8 @@ namespace Application.Documents.Query.Details
             var result = await _houseProjectDbContext.Documents.Where(x => x.Id == request.id)
                 .ProjectTo<DocumentDetailsDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
 
+            if (result is null) return Response<DocumentDetailsDto>.Failure("Failed to get document");
+
             return Response<DocumentDetailsDto>.Success(result);
         }
     }

@@ -9,41 +9,44 @@ using Application.Documents.Command.RemoveDocument;
 using Xunit;
 using System.Threading;
 using Domain.Entities;
+using UnitTests.Handlers.Helpers;
+using Microsoft.EntityFrameworkCore;
+using FluentAssertions;
 
 namespace UnitTests.Handlers.Documents
 {
-    //public class RemoveDocumentHandlerTests
-    //{
-    //    private readonly Mock<IDocumentRepository> _documentRepositoryMock;
-    //    private readonly RemoveDocumentHandler _removeDocumentHandler;
-    //    private readonly int id;
+    public class RemoveDocumentHandlerTests
+    {
 
-    //    public RemoveDocumentHandlerTests()
-    //    {
-    //        _documentRepositoryMock = new Mock<IDocumentRepository>();
-    //        _removeDocumentHandler = new RemoveDocumentHandler(_documentRepositoryMock.Object);
-    //    }
+        [Fact]
+        public async Task RemoveDocumentHandler_GivenId_RemoveDocument()
+        {
 
-    //    [Fact]
-    //    public async Task RemoveDocumentHandler_GivenId_RemoveDocument()
-    //    {
-    //        //Arrange
-    //        var document = new Document
-    //        {
-    //            Id = 2,
-    //            Cost = 5.0M,
-    //            Description = "description",
-    //            Name = "name",
-    //            CreatedAt = new DateTime(2021, 10, 16)
-    //        };
+            var factory = new ConnectionFactory();
+            var context = factory.CreateContextForInMemory();
 
-    //        //Act
-    //        var result = await _removeDocumentHandler.Handle(new RemoveDocumentCommand { Id = id }, CancellationToken.None);
+            //Arrange
+            context.Documents.Add(new Document { Id = 1, Cost = 1M, Description = "desc1", Name = "name1" });
+            context.Documents.Add(new Document { Id = 2, Cost = 2M, Description = "desc2", Name = "name2" });
+            await context.SaveChangesAsync();
 
-    //        //Assert
-    //        _documentRepositoryMock.Verify(x => x.RemoveAsync(id), Times.Once);
-    //    }
+            var removeDocumentHandler = new RemoveDocumentHandler(context);
+
+            //Act
+            var addedDocument2 = await context.Documents.FirstOrDefaultAsync(x => x.Id == 2);
+            var allDocuments = (await context.Documents.ToListAsync()).Count();
+
+            await removeDocumentHandler.Handle(new RemoveDocumentCommand { Id = 2 }, CancellationToken.None);
+
+            var allDocumentsAfterRemovedSecond = (await context.Documents.ToListAsync()).Count();
+            var addedDocument2Check = await context.Documents.FirstOrDefaultAsync(x => x.Id == 2);
+
+            //Assert
+            allDocuments.Should().BeGreaterThan(allDocumentsAfterRemovedSecond);
+            allDocuments.Should().Equals(allDocumentsAfterRemovedSecond + 1);
+            addedDocument2Check.Should().BeNull();
+        }
 
 
-    //}
+    }
 }

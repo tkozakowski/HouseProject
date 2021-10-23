@@ -15,7 +15,6 @@ namespace UnitTests.Handlers.Documents
     public class CreateDocumentHandlerTests
     {
         private readonly Mock<IMapper> _mapperMock;
-        private string userId = "031eca6d-8300-4cb0-b0c8-3d7eecf9b718";
 
         public CreateDocumentHandlerTests()
         {
@@ -49,7 +48,7 @@ namespace UnitTests.Handlers.Documents
 
             _mapperMock.Setup(x => x.Map<Document>(createDocumentDto)).Returns(document);
 
-            var createDocumentCommand = new CreateDocumentCommand { CreateDocumentDto = createDocumentDto, UserId = userId };
+            var createDocumentCommand = new CreateDocumentCommand { CreateDocumentDto = createDocumentDto, UserId = factory.UserId };
 
             CreateDocumentHandler createDocumentHandler = new(_mapperMock.Object, context);
 
@@ -67,6 +66,7 @@ namespace UnitTests.Handlers.Documents
             addedDocument.Name.Should().NotBeEmpty();
             addedDocument.Cost.Value.Should().BeGreaterOrEqualTo(0);
 
+            //Check names
             var singleDocument = context.Documents.FirstOrDefault(x => x.Id == 1);
             Assert.Equal(singleDocument.Name, document.Name);
         }
