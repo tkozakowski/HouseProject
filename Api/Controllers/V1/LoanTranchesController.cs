@@ -11,30 +11,30 @@ using System.Threading.Tasks;
 
 namespace Api.V1.Controllers
 {
-    public class LoanTranchesController: BaseApiController
-    {
-        [HttpGet]
-        public async Task<ActionResult<List<LoanTranche>>> GetAllLoanTranche()
-        {
-            return HandleResult<List<LoanTrancheDto>>(await Mediator.Send(new GetAllLoanTranchesQuery()));
-        }
+    //public class LoanTranchesController: BaseApiController
+    //{
+    //    [HttpGet]
+    //    public async Task<ActionResult<List<LoanTranche>>> GetAllLoanTranche()
+    //    {
+    //        return HandleResult<List<LoanTrancheDto>>(await Mediator.Send(new GetAllLoanTranchesQuery()));
+    //    }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<LoanTrancheDto>> GetLoanTrancheById(int id)
-        {
-            return HandleResult<LoanTrancheDto>(await Mediator.Send(new GetLoanTrancheByIdQuery { Id = id}));
-        }
+    //    [HttpGet("{id}")]
+    //    public async Task<ActionResult<LoanTrancheDto>> GetLoanTrancheById(int id)
+    //    {
+    //        return HandleResult<LoanTrancheDto>(await Mediator.Send(new GetLoanTrancheByIdQuery { Id = id}));
+    //    }
 
-        //[HttpPost]
-        //public async Task<ActionResult> AddOrUpdateLoanTranche([FromBody] LoanTrancheDto loanTranche)
-        //{
-        //    return HandleResult<Unit>(await Mediator.Send(new AddOrUpdateLoanTrancheCommand { LoanTrancheDto = loanTranche}));
-        //}
+    //    //[HttpPost]
+    //    //public async Task<ActionResult> AddOrUpdateLoanTranche([FromBody] LoanTrancheDto loanTranche)
+    //    //{
+    //    //    return HandleResult<Unit>(await Mediator.Send(new AddOrUpdateLoanTrancheCommand { LoanTrancheDto = loanTranche}));
+    //    //}
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> RemoveLoanTranche(int id)
-        {
-            return HandleResult<Unit>(await Mediator.Send(new RemoveLoanTrancheCommand { Id = id }));
-        }
-    }
+    //    [HttpDelete("{id}")]
+    //    public async Task<ActionResult> RemoveLoanTranche(int id)
+    //    {
+    //        return HandleResult<Unit>(await Mediator.Send(new RemoveLoanTrancheCommand { Id = id }));
+    //    }
+    //}
 }

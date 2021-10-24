@@ -6,26 +6,26 @@ using Domain.Interfaces;
 
 namespace Application.LoanTranches.Command.Remove
 {
-    public class RemoveLoanTrancheHandler : IRequestHandler<RemoveLoanTrancheCommand, Response<Unit>>
-    {
-        private readonly ILoanTrancheRepository _loanTrancheRepository;
+    //    public class RemoveLoanTrancheHandler : IRequestHandler<RemoveLoanTrancheCommand, Response<Unit>>
+    //    {
+    //        private readonly ILoanTrancheRepository _loanTrancheRepository;
 
-        public RemoveLoanTrancheHandler(ILoanTrancheRepository loanTrancheRepository)
-        {
-            _loanTrancheRepository = loanTrancheRepository;
-        }
+    //        public RemoveLoanTrancheHandler(ILoanTrancheRepository loanTrancheRepository)
+    //        {
+    //            _loanTrancheRepository = loanTrancheRepository;
+    //        }
 
-        public async Task<Response<Unit>> Handle(RemoveLoanTrancheCommand request, CancellationToken cancellationToken)
-        {
-            var result = await _loanTrancheRepository.GetByIdAsync(request.Id);
+    //        public async Task<Response<Unit>> Handle(RemoveLoanTrancheCommand request, CancellationToken cancellationToken)
+    //        {
+    //            var result = await _loanTrancheRepository.GetByIdAsync(request.Id);
 
-            if (result is null) return Response<Unit>.Failure("Failed to remove loan tranche");          
+    //            if (result is null) return Response<Unit>.Failure("Failed to remove loan tranche");          
 
-            var success = await _loanTrancheRepository.DeleteAsync(result);
+    //            var success = await _loanTrancheRepository.DeleteAsync(result);
 
-            if (!success) return Response<Unit>.Failure("Failed to remove loan tranche");
+    //            if (!success) return Response<Unit>.Failure("Failed to remove loan tranche");
 
-            return Response<Unit>.Success(Unit.Value);
-        }
-    }
+    //            return Response<Unit>.Success(Unit.Value);
+    //        }
+    //    }
 }

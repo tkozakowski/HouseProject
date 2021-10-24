@@ -6,6 +6,8 @@ using Application.Extensions;
 using Api.Extensions.AddServices;
 using Infrastructure.Extensions;
 using System.Reflection;
+using Application.Document.Query.GetDocuments;
+using Application.Documents.Command.CreateDocument;
 
 namespace Api.Extensions
 {
@@ -24,13 +26,10 @@ namespace Api.Extensions
             //services.AddCORS();
 
 
-            services.AddInfrastructure(Configuration);
-
-            services.AddApplication(Configuration);
-
             services.AddIdentityService(Configuration);
 
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            //services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(typeof(CreateDocumentHandler).GetTypeInfo().Assembly);
 
             services.AddScoped<ErrorHandlingMiddleware>();
 

@@ -20,19 +20,11 @@ namespace Api.Controllers.V1
     [ApiController]
     public class AttachmentsController : BaseApiController
     {
-        private readonly IAttachmentService _attachmentComparerService;
-
-        public AttachmentsController(IAttachmentService attachmentComparerService)
-        {
-            _attachmentComparerService = attachmentComparerService;
-        }
-
-
-        [HttpGet("[action]/{applicationId}")]
-        public async Task<ActionResult<GetAttachmentDto>> GetAttachmentsInfoByApplicationIdAsync(int applicationId)
-        {
-            return HandleResult<List<GetAttachmentDto>>(await Mediator.Send(new GetAttachmentInfoDetailQuery(applicationId)));
-        }
+        //[HttpGet("[action]/{applicationId}")]
+        //public async Task<ActionResult<GetAttachmentDto>> GetAttachmentsByApplicationIdAsync(int applicationId)
+        //{
+        //    return HandleResult<List<GetAttachmentDto>>(await Mediator.Send(new GetAttachmentInfoDetailQuery(applicationId)));
+        //}
 
         [HttpGet("[action]/{applicationId}")]
         public async Task<ActionResult<IEnumerable<SmallFileDto>>> DownloadSmallFilesByApplicationAsync(int applicationId)
@@ -56,19 +48,12 @@ namespace Api.Controllers.V1
                 File = formFile }));
         }
 
+
         [HttpDelete("[action]/{fileId}")]
         public async Task<ActionResult> DeleteFileAsync(int fileId)
         {
             return HandleResult(await Mediator.Send(new DeleteFileCommand { AttachmentId = fileId }));
         }
 
-
-        [HttpGet("[action]")]
-        public async Task<ActionResult> RecoverBackupFiles()
-        {
-            await _attachmentComparerService.RecoverFiles();
-
-            return NoContent();
-        }
     }
 }

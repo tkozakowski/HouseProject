@@ -3,7 +3,9 @@ using Api.HealthChecks;
 using Api.Middleware;
 using Application.Dto;
 using Application.Dto.Materials;
+using Application.Extensions;
 using HealthChecks.UI.Client;
+using Infrastructure.Extensions;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -33,6 +35,11 @@ namespace HouseProject.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddServices(Configuration);
+
+            services.AddInfrastructure(Configuration);
+
+            services.AddApplication(Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
