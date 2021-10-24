@@ -5,6 +5,7 @@ using Application.Services;
 using Application.Interfaces;
 using FluentValidation.AspNetCore;
 using Application.Documents.Command.CreateDocument;
+using MediatR;
 
 namespace Application.Extensions
 {
@@ -19,6 +20,7 @@ namespace Application.Extensions
             });
             services.AddScoped<IODataMaterialService, ODataMaterialService>();
             services.AddScoped<UserContextAccessorService>();
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             return services;
         }
     }

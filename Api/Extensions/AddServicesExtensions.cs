@@ -28,9 +28,6 @@ namespace Api.Extensions
 
             services.AddIdentityService(Configuration);
 
-            //services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddMediatR(typeof(CreateDocumentHandler).GetTypeInfo().Assembly);
-
             services.AddScoped<ErrorHandlingMiddleware>();
 
             services.AddVersioning();
