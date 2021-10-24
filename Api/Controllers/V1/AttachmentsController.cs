@@ -22,16 +22,11 @@ namespace Api.Controllers.V1
     [ApiController]
     public class AttachmentsController : BaseApiController
     {
-        //[HttpGet("[action]/{applicationId}")]
-        //public async Task<ActionResult<GetAttachmentDto>> GetAttachmentsByApplicationIdAsync(int applicationId)
-        //{
-        //    return HandleResult<List<GetAttachmentDto>>(await Mediator.Send(new GetAttachmentInfoDetailQuery(applicationId)));
-        //}
 
         [HttpGet("[action]/{applicationId}")]
-        public async Task<ActionResult<IEnumerable<SmallFileDto>>> DownloadSmallFilesByApplicationAsync(int applicationId)
+        public async Task<ActionResult<IEnumerable<SmallFileDto>>> GetSmallFilesAsync(int applicationId)
         {
-            return HandleResult(await Mediator.Send(new GetSmallFilesByApplicationQuery(applicationId)));
+            return HandleResult(await Mediator.Send(new GetSmallFilesQuery(applicationId)));
         }
 
         [HttpGet("[action]/{fileId}")]

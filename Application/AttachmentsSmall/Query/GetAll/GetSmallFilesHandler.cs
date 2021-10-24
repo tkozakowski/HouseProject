@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace Application.AttachmentsSmall.Query.GetAll
 {
-    public class GetSmallFilesByApplicationHandler : IRequestHandler<GetSmallFilesByApplicationQuery, Response<IEnumerable<SmallFileDetailDto>>>
+    public class GetSmallFilesHandler : IRequestHandler<GetSmallFilesQuery, Response<IEnumerable<SmallFileDetailDto>>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
 
-        public GetSmallFilesByApplicationHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
+        public GetSmallFilesHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
         {
             _houseProjectDbContext = houseProjectDbContext;
             _mapper = mapper;
         }
 
-        public async Task<Response<IEnumerable<SmallFileDetailDto>>> Handle(GetSmallFilesByApplicationQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IEnumerable<SmallFileDetailDto>>> Handle(GetSmallFilesQuery request, CancellationToken cancellationToken)
         {
             var attachments = await _houseProjectDbContext.AttachmentsBackup.Where(x => x.ApplicationId == request.applicationId && !x.IsDeleted).ProjectTo<SmallFileDetailDto>(_mapper.ConfigurationProvider).ToListAsync();
 
