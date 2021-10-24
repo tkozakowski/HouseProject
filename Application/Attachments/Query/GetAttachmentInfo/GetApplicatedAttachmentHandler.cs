@@ -11,26 +11,26 @@ using System.Threading.Tasks;
 
 namespace Application.Attachments.Query.GetAttachmentInfo
 {
-    public class GetAttachmentInfoDetailHandler : IRequestHandler<GetAttachmentInfoDetailQuery, Response<List<GetAttachmentDto>>>
+    public class GetApplicatedAttachmentHandler : IRequestHandler<GetApplicatedAttachmentQuery, Response<List<GetApplicatedAttachmentsDto>>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
 
-        public GetAttachmentInfoDetailHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
+        public GetApplicatedAttachmentHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
         {
             _houseProjectDbContext = houseProjectDbContext;
             _mapper = mapper;
         }
 
-        public async Task<Response<List<GetAttachmentDto>>> Handle(GetAttachmentInfoDetailQuery request, CancellationToken cancellationToken)
+        public async Task<Response<List<GetApplicatedAttachmentsDto>>> Handle(GetApplicatedAttachmentQuery request, CancellationToken cancellationToken)
         {
             var attachmentsDto = await _houseProjectDbContext.SendApplications
                 .Include(x => x.Attachments)
                 .Where(x => x.Id == request.applicationId)
-                .ProjectTo<List<GetAttachmentDto>>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync();
+                .ProjectTo<GetApplicatedAttachmentsDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
 
-            return Response<List<GetAttachmentDto>>.Success(attachmentsDto);
+            return Response<List<GetApplicatedAttachmentsDto>>.Success(attachmentsDto);
         }
     }
 }

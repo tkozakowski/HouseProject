@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.AttachmentsSmall.Command.Add
 {
-    public class AddSmallFileToApplicationHandler : IRequestHandler<AdSmallFileToApplicationCommand, Response<Unit>>
+    public class AddSmallFileToApplicationHandler : IRequestHandler<AddSmallFileToApplicationCommand, Response<Unit>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
 
@@ -18,7 +18,7 @@ namespace Application.AttachmentsSmall.Command.Add
             _houseProjectDbContext = houseProjectDbContext;
         }
 
-        public async Task<Response<Unit>> Handle(AdSmallFileToApplicationCommand request, CancellationToken cancellationToken)
+        public async Task<Response<Unit>> Handle(AddSmallFileToApplicationCommand request, CancellationToken cancellationToken)
         {
             var attachmentBackup = new AttachmentBackup
             {
@@ -31,7 +31,7 @@ namespace Application.AttachmentsSmall.Command.Add
 
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;          
 
-            if (!success) return Response<Unit>.Failure("Failed to add attachment to backup");
+            if (!success) return Response<Unit>.Failure("Failed to add attachment");
 
             return Response<Unit>.Success(Unit.Value);
         }
