@@ -52,7 +52,6 @@ namespace Api.Controllers
 
             if (!result.Succeeded)
             {
-                IEnumerable<string> a = result.Errors.Select(x => x.Description);
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     Result<bool>.Failure("User creation failed", result.Errors.Select(x => x.Description)));
             }
