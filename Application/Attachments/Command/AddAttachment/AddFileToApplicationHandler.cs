@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Attachments.Command.AddAttachment
 {
-    public class AddFileToApplicationHandler : IRequestHandler<AddFileToApplicationCommand, Response<Unit>>
+    public class AddFileToApplicationHandler : IRequestHandler<AddFileToApplicationCommand, Result<Unit>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
 
@@ -18,7 +18,7 @@ namespace Application.Attachments.Command.AddAttachment
             _houseProjectDbContext = houseProjectDbContext;
         }
 
-        public async Task<Response<Unit>> Handle(AddFileToApplicationCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(AddFileToApplicationCommand request, CancellationToken cancellationToken)
         {
             var application = await _houseProjectDbContext.SendApplications
                 .FirstOrDefaultAsync(x => x.Id == request.ApplicationId);
@@ -36,9 +36,9 @@ namespace Application.Attachments.Command.AddAttachment
             _houseProjectDbContext.Attachments.Add(attachment);
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
-            if (!success) return Response<Unit>.Failure("Failed to add new attachment");
+            if (!success) return Result<Unit>.Failure("Failed to add new attachment");
 
-            return Response<Unit>.Success(Unit.Value);
+            return Result<Unit>.Success(Unit.Value);
         }
     }
 }

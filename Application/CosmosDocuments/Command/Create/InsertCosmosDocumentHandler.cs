@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.CosmosDocuments.Command.Create
 {
-    public class InsertCosmosDocumentHandler : IRequestHandler<InsertCosmosDocumentCommand, Response<Unit>>
+    public class InsertCosmosDocumentHandler : IRequestHandler<InsertCosmosDocumentCommand, Result<Unit>>
     {
         private readonly ICosmosStore<CosmosDocument> _cosmosStore;
         private readonly IHouseProjectDbContext _houseProjectDbContext;
@@ -22,7 +22,7 @@ namespace Application.CosmosDocuments.Command.Create
             _mapper = mapper;
         }
 
-        public async Task<Response<Unit>> Handle(InsertCosmosDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(InsertCosmosDocumentCommand request, CancellationToken cancellationToken)
         {
             var cosmosDocument = _mapper.Map<CosmosDocument>(request.CosmosDocument);
 
@@ -30,7 +30,7 @@ namespace Application.CosmosDocuments.Command.Create
 
             await _cosmosStore.AddAsync(cosmosDocument);
 
-            return Response<Unit>.Success(Unit.Value);
+            return Result<Unit>.Success(Unit.Value);
         }
     }
 }

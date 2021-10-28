@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.CosmosDocuments.Query.GetDetail
 {
-    public record GetCosmosDocumentByIdQuery(string id): IRequest<Response<GetCosmosDocumentDto>>
+    public record GetCosmosDocumentByIdQuery(string id): IRequest<Result<GetCosmosDocumentDto>>
     {
 
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Attachments.Command.DeleteFromHD
 {
-    public class DeleteFileHandler : IRequestHandler<DeleteFileCommand, Response<Unit>>
+    public class DeleteFileHandler : IRequestHandler<DeleteFileCommand, Result<Unit>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
 
@@ -17,16 +17,16 @@ namespace Application.Attachments.Command.DeleteFromHD
             _houseProjectDbContext = houseProjectDbContext;
         }
 
-        public async Task<Response<Unit>> Handle(DeleteFileCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(DeleteFileCommand request, CancellationToken cancellationToken)
         {
             var attachment = await _houseProjectDbContext.Attachments.FirstOrDefaultAsync(x => x.Id == request.AttachmentId);
 
             attachment.IsDeleted = true;
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
-            if (!success) return Response<Unit>.Failure("Failed to remove file");
+            if (!success) return Result<Unit>.Failure("Failed to remove file");
 
-            return Response<Unit>.Success(Unit.Value);
+            return Result<Unit>.Success(Unit.Value);
         }
     }
 }

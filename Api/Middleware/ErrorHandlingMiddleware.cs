@@ -30,7 +30,7 @@ namespace Api.Middleware
                 _logger.LogError(ex, ex.Message);
 
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsJsonAsync(new Response(false, ex.Message));
+                await context.Response.WriteAsJsonAsync(new Result(false, ex.Message));
 
             }
         }

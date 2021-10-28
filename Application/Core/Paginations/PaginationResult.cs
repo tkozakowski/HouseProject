@@ -1,6 +1,6 @@
 ﻿namespace Application.Core.Paginations
 {
-    public class PaginationResult<T> : Response<T>
+    public class PaginationResult<T> : Result<T>
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }

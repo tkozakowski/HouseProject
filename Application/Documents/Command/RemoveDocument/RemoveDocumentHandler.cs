@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Documents.Command.RemoveDocument
 {
-    public class RemoveDocumentHandler : IRequestHandler<RemoveDocumentCommand, Response<Unit>>
+    public class RemoveDocumentHandler : IRequestHandler<RemoveDocumentCommand, Result<Unit>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
 
@@ -16,18 +16,18 @@ namespace Application.Documents.Command.RemoveDocument
             _houseProjectDbContext = houseProjectDbContext;
         }
 
-        public async Task<Response<Unit>> Handle(RemoveDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(RemoveDocumentCommand request, CancellationToken cancellationToken)
         {
             var document = await _houseProjectDbContext.Documents.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            if (document is null) return Response<Unit>.Failure("Document doesn't exists in db");
+            if (document is null) return Result<Unit>.Failure("Document doesn't exists in db");
 
             _houseProjectDbContext.Documents.Remove(document);
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
-            if (!success) return Response<Unit>.Failure("Failed to remove document");
+            if (!success) return Result<Unit>.Failure("Failed to remove document");
 
-            return Response<Unit>.Success(Unit.Value);
+            return Result<Unit>.Success(Unit.Value);
         }
     }
 }

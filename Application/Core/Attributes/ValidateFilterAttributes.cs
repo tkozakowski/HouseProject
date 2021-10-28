@@ -14,7 +14,7 @@ namespace Application.Core.Attributes
             {
                 var entry = context.ModelState.Values.FirstOrDefault();
 
-                context.Result = new BadRequestObjectResult(new Response<bool>
+                context.Result = new BadRequestObjectResult(new Result<bool>
                 { 
                     IsSuccess = false, 
                     Errors = entry.Errors.Select(x => x.ErrorMessage),                    

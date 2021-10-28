@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.LoanTranches.Query.GetDetail
 {
-    public class GetLoanTrancheByIdQuery: IRequest<Response<LoanTrancheDto>>
+    public class GetLoanTrancheByIdQuery: IRequest<Result<LoanTrancheDto>>
     {
         public int Id { get; set; }
     }

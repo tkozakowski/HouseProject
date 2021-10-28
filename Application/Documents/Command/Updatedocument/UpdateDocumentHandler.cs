@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Documents.Command.UpdateDocument
 {
-    public class UpdateDocumentHandler : IRequestHandler<UpdateDocumentCommand, Response<Unit>>
+    public class UpdateDocumentHandler : IRequestHandler<UpdateDocumentCommand, Result<Unit>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
@@ -18,7 +18,7 @@ namespace Application.Documents.Command.UpdateDocument
             _mapper = mapper;
             _houseProjectDbContext = houseProjectDbContext;
         }
-        public async Task<Response<Unit>> Handle(UpdateDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(UpdateDocumentCommand request, CancellationToken cancellationToken)
         {
             var existingDocument = await _houseProjectDbContext.Documents.FirstOrDefaultAsync(x => x.Id == request.Id);
 
@@ -29,9 +29,9 @@ namespace Application.Documents.Command.UpdateDocument
 
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
-            if (!success) return Response<Unit>.Failure("Failed to update document");
+            if (!success) return Result<Unit>.Failure("Failed to update document");
 
-            return Response<Unit>.Success(Unit.Value);
+            return Result<Unit>.Success(Unit.Value);
         }
     }
 }

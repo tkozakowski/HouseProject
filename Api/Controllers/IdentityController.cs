@@ -38,7 +38,7 @@ namespace Api.Controllers
 
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, Response<bool>.Failure("User already exists"));
+                return StatusCode(StatusCodes.Status500InternalServerError, Result<bool>.Failure("User already exists"));
             }
 
             ApplicationUser user = new ApplicationUser()
@@ -54,7 +54,7 @@ namespace Api.Controllers
             {
                 IEnumerable<string> a = result.Errors.Select(x => x.Description);
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    Response<bool>.Failure("User creation failed", result.Errors.Select(x => x.Description)));
+                    Result<bool>.Failure("User creation failed", result.Errors.Select(x => x.Description)));
             }
 
             if (!await _roleManager.RoleExistsAsync(UserRoles.User))
@@ -63,7 +63,7 @@ namespace Api.Controllers
             await _userManager.AddToRoleAsync(user, UserRoles.User);
 
 
-            return Ok(Response<bool>.Success(true));
+            return Ok(Result<bool>.Success(true));
         }
 
 
@@ -74,7 +74,7 @@ namespace Api.Controllers
 
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, Response<bool>.Failure("User already exists"));
+                return StatusCode(StatusCodes.Status500InternalServerError, Result<bool>.Failure("User already exists"));
             }
 
             ApplicationUser user = new ApplicationUser()
@@ -90,7 +90,7 @@ namespace Api.Controllers
             {
                 IEnumerable<string> a = result.Errors.Select(x => x.Description);
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    Response<bool>.Failure("User creation failed", result.Errors.Select(x => x.Description)));
+                    Result<bool>.Failure("User creation failed", result.Errors.Select(x => x.Description)));
             }
 
             if (!await _roleManager.RoleExistsAsync(UserRoles.UserRO))
@@ -99,7 +99,7 @@ namespace Api.Controllers
             await _userManager.AddToRoleAsync(user, UserRoles.UserRO);
 
 
-            return Ok(Response<bool>.Success(true));
+            return Ok(Result<bool>.Success(true));
         }
 
         [HttpPost("Login")]

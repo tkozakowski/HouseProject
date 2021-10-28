@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Attachments.Query.GetAttachmentInfo
 {
-    public class GetApplicatedAttachmentHandler : IRequestHandler<GetApplicatedAttachmentQuery, Response<List<GetApplicatedAttachmentsDto>>>
+    public class GetApplicatedAttachmentHandler : IRequestHandler<GetApplicatedAttachmentQuery, Result<List<GetApplicatedAttachmentsDto>>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace Application.Attachments.Query.GetAttachmentInfo
             _mapper = mapper;
         }
 
-        public async Task<Response<List<GetApplicatedAttachmentsDto>>> Handle(GetApplicatedAttachmentQuery request, CancellationToken cancellationToken)
+        public async Task<Result<List<GetApplicatedAttachmentsDto>>> Handle(GetApplicatedAttachmentQuery request, CancellationToken cancellationToken)
         {
             var attachmentsDto = await _houseProjectDbContext.SendApplications
                 .Include(x => x.Attachments)
@@ -30,7 +30,7 @@ namespace Application.Attachments.Query.GetAttachmentInfo
                 .ProjectTo<GetApplicatedAttachmentsDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
-            return Response<List<GetApplicatedAttachmentsDto>>.Success(attachmentsDto);
+            return Result<List<GetApplicatedAttachmentsDto>>.Success(attachmentsDto);
         }
     }
 }

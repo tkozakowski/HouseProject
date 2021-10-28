@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.CosmosDocuments.Command.Create
 {
-    public class InsertCosmosDocumentCommand: IRequest<Response<Unit>>
+    public class InsertCosmosDocumentCommand: IRequest<Result<Unit>>
     {
         public CreateCosmosDocumentDto CosmosDocument { get; set; }
     }

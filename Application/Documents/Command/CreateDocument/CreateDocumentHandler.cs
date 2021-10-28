@@ -7,7 +7,7 @@ using Application.Interfaces;
 
 namespace Application.Documents.Command.CreateDocument
 {
-    public class CreateDocumentHandler : IRequestHandler<CreateDocumentCommand, Response<Unit>>
+    public class CreateDocumentHandler : IRequestHandler<CreateDocumentCommand, Result<Unit>>
     {
         private readonly IMapper _mapper;
         private readonly IHouseProjectDbContext _houseDbContext;
@@ -19,7 +19,7 @@ namespace Application.Documents.Command.CreateDocument
         }
         public CreateDocumentHandler() {}
 
-        public async Task<Response<Unit>> Handle(CreateDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(CreateDocumentCommand request, CancellationToken cancellationToken)
         {
             var document = _mapper.Map<Domain.Entities.Document>(request.CreateDocumentDto);
 
@@ -29,9 +29,9 @@ namespace Application.Documents.Command.CreateDocument
 
             var success = await _houseDbContext.SaveChangesAsync() > 0;
 
-            if (success) return Response<Unit>.Success(Unit.Value);
+            if (success) return Result<Unit>.Success(Unit.Value);
 
-            return Response<Unit>.Failure("Failed to create document");
+            return Result<Unit>.Failure("Failed to create document");
         }
     }
 }

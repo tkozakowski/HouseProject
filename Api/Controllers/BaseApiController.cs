@@ -12,7 +12,7 @@ namespace Api.Controllers
         private IMediator _mediator;
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
-        protected ActionResult HandleResult<T>(Response<T> result)
+        protected ActionResult HandleResult<T>(Result<T> result)
         {
             if (result is null) return NotFound();
 

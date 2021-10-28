@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.AttachmentsSmall.Query.GetDetail
 {
-    class GetFileDetailHandler : IRequestHandler<GetFileDetailQuery, Response<GetFileDetailDto>>
+    class GetFileDetailHandler : IRequestHandler<GetFileDetailQuery, Result<GetFileDetailDto>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
@@ -21,15 +21,15 @@ namespace Application.AttachmentsSmall.Query.GetDetail
             _mapper = mapper;
         }
 
-        public async Task<Response<GetFileDetailDto>> Handle(GetFileDetailQuery request, CancellationToken cancellationToken)
+        public async Task<Result<GetFileDetailDto>> Handle(GetFileDetailQuery request, CancellationToken cancellationToken)
         {
             var result = await _houseProjectDbContext.AttachmentsBackup.Where(x => x.Id == request.fileId && !x.IsDeleted)
                 .ProjectTo<GetFileDetailDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
 
             if (result is null || result.File.Length <= 0) 
-                return Response<GetFileDetailDto>.Failure("Failed to get requested file");
+                return Result<GetFileDetailDto>.Failure("Failed to get requested file");
 
-            return Response<GetFileDetailDto>.Success(result);
+            return Result<GetFileDetailDto>.Success(result);
         }
     }
 }

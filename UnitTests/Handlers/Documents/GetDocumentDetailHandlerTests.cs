@@ -60,7 +60,7 @@ namespace UnitTests.Handlers.Documents
 
             var getDocumentDetailHandler = new GetDocumentDetailHandler(_mapperMock.Object, context);
 
-            var responseDocument = Response<DocumentDetailsDto>.Success(getDocumentDto);
+            var responseDocument = Result<DocumentDetailsDto>.Success(getDocumentDto);
 
             var getDocumentDetailQuery = new GetDocumentDetailQuery(1);
 
@@ -68,7 +68,7 @@ namespace UnitTests.Handlers.Documents
             var handleResult = await getDocumentDetailHandler.Handle(getDocumentDetailQuery, CancellationToken.None);
 
             //Assert
-            handleResult.Should().BeOfType<Response<DocumentDetailsDto>>();
+            handleResult.Should().BeOfType<Result<DocumentDetailsDto>>();
 
             handleResult.Should().BeEquivalentTo(responseDocument);
         }

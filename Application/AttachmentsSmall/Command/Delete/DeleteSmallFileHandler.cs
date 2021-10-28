@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.AttachmentsSmall.Command.DeleteFromDb
 {
-    public class DeleteSmallFileHandler : IRequestHandler<DeleteSmallFileCommand, Response<Unit>>
+    public class DeleteSmallFileHandler : IRequestHandler<DeleteSmallFileCommand, Result<Unit>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
 
@@ -16,19 +16,19 @@ namespace Application.AttachmentsSmall.Command.DeleteFromDb
             _houseProjectDbContext = houseProjectDbContext;
         }
 
-        public async Task<Response<Unit>> Handle(DeleteSmallFileCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(DeleteSmallFileCommand request, CancellationToken cancellationToken)
         {
             var attachment = await _houseProjectDbContext.AttachmentsBackup
                 .FirstOrDefaultAsync(x => x.Id == request.AttachmentId);
 
-            if (attachment is null) return Response<Unit>.Failure("Failed to remove attachment");
+            if (attachment is null) return Result<Unit>.Failure("Failed to remove attachment");
 
             attachment.IsDeleted = true;
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
-            if (!success) return Response<Unit>.Failure("Failed to remove file");
+            if (!success) return Result<Unit>.Failure("Failed to remove file");
 
-            return Response<Unit>.Success(Unit.Value);
+            return Result<Unit>.Success(Unit.Value);
         }
     }
 }

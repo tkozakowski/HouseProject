@@ -11,7 +11,7 @@ using AutoMapper.QueryableExtensions;
 
 namespace Application.Documents.Query.Details
 {
-    public class GetDocumentDetailHandler : IRequestHandler<GetDocumentDetailQuery, Response<DocumentDetailsDto>>
+    public class GetDocumentDetailHandler : IRequestHandler<GetDocumentDetailQuery, Result<DocumentDetailsDto>>
     {
         private readonly IMapper _mapper;
         private readonly IHouseProjectDbContext _houseProjectDbContext;
@@ -22,15 +22,15 @@ namespace Application.Documents.Query.Details
             _houseProjectDbContext = houseProjectDbContext;
         }
 
-        public async Task<Response<DocumentDetailsDto>> Handle(GetDocumentDetailQuery request, CancellationToken cancellationToken)
+        public async Task<Result<DocumentDetailsDto>> Handle(GetDocumentDetailQuery request, CancellationToken cancellationToken)
         {
 
             var result = await _houseProjectDbContext.Documents.Where(x => x.Id == request.id)
                 .ProjectTo<DocumentDetailsDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
 
-            if (result is null) return Response<DocumentDetailsDto>.Failure("Failed to get document");
+            if (result is null) return Result<DocumentDetailsDto>.Failure("Failed to get document");
 
-            return Response<DocumentDetailsDto>.Success(result);
+            return Result<DocumentDetailsDto>.Success(result);
         }
     }
 }

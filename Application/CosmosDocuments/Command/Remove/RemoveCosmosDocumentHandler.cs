@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.CosmosDocuments.Command.Remove
 {
-    public class RemoveCosmosDocumentHandler : IRequestHandler<RemoveCosmosDocumentCommand, Response<Unit>>
+    public class RemoveCosmosDocumentHandler : IRequestHandler<RemoveCosmosDocumentCommand, Result<Unit>>
     {
         private readonly ICosmosStore<CosmosDocument> _cosmosStore;
 
@@ -17,15 +17,15 @@ namespace Application.CosmosDocuments.Command.Remove
 
         }
 
-        public async Task<Response<Unit>> Handle(RemoveCosmosDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(RemoveCosmosDocumentCommand request, CancellationToken cancellationToken)
         {
 
             var result = await _cosmosStore.RemoveByIdAsync(request.Id);
 
             if (!result.IsSuccess)
-                return Response<Unit>.Failure("Failed to remove document");
+                return Result<Unit>.Failure("Failed to remove document");
 
-            return Response<Unit>.Success(Unit.Value);
+            return Result<Unit>.Success(Unit.Value);
         }
     }
 }

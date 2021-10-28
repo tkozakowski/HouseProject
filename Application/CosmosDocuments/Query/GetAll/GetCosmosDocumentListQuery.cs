@@ -5,6 +5,6 @@ using System.Collections.Generic;
 
 namespace Application.Queries.CosmosDocuments
 {
-    public record GetCosmosDocumentListQuery : IRequest<Response<List<CosmosDocumentDto>>>;
+    public record GetCosmosDocumentListQuery : IRequest<Result<List<CosmosDocumentDto>>>;
 
 }
