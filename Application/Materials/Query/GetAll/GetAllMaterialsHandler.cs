@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Materials.Query.GetAll
 {
-    public class GetAllMaterialsHandler : IRequestHandler<GetAllMaterialsQuery, Result<IEnumerable<GetAllMaterialsDto>>>
+    public class GetAllMaterialsHandler : IRequestHandler<GetAllMaterialsQuery, Result<IEnumerable<GetMaterialsDto>>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
@@ -21,11 +21,11 @@ namespace Application.Materials.Query.GetAll
             _mapper = mapper;
         }
 
-        public async Task<Result<IEnumerable<GetAllMaterialsDto>>> Handle(GetAllMaterialsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<GetMaterialsDto>>> Handle(GetAllMaterialsQuery request, CancellationToken cancellationToken)
         {
-            var materials = await _houseProjectDbContext.Materials.ProjectTo<GetAllMaterialsDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var materials = await _houseProjectDbContext.Materials.ProjectTo<GetMaterialsDto>(_mapper.ConfigurationProvider).ToListAsync();
 
-            return Result<IEnumerable<GetAllMaterialsDto>>.Success(materials);
+            return Result<IEnumerable<GetMaterialsDto>>.Success(materials);
         }
     }
 }

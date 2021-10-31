@@ -22,7 +22,7 @@ namespace Api.Controllers
         /// </summary>
         [HttpGet]
         [EnableQuery]
-        public IQueryable<GetMaterialsDto> GetAll()
+        public IQueryable<GetMaterialDto> GetAll()
         {
             return _materialService.GetAllMaterials();
         }

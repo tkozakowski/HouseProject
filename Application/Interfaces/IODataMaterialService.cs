@@ -5,6 +5,6 @@ namespace Application.Interfaces
 {
     public interface IODataMaterialService
     {
-        public IQueryable<GetMaterialsDto> GetAllMaterials();
+        public IQueryable<GetMaterialDto> GetAllMaterials();
     }
 }

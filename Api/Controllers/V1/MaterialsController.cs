@@ -21,6 +21,13 @@ namespace Api.Controllers.V1
             return HandleResult(materials);
         }
 
+        [HttpGet("[action]")]
+        public async Task<ActionResult<GetMaterialDto>> GetDetail(int id)
+        {
+            var material = await Mediator.Send(new GetMaterialDetailQuery(id));
+
+            return HandleResult(material);
+        }
 
         [HttpPost("[action]")]
         public async Task<IActionResult> AddMaterial([FromQuery] AddMaterialDto materialDto, IFormFile file)

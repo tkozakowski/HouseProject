@@ -16,11 +16,11 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public IQueryable<GetMaterialsDto> GetAllMaterials()
+        public IQueryable<GetMaterialDto> GetAllMaterials()
         {
             var materials = _oDataMaterialRepository.GetAll();
             
-            return _mapper.ProjectTo<GetMaterialsDto>(materials);
+            return _mapper.ProjectTo<GetMaterialDto>(materials);
         }
     }
 }

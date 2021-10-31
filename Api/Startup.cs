@@ -73,7 +73,7 @@ namespace HouseProject.Api
         public static IEdmModel GetEdmModel()
         {
             var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<GetMaterialsDto>("Materials");
+            builder.EntitySet<GetMaterialDto>("Materials");
             return builder.GetEdmModel();
         }
     }

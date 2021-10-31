@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Application.Materials.Query.GetAll
 {
-    public record GetAllMaterialsQuery: IRequest<Result<IEnumerable<GetAllMaterialsDto>>>
+    public record GetAllMaterialsQuery: IRequest<Result<IEnumerable<GetMaterialsDto>>>
     {
     }
 }
