@@ -1,4 +1,5 @@
 ﻿using Application.Core;
+using Application.Extensions;
 using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
@@ -22,6 +23,7 @@ namespace Application.Materials.Command.Add
         public async Task<Result<Unit>> Handle(AddMaterialCommand request, CancellationToken cancellationToken)
         {
             var material = _mapper.Map<Material>(request.AddMaterialDto);
+            material.Photo = request.Photo?.SaveFile();
 
             _houseProjectDbContext.Materials.Add(material);
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;

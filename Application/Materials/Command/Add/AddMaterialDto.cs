@@ -20,9 +20,8 @@ namespace Application.Materials.Command.Add
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AddMaterialCommand, Material>()
-                .ForMember(d => d.PriceItem, opt => opt.MapFrom(s => StringToDecimal.ConvertStringToDecimal(s.AddMaterialDto.PriceItem)))
-                .ForMember(d => d.Photo, opt => opt.MapFrom(s => s.Photo.SaveFile() ?? string.Empty));
+            profile.CreateMap<AddMaterialDto, Material>()
+                .ForMember(d => d.PriceItem, opt => opt.MapFrom(s => StringToDecimal.ConvertStringToDecimal(s.PriceItem)));
         }
     }
 }

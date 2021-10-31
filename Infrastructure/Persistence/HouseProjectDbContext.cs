@@ -136,6 +136,7 @@ namespace Infrastructure.Persistence
                 .HasOne(e => e.PaymentType)
                 .WithMany(d => d.Materials);
 
+
             modelBuilder.Entity<Execution>()
                 .HasOne(e => e.WorkStage)
                 .WithMany(d => d.Executions);
