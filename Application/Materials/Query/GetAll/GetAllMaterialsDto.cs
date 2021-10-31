@@ -1,6 +1,7 @@
 ﻿using Application.Mappings;
 using AutoMapper;
 using Domain.Entities;
+using System.IO;
 
 namespace Application.Materials.Query.GetAll
 {
@@ -13,12 +14,15 @@ namespace Application.Materials.Query.GetAll
         public decimal? PriceItem { get; set; }
         public string PurchasePlace { get; set; }
         public string Payment { get; set; }
-        public string Photo { get; set; }
+        public byte[] Photo { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Material, GetMaterialsDto>()
-                .ForMember(d => d.Payment, o => o.MapFrom(s => s.PaymentType.Name));
+            profile.CreateMap<Material, GetAllMaterialsDto>()
+                .ForMember(d => d.Payment, o => o.MapFrom(s => s.PaymentType.Name))
+                .ForMember(d => d.Photo, o => o.MapFrom(s => File.ReadAllBytes(s.Photo)));
         }
+
+
     }
 }
