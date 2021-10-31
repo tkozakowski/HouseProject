@@ -2,7 +2,7 @@
 using AutoMapper;
 using Domain.Entities;
 
-namespace Application.Dto.Materials
+namespace Application.Materials.Query.GetDetail
 {
     public class GetMaterialsDto : IMap
     {
