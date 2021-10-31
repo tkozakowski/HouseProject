@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("AttachmentsBackup")]
-    public class AttachmentBackup : AuditableEntity
+    public class AttachmentSmall : AuditableEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

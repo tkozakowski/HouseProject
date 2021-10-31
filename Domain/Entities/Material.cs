@@ -18,7 +18,7 @@ namespace Domain.Entities
         public int? LoanTrancheId { get; set; }
         public virtual LoanTranche LoanTranche { get; set; }
 
-        public int ExecutionId { get; set; }
+        public int? ExecutionId { get; set; }
         public virtual Execution Execution { get; set; }
 
         public int? PaymentTypeId { get; set; }

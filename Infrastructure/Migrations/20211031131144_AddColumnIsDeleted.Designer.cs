@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HouseProject.Api.Migrations
 {
     [DbContext(typeof(HouseProjectDbContext))]
-    partial class HouseProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211031131144_AddColumnIsDeleted")]
+    partial class AddColumnIsDeleted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,7 +63,7 @@ namespace HouseProject.Api.Migrations
                     b.ToTable("Attachments");
                 });
 
-            modelBuilder.Entity("Domain.Entities.AttachmentSmall", b =>
+            modelBuilder.Entity("Domain.Entities.AttachmentBackup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -802,10 +804,10 @@ namespace HouseProject.Api.Migrations
                     b.Navigation("Application");
                 });
 
-            modelBuilder.Entity("Domain.Entities.AttachmentSmall", b =>
+            modelBuilder.Entity("Domain.Entities.AttachmentBackup", b =>
                 {
                     b.HasOne("Domain.Entities.SendApplication", "Application")
-                        .WithMany("AttachmentSmall")
+                        .WithMany()
                         .HasForeignKey("ApplicationId");
 
                     b.Navigation("Application");
@@ -1012,8 +1014,6 @@ namespace HouseProject.Api.Migrations
             modelBuilder.Entity("Domain.Entities.SendApplication", b =>
                 {
                     b.Navigation("Attachments");
-
-                    b.Navigation("AttachmentSmall");
                 });
 
             modelBuilder.Entity("Domain.Entities.SendType", b =>

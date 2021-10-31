@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HouseProject.Api.Migrations
 {
     [DbContext(typeof(HouseProjectDbContext))]
-    partial class HouseProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211031132455_ChangeTableAttachmentToAttachmentSmall")]
+    partial class ChangeTableAttachmentToAttachmentSmall
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

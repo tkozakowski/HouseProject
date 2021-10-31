@@ -11,7 +11,7 @@ namespace Application.AttachmentsSmall.Query.GetAll
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AttachmentBackup, SmallFileDetailDto>();
+            profile.CreateMap<AttachmentSmall, SmallFileDetailDto>();
         }
     }
 }

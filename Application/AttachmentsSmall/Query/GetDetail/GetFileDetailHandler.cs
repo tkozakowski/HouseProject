@@ -23,7 +23,7 @@ namespace Application.AttachmentsSmall.Query.GetDetail
 
         public async Task<Result<GetFileDetailDto>> Handle(GetFileDetailQuery request, CancellationToken cancellationToken)
         {
-            var result = await _houseProjectDbContext.AttachmentsBackup.Where(x => x.Id == request.fileId && !x.IsDeleted)
+            var result = await _houseProjectDbContext.AttachmentsSmall.Where(x => x.Id == request.fileId && !x.IsDeleted)
                 .ProjectTo<GetFileDetailDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
 
             if (result is null || result.File.Length <= 0) 

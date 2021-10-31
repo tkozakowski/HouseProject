@@ -24,7 +24,7 @@ namespace UnitTests.Handlers.Helpers
 
 
         public DbSet<Attachment> Attachments { get; set; }
-        public DbSet<AttachmentBackup> AttachmentsBackup { get; set; }
+        public DbSet<AttachmentSmall> AttachmentsSmall { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<Execution> Executions { get; set; }
         public DbSet<Finance> Finances { get; set; }
@@ -113,7 +113,7 @@ namespace UnitTests.Handlers.Helpers
                 .IsRequired()
                 .HasMaxLength(200);
 
-            modelBuilder.Entity<AttachmentBackup>()
+            modelBuilder.Entity<AttachmentSmall>()
                 .Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);

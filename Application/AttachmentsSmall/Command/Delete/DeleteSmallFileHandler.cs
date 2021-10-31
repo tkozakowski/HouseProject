@@ -18,7 +18,7 @@ namespace Application.AttachmentsSmall.Command.DeleteFromDb
 
         public async Task<Result<Unit>> Handle(DeleteSmallFileCommand request, CancellationToken cancellationToken)
         {
-            var attachment = await _houseProjectDbContext.AttachmentsBackup
+            var attachment = await _houseProjectDbContext.AttachmentsSmall
                 .FirstOrDefaultAsync(x => x.Id == request.AttachmentId);
 
             if (attachment is null) return Result<Unit>.Failure("Failed to remove attachment");

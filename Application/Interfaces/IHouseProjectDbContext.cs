@@ -7,7 +7,7 @@ namespace Application.Interfaces
     public interface IHouseProjectDbContext
     {
         DbSet<Attachment> Attachments { get; set; }
-        DbSet<AttachmentBackup> AttachmentsBackup { get; set; }
+        DbSet<AttachmentSmall> AttachmentsSmall { get; set; }
         DbSet<Domain.Entities.Document> Documents { get; set; }
         DbSet<Execution> Executions { get; set; }
         DbSet<Finance> Finances { get; set; }

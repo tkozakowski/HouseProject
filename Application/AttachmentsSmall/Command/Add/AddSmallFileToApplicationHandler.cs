@@ -20,14 +20,14 @@ namespace Application.AttachmentsSmall.Command.Add
 
         public async Task<Result<Unit>> Handle(AddSmallFileToApplicationCommand request, CancellationToken cancellationToken)
         {
-            var attachmentBackup = new AttachmentBackup
+            var attachmentBackup = new AttachmentSmall
             {
                 ApplicationId = request.ApplicationId,
                 File = request.FormFile.GetBytes(),
                 Name = request.FormFile.FileName,
             };
 
-            _houseProjectDbContext.AttachmentsBackup.Add(attachmentBackup);
+            _houseProjectDbContext.AttachmentsSmall.Add(attachmentBackup);
 
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;          
 

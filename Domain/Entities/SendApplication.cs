@@ -21,6 +21,7 @@ namespace Domain.Entities
         public virtual SendType SendType { get; set; }
 
         public ICollection<Attachment> Attachments { get; set; }
+        public ICollection<AttachmentSmall> AttachmentSmall { get; set; }
 
     }
 }
