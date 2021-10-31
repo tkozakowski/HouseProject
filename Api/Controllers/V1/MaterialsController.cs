@@ -1,9 +1,9 @@
 ﻿using Application.Materials.Command.Add;
 using Application.Materials.Query.GetAll;
 using Application.Materials.Query.GetDetail;
+using Application.Materials.Query.GetPriceByExecution;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -27,6 +27,14 @@ namespace Api.Controllers.V1
             var material = await Mediator.Send(new GetMaterialDetailQuery(id));
 
             return HandleResult(material);
+        }
+
+        [HttpGet("[action]/{executionId}")]
+        public async Task<ActionResult<GetMaterialsPriceDto>> GetPrice(int executionId)
+        {
+            var result = await Mediator.Send(new GetMaterialsPriceCommand(executionId));
+
+            return Ok(result);
         }
 
         [HttpPost("[action]")]
