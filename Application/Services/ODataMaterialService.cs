@@ -1,5 +1,5 @@
-﻿using Application.Dto.Materials;
-using Application.Interfaces;
+﻿using Application.Interfaces;
+using Application.Materials.Query.GetDetail;
 using AutoMapper;
 using Domain.Interfaces;
 using System.Linq;

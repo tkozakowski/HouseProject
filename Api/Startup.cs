@@ -1,24 +1,17 @@
 using Api.Extensions;
-using Api.HealthChecks;
 using Api.Middleware;
-using Application.Dto;
-using Application.Dto.Materials;
 using Application.Extensions;
+using Application.Materials.Query.GetDetail;
 using HealthChecks.UI.Client;
 using Infrastructure.Extensions;
 using Microsoft.AspNet.OData.Builder;
-using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OData.Edm;
-using Newtonsoft.Json;
-using System;
-using System.Linq;
 
 namespace HouseProject.Api
 {

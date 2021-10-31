@@ -1,5 +1,5 @@
-﻿using Application.Dto.Materials;
-using Application.Interfaces;
+﻿using Application.Interfaces;
+using Application.Materials.Query.GetDetail;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;

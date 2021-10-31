@@ -1,4 +1,4 @@
-﻿using Application.Dto.Materials;
+﻿using Application.Materials.Query.GetDetail;
 using System.Linq;
 
 namespace Application.Interfaces
