@@ -1,11 +1,8 @@
 ﻿using Application.Core;
 using Application.Interfaces;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,9 +19,17 @@ namespace Application.Executions.Command.Add
             _mapper = mapper;
         }
 
-        public Task<Result<Unit>> Handle(AddExecutionCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(AddExecutionCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var execution = _mapper.Map<Execution>(request.AddExecutionDto);
+
+            _houseProjectDbContext.Executions.Add(execution);
+
+            var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
+
+            if (!success) return Result<Unit>.Failure("Failed to add execution");
+
+            return Result<Unit>.Success(Unit.Value);
         }
     }
 }

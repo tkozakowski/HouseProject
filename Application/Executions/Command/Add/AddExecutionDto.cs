@@ -12,7 +12,6 @@ namespace Application.Executions.Command.Add
         public string EstimatedCost { get; set; }
         public string LaborCost { get; set; }
         public string CostPayed { get; set; }
-        public decimal? Account { get; set; }
         public DateTime? FinishedAt { get; set; }
         public int WorkStageID { get; set; }
 

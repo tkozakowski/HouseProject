@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HouseProject.Api.Migrations
 {
     [DbContext(typeof(HouseProjectDbContext))]
-    partial class HouseProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211101210002_RemoveAccountFromExecution")]
+    partial class RemoveAccountFromExecution
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,6 +178,9 @@ namespace HouseProject.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal?>("Account")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("CostPayed")
                         .HasColumnType("decimal(18,2)");

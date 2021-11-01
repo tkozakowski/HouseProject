@@ -12,7 +12,6 @@ namespace Domain.Entities
         public string Name { get; set; }
         public decimal? EstimatedCost { get; set; }
         public decimal? CostPayed { get; set; }
-        public decimal? Account { get; set; }
         public decimal? LaborCost { get; set; }
         public DateTime? StartedAt { get; set; }
         public DateTime? FinishedAt { get; set; }
