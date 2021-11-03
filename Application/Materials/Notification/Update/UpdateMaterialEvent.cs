@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Materials.Command.Update
+namespace Application.Materials.Notification.Update
 {
     public class UpdateMaterialEvent: INotification
     {

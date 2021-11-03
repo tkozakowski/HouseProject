@@ -1,5 +1,6 @@
 ﻿using Application.Core;
 using Application.Interfaces;
+using Application.Materials.Notification.Update;
 using AutoMapper;
 using Cosmonaut.Extensions;
 using Domain.Entities;

@@ -3,7 +3,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Materials.Command.Update
+namespace Application.Materials.Notification.Update
 {
     public class UpdateMaterialEventHandler : INotificationHandler<UpdateMaterialEvent>
     {

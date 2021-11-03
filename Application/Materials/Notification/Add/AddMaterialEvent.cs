@@ -1,7 +1,6 @@
-﻿using Application.Executions.Command.Update;
-using MediatR;
+﻿using MediatR;
 
-namespace Application.Materials.Command.Add
+namespace Application.Materials.Notification.Add
 {
     public class AddMaterialEvent : INotification
     {
