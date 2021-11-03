@@ -31,11 +31,13 @@ namespace Application.Materials.Command.Add
             _houseProjectDbContext.Materials.Add(material);
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
-            await _mediator.Publish(new AddMaterialEvent(request.AddMaterialDto.ExecutionId));
+            if (success)
+            {
+                await _mediator.Publish(new AddMaterialEvent(request.AddMaterialDto.ExecutionId));
+                return Result<Unit>.Success(Unit.Value);
+            }
 
-            if (!success) return Result<Unit>.Failure("Failed to add material");
-
-            return Result<Unit>.Success(Unit.Value);
+            return Result<Unit>.Failure("Failed to add material");
         }
     }
 }
