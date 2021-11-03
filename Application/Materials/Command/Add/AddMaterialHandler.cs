@@ -13,20 +13,25 @@ namespace Application.Materials.Command.Add
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public AddMaterialHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
+        public AddMaterialHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper, IMediator mediator)
         {
             _houseProjectDbContext = houseProjectDbContext;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<Result<Unit>> Handle(AddMaterialCommand request, CancellationToken cancellationToken)
         {
+
             var material = _mapper.Map<Material>(request.AddMaterialDto);
             material.Photo = request.Photo?.SaveFile();
 
             _houseProjectDbContext.Materials.Add(material);
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
+
+            await _mediator.Publish(new AddMaterialEvent(request.AddMaterialDto.ExecutionId));
 
             if (!success) return Result<Unit>.Failure("Failed to add material");
 

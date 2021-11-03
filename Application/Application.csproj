@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Executions\Query\" />
+    <Folder Include="Materials\Command\Update\" />
   </ItemGroup>
 
 </Project>

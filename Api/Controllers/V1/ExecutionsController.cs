@@ -1,4 +1,5 @@
 ﻿using Application.Executions.Command.Add;
+using Application.Executions.Command.Update;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -13,5 +14,10 @@ namespace Api.Controllers.V1
             return HandleResult(await Mediator.Send(new AddExecutionCommand { AddExecutionDto = executionDto }));
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateExecution(int id)
+        {
+            return HandleResult(await Mediator.Send(new UpdateExecutionCommand { ExecutionId = id }));
+        }
     }
 }
