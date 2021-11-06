@@ -12,12 +12,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{F86FE5F8-8B37-43EC-A978-8DA423D46B38}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{83520CF4-1AA4-40B2-9C2A-040D0F010FC2}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CADD07CD-EAD0-4DC3-BBAE-5859503E7D27}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{48E3DBC6-215B-4B99-8EF6-0C99B042CABB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndToEndTests", "EndToEndTests\EndToEndTests.csproj", "{231EEBB6-B91D-41D3-A93F-6116D3B91102}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EndToEndTests", "EndToEndTests\EndToEndTests.csproj", "{231EEBB6-B91D-41D3-A93F-6116D3B91102}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
