@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Api</AssemblyName>
+    <UserSecretsId>58b58901-4b1d-49c7-96f4-74d7971b073b</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
