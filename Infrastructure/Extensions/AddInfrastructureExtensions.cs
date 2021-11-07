@@ -11,6 +11,7 @@ namespace Infrastructure.Extensions
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration Configuration)
         {
+            services.AddScoped<Seeder>();
             services.AddHouseDbContext(Configuration);
             services.AddCosmos(Configuration);
             services.AddScoped<IHouseProjectDbContext, HouseProjectDbContext>();

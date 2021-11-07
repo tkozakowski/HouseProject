@@ -3,6 +3,7 @@ using Api.Middleware;
 using Application.Extensions;
 using Application.Materials.Query.GetDetail;
 using HealthChecks.UI.Client;
+using Infrastructure;
 using Infrastructure.Extensions;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Builder;
@@ -36,10 +37,10 @@ namespace HouseProject.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seeder seeder)
         {
             app.UseCors("CorsPolicy");
-
+            seeder.Seed();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
