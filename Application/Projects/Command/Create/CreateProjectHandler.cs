@@ -3,6 +3,7 @@ using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,9 +27,22 @@ namespace Application.Projects.Command.CreateProject
 
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
-            if (!success) return Result<Unit>.Failure("Failed to create project");
+            if (!success)
+            {
+                return Result<Unit>.Failure("Failed to create project");
+            }
+
+            var totalProjectCosts = await _houseProjectDbContext.Projects?.SumAsync(x => x.Cost);
+            if (totalProjectCosts != null)
+            {
+                var finance = await _houseProjectDbContext.Finances.FirstAsync(x => x.Id == 1);
+                finance.ProjectsCost = totalProjectCosts;
+
+                await _houseProjectDbContext.SaveChangesAsync();
+            }
 
             return Result<Unit>.Success(Unit.Value);
+
         }
     }
 }

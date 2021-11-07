@@ -30,7 +30,7 @@ namespace Domain.Entities
         public int? StageId { get; set; }
         public virtual Stage Stage { get; set; }
 
-        public int FinanceId { get; set; }
+        public int? FinanceId { get; set; }
         public virtual Finance Finance { get; set; }
     }
 }

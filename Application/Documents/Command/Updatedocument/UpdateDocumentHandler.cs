@@ -31,6 +31,14 @@ namespace Application.Documents.Command.UpdateDocument
 
             if (!success) return Result<Unit>.Failure("Failed to update document");
 
+            var documentTotalCosts = await _houseProjectDbContext.Documents.SumAsync(x => x.Cost);
+            if (documentTotalCosts != null)
+            {
+                var finance = await _houseProjectDbContext.Finances.FirstOrDefaultAsync(x => x.Id == 1);
+                finance.DocumentsCost = documentTotalCosts;
+
+                await _houseProjectDbContext.SaveChangesAsync();
+            }
             return Result<Unit>.Success(Unit.Value);
         }
     }

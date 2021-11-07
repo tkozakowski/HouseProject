@@ -43,6 +43,17 @@ namespace Application.Executions.Command.Update
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
             if (!success) return Result<Unit>.Failure("Failed to update execution");
+
+
+            var executionTotalCosts = await _houseProjectDbContext.Executions.SumAsync(x => x.CostPayed);
+            if (executionTotalCosts != null)
+            {
+                var finance = await _houseProjectDbContext.Finances.FirstOrDefaultAsync(x => x.Id == 1);
+                finance.ExecutionsCost = executionTotalCosts;
+
+                await _houseProjectDbContext.SaveChangesAsync();
+            }
+
             return Result<Unit>.Success(Unit.Value);
         }
     }

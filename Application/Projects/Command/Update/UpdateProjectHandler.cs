@@ -26,7 +26,7 @@ namespace Application.Projects.Command.Update
         {
             var project = await _houseProjectDbContext.Projects.FirstOrDefaultAsync(x => x.Id == request.UpdateProjectDto.Id);
 
-            if(project is null)
+            if (project is null)
             {
                 _logger.LogDebug($"Response from requested project with id {request.UpdateProjectDto.Id} is null");
                 return Result<Unit>.Failure("Failed to update project");
@@ -42,7 +42,17 @@ namespace Application.Projects.Command.Update
                 return Result<Unit>.Failure("Failed to update project");
             }
 
+            var totalProjectCosts = await _houseProjectDbContext.Projects.SumAsync(x => x.Cost);
+            if (totalProjectCosts != null)
+            {
+                var finance = await _houseProjectDbContext.Finances.FirstAsync(x => x.Id == 1);
+                finance.ProjectsCost = totalProjectCosts;
+
+                await _houseProjectDbContext.SaveChangesAsync();
+            }
+
             return Result<Unit>.Success(Unit.Value);
+
         }
     }
 }

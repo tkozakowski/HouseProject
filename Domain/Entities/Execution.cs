@@ -20,7 +20,7 @@ namespace Domain.Entities
         public int WorkStageID { get; set; }
         public virtual WorkStage WorkStage { get; set; }
 
-        public int FinanceId { get; set; }
+        public int? FinanceId { get; set; }
         public virtual Finance Finance { get; set; }
 
         public ICollection<Material> Materials { get; set; }
