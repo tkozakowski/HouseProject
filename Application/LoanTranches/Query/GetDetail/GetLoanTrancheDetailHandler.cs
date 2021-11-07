@@ -1,33 +1,34 @@
 ﻿using Application.Core;
-using Application.Dto.LoanTranche;
+using Application.Dto.LoanTranche.Query;
+using Application.Interfaces;
 using AutoMapper;
-using Domain.Interfaces;
+using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.LoanTranches.Query.GetDetail
 {
-    //public class GetLoanTrancheDetailHandler : IRequestHandler<GetLoanTrancheByIdQuery, Response<LoanTrancheDto>>
-    //{
-    //    private readonly ILoanTrancheRepository _loanTrancheRepository;
-    //    private readonly IMapper _mapper;
+    public class GetLoanTrancheDetailHandler : IRequestHandler<GetLoanTrancheByIdQuery, Result<LoanTrancheDto>>
+    {
+        private readonly IHouseProjectDbContext _houseProjectDbContext;
+        private readonly IMapper _mapper;
 
-    //    public GetLoanTrancheDetailHandler(ILoanTrancheRepository loanTrancheRepository, IMapper mapper)
-    //    {
-    //        _loanTrancheRepository = loanTrancheRepository;
-    //        _mapper = mapper;
-    //    }
+        public GetLoanTrancheDetailHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
+        {
+            _houseProjectDbContext = houseProjectDbContext;
+            _mapper = mapper;
+        }
 
-    //    public async Task<Response<LoanTrancheDto>> Handle(GetLoanTrancheByIdQuery request, CancellationToken cancellationToken)
-    //    {
-    //        var loanTranche = await _loanTrancheRepository.GetByIdAsync(request.Id);
+        public async Task<Result<LoanTrancheDto>> Handle(GetLoanTrancheByIdQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _houseProjectDbContext.LoanTranches.Where(x => x.Id == request.Id).ProjectTo<LoanTrancheDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
 
-    //        if (loanTranche is null) return Response<LoanTrancheDto>.Failure("Failed to get loan tranche");
-
-    //        var loanTrancheDto = _mapper.Map<LoanTrancheDto>(loanTranche);
-
-    //        return Response<LoanTrancheDto>.Success(loanTrancheDto);
-    //    }
-    //}
+            if (result is null) return Result<LoanTrancheDto>.Failure("Failed to get loan tranche");
+           
+            return Result<LoanTrancheDto>.Success(result);
+        }
+    }
 }

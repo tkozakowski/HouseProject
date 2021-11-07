@@ -13,6 +13,5 @@ namespace Domain.Entities
         public decimal Amount { get; set; }
 
         public ICollection<Material> Materials { get; set; }
-        public ICollection<Finance> Finances { get; set; }
     }
 }

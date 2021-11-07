@@ -2,30 +2,31 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain.Interfaces;
+using Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.LoanTranches.Command.Remove
 {
-    //    public class RemoveLoanTrancheHandler : IRequestHandler<RemoveLoanTrancheCommand, Response<Unit>>
-    //    {
-    //        private readonly ILoanTrancheRepository _loanTrancheRepository;
+    public class RemoveLoanTrancheHandler : IRequestHandler<RemoveLoanTrancheCommand, Result<Unit>>
+    {
+        private readonly IHouseProjectDbContext _houseProjectDbContext;
 
-    //        public RemoveLoanTrancheHandler(ILoanTrancheRepository loanTrancheRepository)
-    //        {
-    //            _loanTrancheRepository = loanTrancheRepository;
-    //        }
+        public RemoveLoanTrancheHandler(IHouseProjectDbContext houseProjectDbContext)
+        {
+            _houseProjectDbContext = houseProjectDbContext;
+        }
 
-    //        public async Task<Response<Unit>> Handle(RemoveLoanTrancheCommand request, CancellationToken cancellationToken)
-    //        {
-    //            var result = await _loanTrancheRepository.GetByIdAsync(request.Id);
+        public async Task<Result<Unit>> Handle(RemoveLoanTrancheCommand request, CancellationToken cancellationToken)
+        {
+            var loanTranche = await _houseProjectDbContext.LoanTranches.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-    //            if (result is null) return Response<Unit>.Failure("Failed to remove loan tranche");          
+            if (loanTranche is null) return Result<Unit>.Failure($"Failed to remove loan tranche wit id {request.Id}");
 
-    //            var success = await _loanTrancheRepository.DeleteAsync(result);
+            _houseProjectDbContext.LoanTranches.Remove(loanTranche);
 
-    //            if (!success) return Response<Unit>.Failure("Failed to remove loan tranche");
+            await _houseProjectDbContext.SaveChangesAsync();
 
-    //            return Response<Unit>.Success(Unit.Value);
-    //        }
-    //    }
+            return Result<Unit>.Success(Unit.Value);
+        }
+    }
 }

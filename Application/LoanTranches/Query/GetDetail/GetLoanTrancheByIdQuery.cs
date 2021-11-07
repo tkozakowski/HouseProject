@@ -1,10 +1,10 @@
 ﻿using Application.Core;
-using Application.Dto.LoanTranche;
+using Application.Dto.LoanTranche.Query;
 using MediatR;
 
 namespace Application.LoanTranches.Query.GetDetail
 {
-    public class GetLoanTrancheByIdQuery: IRequest<Result<LoanTrancheDto>>
+    public record GetLoanTrancheByIdQuery: IRequest<Result<LoanTrancheDto>>
     {
         public int Id { get; set; }
     }

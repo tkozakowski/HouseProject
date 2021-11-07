@@ -10,7 +10,6 @@ namespace Application.Interfaces
         DbSet<AttachmentSmall> AttachmentsSmall { get; set; }
         DbSet<Domain.Entities.Document> Documents { get; set; }
         DbSet<Execution> Executions { get; set; }
-        DbSet<Finance> Finances { get; set; }
         DbSet<LoanTranche> LoanTranches { get; set; }
         DbSet<Material> Materials { get; set; }
         DbSet<PaymentType> PaymentTypes { get; set; }

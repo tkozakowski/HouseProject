@@ -26,7 +26,6 @@ namespace Infrastructure.Persistence
         public DbSet<AttachmentSmall> AttachmentsSmall { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<Execution> Executions { get; set; }
-        public DbSet<Finance> Finances { get; set; }
         public DbSet<LoanTranche> LoanTranches { get; set; }
         public DbSet<Material> Materials { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -140,10 +139,6 @@ namespace Infrastructure.Persistence
             modelBuilder.Entity<Execution>()
                 .HasOne(e => e.WorkStage)
                 .WithMany(d => d.Executions);
-
-            modelBuilder.Entity<Finance>()
-                .HasOne(e => e.LoanTranche)
-                .WithMany(d => d.Finances);
 
         }
 

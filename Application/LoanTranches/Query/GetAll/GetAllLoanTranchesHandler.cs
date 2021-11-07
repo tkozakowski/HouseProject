@@ -3,30 +3,32 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain.Interfaces;
-using Application.Dto.LoanTranche;
+using Application.Dto.LoanTranche.Query;
 using AutoMapper;
+using Application.Interfaces;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.LoanTranches.Query.GetAll
 {
-    //public class GetAllLoanTranchesHandler : IRequestHandler<GetAllLoanTranchesQuery, Response<List<LoanTrancheDto>>>
-    //{
-    //    private readonly ILoanTrancheRepository _loanTrancheRepository;
-    //    private readonly IMapper _mapper;
+    public record GetAllLoanTranchesHandler : IRequestHandler<GetAllLoanTranchesQuery, Result<IEnumerable<LoanTrancheDto>>>
+    {
+        private readonly IHouseProjectDbContext _houseProjectDbContext;
+        private readonly IMapper _mapper;
 
-    //    public GetAllLoanTranchesHandler(ILoanTrancheRepository loanTrancheRepository, IMapper mapper)
-    //    {
-    //        _loanTrancheRepository = loanTrancheRepository;
-    //        _mapper = mapper;
-    //    }
+        public GetAllLoanTranchesHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
+        {
+            _houseProjectDbContext = houseProjectDbContext;
+            _mapper = mapper;
+        }
 
-    //    public async Task<Response<List<LoanTrancheDto>>> Handle(GetAllLoanTranchesQuery request, CancellationToken cancellationToken)
-    //    {
-    //        var loanTranches = await _loanTrancheRepository.GetAllAsync();
+        public async Task<Result<IEnumerable<LoanTrancheDto>>> Handle(GetAllLoanTranchesQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _houseProjectDbContext.LoanTranches.ProjectTo<LoanTrancheDto>(_mapper.ConfigurationProvider).ToListAsync();
 
-    //        var loanTranchesDto = _mapper.Map<List<LoanTrancheDto>>(loanTranches);
+            if (result != null) return Result<IEnumerable<LoanTrancheDto>>.Success(result);
 
-    //        return Response<List<LoanTrancheDto>>.Success(loanTranchesDto);
-    //    }
-    //}
+            return Result<IEnumerable<LoanTrancheDto>>.Failure("Failed to get loan tranches");
+        }
+    }
 }
