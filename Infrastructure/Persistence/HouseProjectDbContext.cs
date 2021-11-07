@@ -26,6 +26,7 @@ namespace Infrastructure.Persistence
         public DbSet<AttachmentSmall> AttachmentsSmall { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<Execution> Executions { get; set; }
+        public DbSet<Finance> Finances { get; set; }
         public DbSet<LoanTranche> LoanTranches { get; set; }
         public DbSet<Material> Materials { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -67,6 +68,9 @@ namespace Infrastructure.Persistence
                 .Property(e => e.UserId)
                 .HasMaxLength(450)
                 .IsRequired();
+            modelBuilder.Entity<Document>()
+                .HasOne(e => e.Finance)
+                .WithMany(d => d.Documents);
 
             modelBuilder.Entity<Project>()
                 .Property(e => e.Name)
@@ -75,6 +79,9 @@ namespace Infrastructure.Persistence
             modelBuilder.Entity<Project>()
                 .HasOne(e => e.PaymentType)
                 .WithMany(d => d.Projects);
+            modelBuilder.Entity<Project>()
+                .HasOne(e => e.Finance)
+                .WithMany(d => d.Projects);
 
             modelBuilder.Entity<Preparation>()
                 .Property(e => e.Name)
@@ -82,6 +89,9 @@ namespace Infrastructure.Persistence
                 .IsRequired();
             modelBuilder.Entity<Preparation>()
                 .HasOne(e => e.PaymentType)
+                .WithMany(d => d.Preparations);
+            modelBuilder.Entity<Preparation>()
+                .HasOne(e => e.Finance)
                 .WithMany(d => d.Preparations);
 
             modelBuilder.Entity<SendType>()
@@ -135,9 +145,11 @@ namespace Infrastructure.Persistence
                 .HasOne(e => e.PaymentType)
                 .WithMany(d => d.Materials);
 
-
             modelBuilder.Entity<Execution>()
                 .HasOne(e => e.WorkStage)
+                .WithMany(d => d.Executions);
+            modelBuilder.Entity<Execution>()
+                .HasOne(e => e.Finance)
                 .WithMany(d => d.Executions);
 
         }

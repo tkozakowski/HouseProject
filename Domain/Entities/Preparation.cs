@@ -18,6 +18,9 @@ namespace Domain.Entities
         public int? PaymentTypeId { get; set; }
         public virtual PaymentType PaymentType { get; set; }
 
+        public int FinanceId { get; set; }
+        public virtual Finance Finance { get; set; }
+
         public ICollection<Document> Documents { get; set; }
 
     }
