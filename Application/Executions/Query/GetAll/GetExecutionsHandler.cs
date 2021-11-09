@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Executions.Query.GetAll
 {
-    public class GetExecutionsHandler : IRequestHandler<GetExecutionsQuery, IEnumerable<GetExecutionsDto>>
+    public class GetExecutionsHandler : IRequestHandler<GetExecutionsQuery, Result<IEnumerable<GetExecutionsDto>>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
@@ -20,12 +21,12 @@ namespace Application.Executions.Query.GetAll
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<GetExecutionsDto>> Handle(GetExecutionsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<GetExecutionsDto>>> Handle(GetExecutionsQuery request, CancellationToken cancellationToken)
         {
             var executions = await _houseProjectDbContext.Executions
                 .ProjectTo<GetExecutionsDto>(_mapper.ConfigurationProvider).ToListAsync();
 
-            return executions;
+            return Result<IEnumerable<GetExecutionsDto>>.Success(executions);
         }
     }
 }

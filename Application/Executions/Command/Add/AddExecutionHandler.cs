@@ -1,4 +1,5 @@
 ﻿using Application.Core;
+using Application.Finance.Command.Update;
 using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
@@ -12,11 +13,13 @@ namespace Application.Executions.Command.Add
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public AddExecutionHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
+        public AddExecutionHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper, IMediator mediator)
         {
             _houseProjectDbContext = houseProjectDbContext;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<Result<Unit>> Handle(AddExecutionCommand request, CancellationToken cancellationToken)
@@ -27,9 +30,15 @@ namespace Application.Executions.Command.Add
 
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
-            if (!success) return Result<Unit>.Failure("Failed to add execution");
+            if (!success)
+            {
+                await _mediator.Send(new UpdateFinanceCommand());
 
-            return Result<Unit>.Success(Unit.Value);
+                return Result<Unit>.Success(Unit.Value);
+            }
+
+            return Result<Unit>.Failure("Failed to add execution");
+
         }
     }
 }

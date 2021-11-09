@@ -1,4 +1,5 @@
 ﻿using Application.Core;
+using Application.Finance.Command.Update;
 using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
@@ -14,11 +15,13 @@ namespace Application.Executions.Command.Update
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public UpdateExecutionHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
+        public UpdateExecutionHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper, IMediator mediator)
         {
             _houseProjectDbContext = houseProjectDbContext;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<Result<Unit>> Handle(UpdateExecutionCommand request, CancellationToken cancellationToken)
