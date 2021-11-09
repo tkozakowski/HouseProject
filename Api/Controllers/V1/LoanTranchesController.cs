@@ -15,25 +15,25 @@ namespace Api.V1.Controllers
     public class LoanTranchesController : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<List<LoanTranche>>> GetAllLoanTranche()
+        public async Task<ActionResult<List<LoanTranche>>> GetAllLoanTrancheAsync()
         {
             return HandleResult<IEnumerable<LoanTrancheDto>>(await Mediator.Send(new GetAllLoanTranchesQuery()));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<LoanTrancheDto>> GetLoanTrancheById(int id)
+        public async Task<ActionResult<LoanTrancheDto>> GetLoanTrancheAsync(int id)
         {
             return HandleResult<LoanTrancheDto>(await Mediator.Send(new GetLoanTrancheByIdQuery { Id = id }));
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddLoanTranche([FromBody] AddLoanTrancheCommand request)
+        public async Task<ActionResult> AddLoanTrancheAsync([FromBody] AddLoanTrancheCommand request)
         {
             return HandleResult<Unit>(await Mediator.Send(request));
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> RemoveLoanTranche(int id)
+        public async Task<ActionResult> RemoveLoanTrancheAsync(int id)
         {
             return HandleResult<Unit>(await Mediator.Send(new RemoveLoanTrancheCommand { Id = id }));
         }

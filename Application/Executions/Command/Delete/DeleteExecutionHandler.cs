@@ -25,11 +25,19 @@ namespace Application.Executions.Command.Delete
             {
                 _houseProjectDbContext.Executions.Remove(execution);
 
-                var materials = await _houseProjectDbContext.Materials.Where(x => x.ExecutionId == request.ExecutionId).ToListAsync();
+                var materials = await _houseProjectDbContext.Materials?.Where(x => x.ExecutionId == request.ExecutionId)?.ToListAsync();
                 materials.ForEach(x => x.ExecutionId = null);
 
                 await _houseProjectDbContext.SaveChangesAsync();
             }
+
+            var executionTotalCosts = await _houseProjectDbContext.Executions?.SumAsync(x => x.CostPayed) ?? 0M;
+
+            var finance = await _houseProjectDbContext.Finances.FirstOrDefaultAsync();
+            finance.ExecutionsCost = executionTotalCosts;
+
+            await _houseProjectDbContext.SaveChangesAsync();
+
 
             return Result<Unit>.Success(Unit.Value);
         }

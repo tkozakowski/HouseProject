@@ -11,20 +11,20 @@ using System.Threading.Tasks;
 
 namespace Application.Executions.Command.Update
 {
-    public class UpdateExecutionHandler : IRequestHandler<UpdateExecutionCommand, Result<Unit>>
+    public class UpdateExecutionCostHandler : IRequestHandler<UpdateExecutionCostCommand, Result<Unit>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
 
-        public UpdateExecutionHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper, IMediator mediator)
+        public UpdateExecutionCostHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper, IMediator mediator)
         {
             _houseProjectDbContext = houseProjectDbContext;
             _mapper = mapper;
             _mediator = mediator;
         }
 
-        public async Task<Result<Unit>> Handle(UpdateExecutionCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(UpdateExecutionCostCommand request, CancellationToken cancellationToken)
         {
 
             var existedExecution = await _houseProjectDbContext.Executions
@@ -51,7 +51,7 @@ namespace Application.Executions.Command.Update
             var executionTotalCosts = await _houseProjectDbContext.Executions.SumAsync(x => x.CostPayed);
             if (executionTotalCosts != null)
             {
-                var finance = await _houseProjectDbContext.Finances.FirstOrDefaultAsync(x => x.Id == 1);
+                var finance = await _houseProjectDbContext.Finances.FirstOrDefaultAsync();
                 finance.ExecutionsCost = executionTotalCosts;
 
                 await _houseProjectDbContext.SaveChangesAsync();

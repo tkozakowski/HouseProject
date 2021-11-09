@@ -16,7 +16,7 @@ namespace Application.Materials.Notification.Add
 
         public async Task Handle(AddMaterialEvent notification, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new UpdateExecutionCommand { ExecutionId = notification.ExecutionId });
+            await _mediator.Send(new UpdateExecutionCostCommand { ExecutionId = notification.ExecutionId });
         }
     }
 }

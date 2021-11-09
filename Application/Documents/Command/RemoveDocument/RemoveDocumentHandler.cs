@@ -31,7 +31,7 @@ namespace Application.Documents.Command.RemoveDocument
             var documentTotalCosts = await _houseProjectDbContext.Documents?.SumAsync(x => x.Cost);
             if (documentTotalCosts != null)
             {
-                var finance = await _houseProjectDbContext.Finances.FirstOrDefaultAsync(x => x.Id == 1);
+                var finance = await _houseProjectDbContext.Finances.FirstOrDefaultAsync();
                 finance.DocumentsCost = documentTotalCosts;
 
                 await _houseProjectDbContext.SaveChangesAsync();

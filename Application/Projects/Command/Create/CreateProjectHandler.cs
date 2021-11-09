@@ -35,7 +35,7 @@ namespace Application.Projects.Command.CreateProject
             var totalProjectCosts = await _houseProjectDbContext.Projects?.SumAsync(x => x.Cost);
             if (totalProjectCosts != null)
             {
-                var finance = await _houseProjectDbContext.Finances.FirstAsync(x => x.Id == 1);
+                var finance = await _houseProjectDbContext.Finances.FirstAsync();
                 finance.ProjectsCost = totalProjectCosts;
 
                 await _houseProjectDbContext.SaveChangesAsync();

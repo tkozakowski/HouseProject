@@ -35,7 +35,7 @@ namespace Application.Documents.Command.CreateDocument
             var documentTotalCosts = await _houseDbContext.Documents.SumAsync(x => x.Cost);
             if (documentTotalCosts != null)
             {
-                var finance = await _houseDbContext.Finances.FirstOrDefaultAsync(x => x.Id == 1);
+                var finance = await _houseDbContext.Finances.FirstOrDefaultAsync();
                 finance.DocumentsCost = documentTotalCosts;
 
                 await _houseDbContext.SaveChangesAsync();

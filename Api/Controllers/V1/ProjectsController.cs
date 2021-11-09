@@ -15,7 +15,7 @@ namespace Api.Controllers.V1
         public ProjectsController() { }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GetProjectDto>>> GetProjects()
+        public async Task<ActionResult<IEnumerable<GetProjectDto>>> GetProjectsAsync()
         {
             var result = await Mediator.Send(new GetProjectsQuery());
 
@@ -23,13 +23,13 @@ namespace Api.Controllers.V1
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] CreateProjectDto request)
+        public async Task<IActionResult> CreateAsync([FromQuery] CreateProjectDto request)
         {
             return HandleResult<Unit>(await Mediator.Send(new CreateProjectCommand { CreateProjectDto = request}));
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery] UpdateProjectDto request)
+        public async Task<IActionResult> UpdateAsync([FromQuery] UpdateProjectDto request)
         {
             return HandleResult(await Mediator.Send(new UpdateProjectCommand { UpdateProjectDto = request}));
         }

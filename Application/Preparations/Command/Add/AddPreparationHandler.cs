@@ -36,7 +36,7 @@ namespace Application.Preparations.Command.Add
             {
                 var preparationTotalCost = await _houseProjectDbContext.Preparations.SumAsync(x => x.Cost);
 
-                var finance = await _houseProjectDbContext.Finances.FirstAsync(x => x.Id == 1);
+                var finance = await _houseProjectDbContext.Finances.FirstAsync();
                 finance.ProjectsCost = preparationTotalCost;
 
                 await _houseProjectDbContext.SaveChangesAsync();

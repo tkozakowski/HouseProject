@@ -13,7 +13,7 @@ namespace Api.Controllers.V1
         public MaterialsController() { }
 
         [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<GetMaterialsDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<GetMaterialsDto>>> GetAllAsync()
         {
             var materials = await Mediator.Send(new GetAllMaterialsQuery());
 
@@ -21,7 +21,7 @@ namespace Api.Controllers.V1
         }
 
         [HttpGet("[action]")]
-        public async Task<ActionResult<GetMaterialDto>> GetDetail(int id)
+        public async Task<ActionResult<GetMaterialDto>> GetDetailAsync(int id)
         {
             var material = await Mediator.Send(new GetMaterialDetailQuery(id));
 
@@ -30,7 +30,7 @@ namespace Api.Controllers.V1
 
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> AddMaterial([FromQuery] AddMaterialDto materialDto, IFormFile file)
+        public async Task<IActionResult> AddMaterialAsync([FromQuery] AddMaterialDto materialDto, IFormFile file)
         {
             return HandleResult(await Mediator.Send(new AddMaterialCommand { AddMaterialDto = materialDto, Photo = file }));
         }

@@ -13,7 +13,7 @@ namespace Api.Controllers.V1
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PaymentTypeDto>>> GetPaymentTypes()
+        public async Task<ActionResult<IEnumerable<PaymentTypeDto>>> GetPaymentTypesAsync()
         {
             var result = await Mediator.Send(new GetPaymentTypesQuery());
 
