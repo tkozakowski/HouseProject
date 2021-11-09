@@ -1,4 +1,5 @@
 ﻿using Application.Core;
+using Application.Finance.Command.UpdateByProject;
 using Application.Interfaces;
 using AutoMapper;
 using MediatR;
@@ -14,12 +15,14 @@ namespace Application.Projects.Command.Update
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
         private readonly ILogger<UpdateProjectHandler> _logger;
+        private readonly IMediator _mediator;
 
-        public UpdateProjectHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper, ILogger<UpdateProjectHandler> logger)
+        public UpdateProjectHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper, ILogger<UpdateProjectHandler> logger, IMediator mediator)
         {
             _houseProjectDbContext = houseProjectDbContext;
             _mapper = mapper;
             _logger = logger;
+            _mediator = mediator;
         }
 
         public async Task<Result<Unit>> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
@@ -42,14 +45,7 @@ namespace Application.Projects.Command.Update
                 return Result<Unit>.Failure("Failed to update project");
             }
 
-            var totalProjectCosts = await _houseProjectDbContext.Projects.SumAsync(x => x.Cost);
-            if (totalProjectCosts != null)
-            {
-                var finance = await _houseProjectDbContext.Finances.FirstAsync();
-                finance.ProjectsCost = totalProjectCosts;
-
-                await _houseProjectDbContext.SaveChangesAsync();
-            }
+            await _mediator.Send(new UpdateByProjectCommand());
 
             return Result<Unit>.Success(Unit.Value);
 

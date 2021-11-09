@@ -1,13 +1,9 @@
 ﻿using Application.Core;
+using Application.Finance.Command.UpdateByPreparation;
 using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,11 +13,13 @@ namespace Application.Preparations.Command.Add
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public AddPreparationHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
+        public AddPreparationHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper, IMediator mediator)
         {
             _houseProjectDbContext = houseProjectDbContext;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<Result<Unit>> Handle(AddPreparationCommand request, CancellationToken cancellationToken)
@@ -34,13 +32,10 @@ namespace Application.Preparations.Command.Add
 
             if (success)
             {
-                var preparationTotalCost = await _houseProjectDbContext.Preparations.SumAsync(x => x.Cost);
-
-                var finance = await _houseProjectDbContext.Finances.FirstAsync();
-                finance.ProjectsCost = preparationTotalCost;
+                await _mediator.Send(new UpdateByPreparationCommand());
 
                 await _houseProjectDbContext.SaveChangesAsync();
-
+                
                 return Result<Unit>.Success(Unit.Value);
             }
 

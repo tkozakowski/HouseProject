@@ -19,6 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Finance\Command\UpdateByDocument\" />
+    <Folder Include="Finance\Command\UpdateByExecution\" />
     <Folder Include="Finance\Query\" />
   </ItemGroup>
 

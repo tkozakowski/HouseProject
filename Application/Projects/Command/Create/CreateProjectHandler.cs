@@ -1,9 +1,9 @@
 ﻿using Application.Core;
+using Application.Finance.Command.UpdateByProject;
 using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,11 +13,13 @@ namespace Application.Projects.Command.CreateProject
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public CreateProjectHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper)
+        public CreateProjectHandler(IHouseProjectDbContext houseProjectDbContext, IMapper mapper, IMediator mediator)
         {
             _houseProjectDbContext = houseProjectDbContext;
             _mapper = mapper;
+            _mediator = mediator;
         }
         public async Task<Result<Unit>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
@@ -27,22 +29,11 @@ namespace Application.Projects.Command.CreateProject
 
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
-            if (!success)
-            {
-                return Result<Unit>.Failure("Failed to create project");
-            }
+            if (!success) return Result<Unit>.Failure("Failed to create project");
 
-            var totalProjectCosts = await _houseProjectDbContext.Projects?.SumAsync(x => x.Cost);
-            if (totalProjectCosts != null)
-            {
-                var finance = await _houseProjectDbContext.Finances.FirstAsync();
-                finance.ProjectsCost = totalProjectCosts;
-
-                await _houseProjectDbContext.SaveChangesAsync();
-            }
+            await _mediator.Send(new UpdateByProjectCommand());
 
             return Result<Unit>.Success(Unit.Value);
-
         }
     }
 }
