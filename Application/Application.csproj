@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Finance\Query\" />
     <Folder Include="Preparations\Command\" />
   </ItemGroup>
 
