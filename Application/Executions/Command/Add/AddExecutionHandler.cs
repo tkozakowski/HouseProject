@@ -30,7 +30,7 @@ namespace Application.Executions.Command.Add
 
             var success = await _houseProjectDbContext.SaveChangesAsync() > 0;
 
-            if (!success)
+            if (success)
             {
                 await _mediator.Send(new UpdateFinanceCommand());
 

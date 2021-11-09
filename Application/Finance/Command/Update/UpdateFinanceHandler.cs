@@ -18,8 +18,9 @@ namespace Application.Finance.Command.Update
         public async Task<Unit> Handle(UpdateFinanceCommand request, CancellationToken cancellationToken)
         {
 
-            var finance = await _houseProjectDbContext.Finances.FirstAsync();
+            var finance = await _houseProjectDbContext.Finances.FirstOrDefaultAsync();
             if (finance is null) finance = new Domain.Entities.Finance();
+            await _houseProjectDbContext.Finances.AddAsync(finance);
 
             var totalProjectCosts = _houseProjectDbContext.Projects?.SumAsync(x => x.Cost);
             var totalPreparationsCosts = _houseProjectDbContext.Preparations?.SumAsync(x => x.Cost);

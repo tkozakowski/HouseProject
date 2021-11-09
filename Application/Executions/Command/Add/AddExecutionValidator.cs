@@ -25,7 +25,7 @@ namespace Application.Executions.Command.Add
             {
                 if(!decimal.TryParse(x , out decimal value) || value < 0)
                 {
-                    validationContext.AddFailure($"{x} for labor cost is not a valid number or is less than 0");
+                    validationContext.AddFailure($"{x} for payed cost is not a valid number or is less than 0");
                 }
             });
 
