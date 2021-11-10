@@ -25,7 +25,7 @@ namespace Application.Documents.Query.Details
         public async Task<Result<DocumentDetailsDto>> Handle(GetDocumentDetailQuery request, CancellationToken cancellationToken)
         {
 
-            var result = await _houseProjectDbContext.Documents.Where(x => x.Id == request.id)
+            var result = await _houseProjectDbContext.Documents.Where(x => x.Id == request.id).Include(x => x.Attachments)
                 .ProjectTo<DocumentDetailsDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
 
             if (result is null) return Result<DocumentDetailsDto>.Failure("Failed to get document");

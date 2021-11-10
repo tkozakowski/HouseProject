@@ -1,11 +1,13 @@
 ﻿using Application.Conversions;
+using Application.Mappings;
 using AutoMapper;
 using Domain.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace Application.Documents.Query.GetDocumentDetails
 {
-    public class DocumentDetailsDto
+    public class DocumentDetailsDto: IMap
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -18,7 +20,7 @@ namespace Application.Documents.Query.GetDocumentDetails
         public string PreparationName { get; set; }
         public string StageName { get; set; }
         public DateTime CreationDate { get; set; }
-
+        public IEnumerable<GetAttachmentByDocumentDto> GetAttachmentsByDocumentDto { get; set; } = new List<GetAttachmentByDocumentDto>();
 
         public void Mapping(Profile profile)
         {
@@ -36,6 +38,8 @@ namespace Application.Documents.Query.GetDocumentDetails
                 .ForMember(d => d.Post, o => o.MapFrom(s => new Post { Name = s.Name }))
                 .ForMember(d => d.Project, o => o.MapFrom(s => new Project { Name = s.Name }))
                 .ForMember(d => d.StageId, o => o.NullSubstitute(3));
+
+            profile.CreateMap<Attachment, GetAttachmentByDocumentDto>();
         }
 
     }
