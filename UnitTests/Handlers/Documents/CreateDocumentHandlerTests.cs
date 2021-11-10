@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Entities;
 using FluentAssertions;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
@@ -15,10 +16,12 @@ namespace UnitTests.Handlers.Documents
     public class CreateDocumentHandlerTests
     {
         private readonly Mock<IMapper> _mapperMock;
+        private readonly Mock<IMediator> _mediatorMock;
 
         public CreateDocumentHandlerTests()
         {
             _mapperMock = new Mock<IMapper>();
+            _mediatorMock = new Mock<IMediator>();
         }
 
         [Fact]
@@ -50,14 +53,14 @@ namespace UnitTests.Handlers.Documents
 
             var createDocumentCommand = new CreateDocumentCommand { CreateDocumentDto = createDocumentDto, UserId = factory.UserId };
 
-            CreateDocumentHandler createDocumentHandler = new(_mapperMock.Object, context);
+            CreateDocumentHandler createDocumentHandler = new(_mapperMock.Object, context, _mediatorMock.Object);
 
             //Act->add new post
             await createDocumentHandler.Handle(createDocumentCommand, CancellationToken.None);
 
             //Assert
             var documentsInMemory = await context.Documents.ToListAsync();
-            Assert.Equal(documentsInMemory.Count, 1);
+            Assert.Single(documentsInMemory);
 
             var addedDocument = documentsInMemory.Last();
             addedDocument.Should().NotBeNull();

@@ -10,6 +10,7 @@ namespace Application.Finance.Query.GetDetail
         public decimal? PreparationsCost { get; set; }
         public decimal? DocumentsCost { get; set; }
         public decimal? ExecutionsCost { get; set; }
+        public decimal? TotalCost { get; set; }
 
         public void Mapping(Profile profile)
         {

@@ -22,6 +22,7 @@ namespace Application.Finance.Command.UpdateByProject
             var totalProjectCosts = await _houseProjectDbContext.Projects?.SumAsync(x => x.Cost) ?? 0M;
 
             finance.ProjectsCost = totalProjectCosts;
+            finance.TotalCost = finance.DocumentsCost + finance.ExecutionsCost + finance.PreparationsCost + finance.ProjectsCost;
 
             await _houseProjectDbContext.SaveChangesAsync();
 

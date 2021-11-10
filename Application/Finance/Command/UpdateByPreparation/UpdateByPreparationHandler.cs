@@ -23,6 +23,7 @@ namespace Application.Finance.Command.UpdateByPreparation
             var totalPreparationsCosts = await _houseProjectDbContext.Preparations?.SumAsync(x => x.Cost);
 
             finance.PreparationsCost = totalPreparationsCosts;
+            finance.TotalCost = finance.DocumentsCost + finance.ExecutionsCost + finance.PreparationsCost + finance.ProjectsCost;
 
             await _houseProjectDbContext.SaveChangesAsync();
 

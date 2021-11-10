@@ -24,6 +24,7 @@ namespace Application.Finance.Command.UpdateByExecution
             if (!totalExecutionsCosts.HasValue) return Unit.Value;
 
             finance.ExecutionsCost = totalExecutionsCosts;
+            finance.TotalCost = finance.DocumentsCost + finance.ExecutionsCost + finance.PreparationsCost + finance.ProjectsCost;
 
             await _houseProjectDbContext.SaveChangesAsync();
 
