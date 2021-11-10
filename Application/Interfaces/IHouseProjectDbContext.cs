@@ -17,7 +17,6 @@ namespace Application.Interfaces
         DbSet<Post> Posts { get; set; }
         DbSet<Preparation> Preparations { get; set; }
         DbSet<Project> Projects { get; set; }
-        DbSet<SendApplication> SendApplications { get; set; }
         DbSet<SendType> SendTypes { get; set; }
         DbSet<Stage> Stages { get; set; }
         DbSet<WorkStage> WorkStages { get; set; }

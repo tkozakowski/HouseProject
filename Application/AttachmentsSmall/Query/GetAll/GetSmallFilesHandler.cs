@@ -24,9 +24,10 @@ namespace Application.AttachmentsSmall.Query.GetAll
 
         public async Task<Result<IEnumerable<SmallFileDetailDto>>> Handle(GetSmallFilesQuery request, CancellationToken cancellationToken)
         {
-            var attachments = await _houseProjectDbContext.AttachmentsSmall.Where(x => x.ApplicationId == request.applicationId && !x.IsDeleted).ProjectTo<SmallFileDetailDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var attachments = await _houseProjectDbContext.AttachmentsSmall.Where(x => x.DocumentId == request.documentId && !x.IsDeleted)?
+                .ProjectTo<SmallFileDetailDto>(_mapper.ConfigurationProvider)?.ToListAsync();
 
-            if (attachments is not null) 
+            if (attachments is null) 
                 return Result<IEnumerable<SmallFileDetailDto>>.Failure("Failed to get attachments");
 
             return Result<IEnumerable<SmallFileDetailDto>>.Success(attachments);

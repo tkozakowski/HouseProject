@@ -24,9 +24,9 @@ namespace Application.Attachments.Query.GetAttachmentInfo
 
         public async Task<Result<List<GetApplicatedAttachmentsDto>>> Handle(GetApplicatedAttachmentQuery request, CancellationToken cancellationToken)
         {
-            var attachmentsDto = await _houseProjectDbContext.SendApplications
+            var attachmentsDto = await _houseProjectDbContext.Documents
                 .Include(x => x.Attachments)
-                .Where(x => x.Id == request.applicationId)
+                .Where(x => x.Id == request.documentId)
                 .ProjectTo<GetApplicatedAttachmentsDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 

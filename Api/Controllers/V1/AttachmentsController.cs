@@ -62,7 +62,7 @@ namespace Api.Controllers.V1
         [HttpPost("[action]/{applicationId}")]
         public async Task<ActionResult> AddFileAsync(int applicationId, IFormFile formFile)
         {
-            return HandleResult(await Mediator.Send(new AddFileToApplicationCommand { ApplicationId = applicationId, 
+            return HandleResult(await Mediator.Send(new AddFileToApplicationCommand { DocumentId = applicationId, 
                 File = formFile }));
         }
 
@@ -71,7 +71,7 @@ namespace Api.Controllers.V1
         {
             return HandleResult(await Mediator.Send(new AddSmallFileToApplicationCommand
             {
-                ApplicationId = applicationId,
+                DocumentId = applicationId,
                 FormFile = formFile
             }));
         }

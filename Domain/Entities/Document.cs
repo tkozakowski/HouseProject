@@ -1,5 +1,6 @@
 ﻿using Domain.Common;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
@@ -32,5 +33,8 @@ namespace Domain.Entities
 
         public int? FinanceId { get; set; }
         public virtual Finance Finance { get; set; }
+
+        public ICollection<Attachment> Attachments { get; set; }
+        public ICollection<AttachmentSmall> AttachmentSmall { get; set; }
     }
 }

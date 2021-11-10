@@ -6,9 +6,7 @@ using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace UnitTests.Handlers.Helpers
@@ -33,7 +31,6 @@ namespace UnitTests.Handlers.Helpers
         public DbSet<Post> Posts { get; set; }
         public DbSet<Preparation> Preparations { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<SendApplication> SendApplications { get; set; }
         public DbSet<SendType> SendTypes { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<Stage> Stages { get; set; }
@@ -94,20 +91,10 @@ namespace UnitTests.Handlers.Helpers
                 .Property(e => e.Name)
                 .IsRequired();
 
-            modelBuilder.Entity<SendApplication>()
-                .HasOne(e => e.SendType)
-                .WithMany(d => d.Applications);
-            modelBuilder.Entity<SendApplication>()
-                .HasOne(e => e.Post)
-                .WithMany(d => d.Applications);
-
             modelBuilder.Entity<Attachment>()
                 .Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);
-            modelBuilder.Entity<Attachment>()
-                .HasOne(e => e.Application)
-                .WithMany(d => d.Attachments);
             modelBuilder.Entity<Attachment>()
                 .Property(e => e.Path)
                 .IsRequired()
@@ -117,13 +104,7 @@ namespace UnitTests.Handlers.Helpers
                 .Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);
-            modelBuilder.Entity<Attachment>()
-                .HasOne(e => e.Application)
-                .WithMany(d => d.Attachments);
-            modelBuilder.Entity<Attachment>()
-                .Property(e => e.Path)
-                .IsRequired()
-                .HasMaxLength(200);
+
 
             modelBuilder.Entity<LoanTranche>()
                 .Property(e => e.Stage)

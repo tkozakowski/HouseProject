@@ -6,7 +6,7 @@ namespace Application.Attachments.Command.AddAttachment
 {
     public class AddFileToApplicationCommand : IRequest<Result<Unit>>
     {
-        public int ApplicationId { get; set;}
+        public int DocumentId { get; set;}
         public IFormFile File { get; set; }
     }
 }

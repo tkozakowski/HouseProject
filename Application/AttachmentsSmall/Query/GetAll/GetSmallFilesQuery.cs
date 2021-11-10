@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Application.AttachmentsSmall.Query.GetAll
 {
-    public record GetSmallFilesQuery(int applicationId) : IRequest<Result<IEnumerable<SmallFileDetailDto>>>
+    public record GetSmallFilesQuery(int documentId) : IRequest<Result<IEnumerable<SmallFileDetailDto>>>
     {
     }
 }

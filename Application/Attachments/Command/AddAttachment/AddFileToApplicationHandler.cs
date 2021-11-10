@@ -20,15 +20,14 @@ namespace Application.Attachments.Command.AddAttachment
 
         public async Task<Result<Unit>> Handle(AddFileToApplicationCommand request, CancellationToken cancellationToken)
         {
-            var application = await _houseProjectDbContext.SendApplications
-                .FirstOrDefaultAsync(x => x.Id == request.ApplicationId);
+            var document = await _houseProjectDbContext.Documents.FirstOrDefaultAsync(x => x.Id == request.DocumentId);
 
-            if (application is null) return null;
+            if (document is null) return null;
 
             var attachment = new Attachment
             {
                 Name = request.File.FileName,
-                Application = application,
+                Document = document,
                 Path = request.File.SaveFile()
             };
 
