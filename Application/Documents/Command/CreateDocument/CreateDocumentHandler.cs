@@ -4,7 +4,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using Application.Finance.Command.UpdateByDocument;
 
 namespace Application.Documents.Command.CreateDocument
 {
@@ -12,13 +12,14 @@ namespace Application.Documents.Command.CreateDocument
     {
         private readonly IMapper _mapper;
         private readonly IHouseProjectDbContext _houseDbContext;
+        private readonly IMediator _mediator;
 
-        public CreateDocumentHandler(IMapper mapper, IHouseProjectDbContext houseDbContext)
+        public CreateDocumentHandler(IMapper mapper, IHouseProjectDbContext houseDbContext, IMediator mediator)
         {
             _mapper = mapper;
             _houseDbContext = houseDbContext;
+            _mediator = mediator;
         }
-        public CreateDocumentHandler() { }
 
         public async Task<Result<Unit>> Handle(CreateDocumentCommand request, CancellationToken cancellationToken)
         {
@@ -30,18 +31,14 @@ namespace Application.Documents.Command.CreateDocument
 
             var success = await _houseDbContext.SaveChangesAsync() > 0;
 
-            if (!success) return Result<Unit>.Failure("Failed to create document");
-
-            var documentTotalCosts = await _houseDbContext.Documents.SumAsync(x => x.Cost);
-            if (documentTotalCosts != null)
+            if (success)
             {
-                var finance = await _houseDbContext.Finances.FirstOrDefaultAsync();
-                finance.DocumentsCost = documentTotalCosts;
+                await _mediator.Send(new UpdateByDocumentCommand());
 
-                await _houseDbContext.SaveChangesAsync();
+                return Result<Unit>.Success(Unit.Value);
             }
 
-            return Result<Unit>.Success(Unit.Value);
+            return Result<Unit>.Failure("Failed to create document");
         }
     }
 }

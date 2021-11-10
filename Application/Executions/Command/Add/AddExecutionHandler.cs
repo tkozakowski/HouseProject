@@ -1,5 +1,5 @@
 ﻿using Application.Core;
-using Application.Finance.Command.Update;
+using Application.Finance.Command.UpdateByExecution;
 using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
@@ -32,7 +32,7 @@ namespace Application.Executions.Command.Add
 
             if (success)
             {
-                await _mediator.Send(new UpdateFinanceCommand());
+                await _mediator.Send(new UpdateByExecutionCommand());
 
                 return Result<Unit>.Success(Unit.Value);
             }

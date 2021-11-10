@@ -12,6 +12,7 @@ namespace Domain.Entities
         public decimal? PreparationsCost { get; set; }
         public decimal? DocumentsCost { get; set; }
         public decimal? ExecutionsCost { get; set; }
+        public decimal? TotalCost { get; set; }
 
         public ICollection<Project> Projects { get; set; }
         public ICollection<Preparation> Preparations { get; set; }

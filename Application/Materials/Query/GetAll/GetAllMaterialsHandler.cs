@@ -5,6 +5,7 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,7 +24,7 @@ namespace Application.Materials.Query.GetAll
 
         public async Task<Result<IEnumerable<GetMaterialsDto>>> Handle(GetAllMaterialsQuery request, CancellationToken cancellationToken)
         {
-            var materials = await _houseProjectDbContext.Materials.ProjectTo<GetMaterialsDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var materials = await _houseProjectDbContext.Materials.Where(x => x.ExecutionId.HasValue).ProjectTo<GetMaterialsDto>(_mapper.ConfigurationProvider).ToListAsync();
 
             return Result<IEnumerable<GetMaterialsDto>>.Success(materials);
         }
