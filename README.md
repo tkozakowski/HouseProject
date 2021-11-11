@@ -7,4 +7,3 @@ Przy dodawaniu załaczników są one zapisywane na dysku oraz w bazie sql. Nie p
 Przewiduję dużą liczbę dokumentów, dlatego dla nich wprowadziłem stronicowanie, sortowanie oraz filtrowanie. Testowałem też protokół komunikacyjny OData, dla moich potrzeb jest
 on mało przydatny i potraktowałem go jako ciekawostkę.
 
-W przyszłości planuję zrobić frontend w react'cie.
