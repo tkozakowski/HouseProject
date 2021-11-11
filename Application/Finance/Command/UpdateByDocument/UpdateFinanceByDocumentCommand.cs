@@ -2,7 +2,7 @@
 
 namespace Application.Finance.Command.UpdateByDocument
 {
-    public class UpdateByDocumentCommand: IRequest<Unit>
+    public class UpdateFinanceByDocumentCommand: IRequest<Unit>
     {
     }
 }

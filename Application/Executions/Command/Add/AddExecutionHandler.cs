@@ -32,7 +32,7 @@ namespace Application.Executions.Command.Add
 
             if (success)
             {
-                await _mediator.Send(new UpdateByExecutionCommand());
+                await _mediator.Send(new UpdateFinanceByExecutionCommand());
 
                 return Result<Unit>.Success(Unit.Value);
             }

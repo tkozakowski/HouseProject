@@ -35,7 +35,7 @@ namespace Application.Executions.Command.Delete
 
             await _houseProjectDbContext.SaveChangesAsync();
 
-            await _mediator.Send(new UpdateByExecutionCommand());
+            await _mediator.Send(new UpdateFinanceByExecutionCommand());
 
             return Result<Unit>.Success(Unit.Value);
         }

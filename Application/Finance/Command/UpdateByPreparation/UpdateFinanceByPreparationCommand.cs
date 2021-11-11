@@ -2,7 +2,7 @@
 
 namespace Application.Finance.Command.UpdateByPreparation
 {
-    public class UpdateByPreparationCommand: IRequest<Unit>
+    public class UpdateFinanceByPreparationCommand: IRequest<Unit>
     {
     }
 }

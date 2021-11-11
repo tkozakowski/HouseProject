@@ -33,7 +33,7 @@ namespace Application.Documents.Command.CreateDocument
 
             if (success)
             {
-                await _mediator.Send(new UpdateByDocumentCommand());
+                await _mediator.Send(new UpdateFinanceByDocumentCommand());
 
                 return Result<Unit>.Success(Unit.Value);
             }

@@ -4,26 +4,25 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Finance.Command.UpdateByDocument
+namespace Application.Finance.Command.UpdateByPreparation
 {
-    public class UpdateByDocumentHandler : IRequestHandler<UpdateByDocumentCommand, Unit>
+    public class UpdateFinanceByPreparationHandler : IRequestHandler<UpdateFinanceByPreparationCommand, Unit>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
 
-        public UpdateByDocumentHandler(IHouseProjectDbContext houseProjectDbContext)
+        public UpdateFinanceByPreparationHandler(IHouseProjectDbContext houseProjectDbContext)
         {
             _houseProjectDbContext = houseProjectDbContext;
         }
 
-        public async Task<Unit> Handle(UpdateByDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateFinanceByPreparationCommand request, CancellationToken cancellationToken)
         {
             var finance = await _houseProjectDbContext.Finances.FirstOrDefaultAsync();
             if (finance is null) return await Task.FromResult(Unit.Value);
 
-            var totalDocumentsCosts = await _houseProjectDbContext.Documents?.SumAsync(x => x.Cost);
-            if (!totalDocumentsCosts.HasValue) return Unit.Value;
+            var totalPreparationsCosts = await _houseProjectDbContext.Preparations?.SumAsync(x => x.Cost);
 
-            finance.DocumentsCost = totalDocumentsCosts;
+            finance.PreparationsCost = totalPreparationsCosts;
             finance.TotalCost = finance.DocumentsCost + finance.ExecutionsCost + finance.PreparationsCost + finance.ProjectsCost;
 
             await _houseProjectDbContext.SaveChangesAsync();

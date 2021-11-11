@@ -1,8 +1,12 @@
 ﻿using Application.Documents.Command.UpdateDocument;
+using Application.Finance.Command.UpdateByDocument;
+using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using FluentAssertions;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -14,90 +18,120 @@ using Xunit;
 
 namespace UnitTests.Handlers.Documents
 {
-    //public class UpdateDocumentHandlerTests
-    //{
-    //    private readonly string userId = "9aeb84c8-0d2b-4f4d-9c3d-dc4356ddda85";
-    //    private readonly int id = 1;
-    //    private readonly Mock<IDocumentRepository> _documentRepositoryMock;
-    //    private readonly UpdateDocumentHandler _updateDocumentHandler;
-    //    private readonly Mock<IMapper> _mapperMock;
+    public class UpdateDocumentHandlerTests
+    {
+        private readonly string userId = "9aeb84c8-0d2b-4f4d-9c3d-dc4356ddda85";
+        private readonly Mock<IMediator> _mediatorMock;
 
-    //    private UpdateDocumentCommand _updateDocumentCommand;
+        public UpdateDocumentHandlerTests()
+        {
+            _mediatorMock = new Mock<IMediator>();
+        }
 
-    //    public UpdateDocumentHandlerTests()
-    //    {
-    //        _documentRepositoryMock = new Mock<IDocumentRepository>();
-    //        _mapperMock = new Mock<IMapper>();
+        [Fact]
+        public async Task UpdateDocumentHandler_GivenValidDocument_ShouldUpdateDocument()
+        {
+            //Arrange
+            var factory = new ConnectionFactory();
+            var context = factory.CreateContextForInMemory();
 
-    //        _updateDocumentHandler = new UpdateDocumentHandler(_mapperMock.Object, _documentRepositoryMock.Object);
-    //    }
+            var existedDocument = new Document
+            {
+                Cost = 100,
+                Description = "description",
+                Name = "name",
+                ReceivedAt = new DateTime(2021, 11, 11)
+            };
 
-    //    [Fact]
-    //    public async Task UpdateDocumentHandler_GivenValidRequest_GetExistingDocument()
-    //    {
-    //        //Arrange
-    //        var updateDocumentDto = new UpdateDocumentDto
-    //        {
-    //            Cost = "1",
-    //            Description = "description",
-    //            Name = "name",
-    //            ReceivedAt = DateTime.Now
-    //        };
+            context.Documents.Add(existedDocument);
+            await context.SaveChangesAsync();
 
-    //        var document = new Document
-    //        {
-    //            Cost = decimal.Parse(updateDocumentDto.Cost),
-    //            Description = updateDocumentDto.Description,
-    //            Name = updateDocumentDto.Name,
-    //            ReceivedAt = updateDocumentDto.ReceivedAt
-    //        };
+            var updateDocumentDto = new UpdateDocumentDto
+            {
+                Cost = "1",
+                Description = "description",
+                Name = "name",
+                ReceivedAt = new DateTime(2021, 11, 11)
+            };
 
+            var document = new Document
+            {
+                Cost = decimal.Parse(updateDocumentDto.Cost),
+                Description = updateDocumentDto.Description,
+                Name = updateDocumentDto.Name,
+                ReceivedAt = updateDocumentDto.ReceivedAt
+            };
 
-    //        _updateDocumentCommand = new UpdateDocumentCommand { Id = id, UpdateDocumentDto = updateDocumentDto, UserId = userId };
-
-    //        //Act
-    //        await _updateDocumentHandler.Handle(_updateDocumentCommand, CancellationToken.None);
-
-    //        //Assert
-    //        _documentRepositoryMock.Verify(x => x.GetByIdAsync(id), Times.Once);
-
-    //    }
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(x => x.Map<Document>(updateDocumentDto)).Returns(document);
 
 
-    //    [Fact]
-    //    public async Task UpdateDocumentHandler_GivenValidRequest_UpdateDocument()
-    //    {
-    //        //Arrange
-    //        var updateDocumentDto = new UpdateDocumentDto
-    //        {
-    //            Cost = "1",
-    //            Description = "description",
-    //            Name = "name",
-    //            ReceivedAt = DateTime.Now
-    //        };
+            var updateDocumentCommand = new UpdateDocumentCommand { Id = 1, UpdateDocumentDto = updateDocumentDto, UserId = userId };
+            
+            var updateDocumentHandler = new UpdateDocumentHandler(mapperMock.Object, context, _mediatorMock.Object);
 
-    //        var document = new Document
-    //        {
-    //            Cost = decimal.Parse(updateDocumentDto.Cost),
-    //            Description = updateDocumentDto.Description,
-    //            Name = updateDocumentDto.Name,
-    //            ReceivedAt = updateDocumentDto.ReceivedAt
-    //        };
+            //Act
+            await updateDocumentHandler.Handle(updateDocumentCommand, CancellationToken.None);
 
-    //        _updateDocumentCommand = new UpdateDocumentCommand { Id = id, UpdateDocumentDto = updateDocumentDto, UserId = userId };
+            var dbDocument = await context.Documents.FirstOrDefaultAsync(x => x.Name == "name");
 
-    //        _mapperMock.Setup(x => x.Map<Document>(updateDocumentDto));
+            //Assert
+            dbDocument.Name.Should().BeEquivalentTo(existedDocument.Name);
+            dbDocument.Cost.Should().BeInRange(99, 101);
 
-    //        //Act
-    //        await _updateDocumentHandler.Handle(_updateDocumentCommand, CancellationToken.None);
+        }
 
-    //        //Assert
-    //        //_documentRepositoryMock.Verify(x => x.UpdateAsync(document), Times.Once); ??????
+        [Fact]
+        public async Task UpdateDocumentHandler_GivenValidDocument_AfterSaveToDbShouldInvokeUpdateFinanceByDocumentCommand()
+        {
+            //Arrange
+            var factory = new ConnectionFactory();
+            var context = factory.CreateContextForInMemory();
 
-    //        document.Name.Should().NotBeEmpty();
-    //        document.Name.Length.Should().BeGreaterThan(0);
-    //        document.Name.Length.Should().BeLessOrEqualTo(100);
-    //        document.Cost.Value.Should().BeGreaterThan(0);
-    //    }
-    //}
+            var existedDocument = new Document
+            {
+                Cost = 100,
+                Description = "description",
+                Name = "name",
+                ReceivedAt = new DateTime(2021, 11, 11)
+            };
+
+            context.Documents.Add(existedDocument);
+            await context.SaveChangesAsync();
+
+            var updateDocumentDto = new UpdateDocumentDto
+            {
+                Cost = "1",
+                Description = "description",
+                Name = "name",
+                ReceivedAt = new DateTime(2021, 11, 11)
+            };
+
+            var document = new Document
+            {
+                Cost = decimal.Parse(updateDocumentDto.Cost),
+                Description = updateDocumentDto.Description,
+                Name = updateDocumentDto.Name,
+                ReceivedAt = updateDocumentDto.ReceivedAt
+            };
+
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(x => x.Map<Document>(updateDocumentDto)).Returns(document);
+
+
+            var updateDocumentCommand = new UpdateDocumentCommand { Id = 1, UpdateDocumentDto = updateDocumentDto, UserId = userId };
+
+            var updateDocumentHandler = new UpdateDocumentHandler(mapperMock.Object, context, _mediatorMock.Object);
+
+            var mediatorMock = new Mock<IMediator>();
+            mediatorMock.Setup(x => x.Send(It.IsAny<UpdateFinanceByDocumentCommand>(), It.IsAny<CancellationToken>()));
+
+            //Act
+            await updateDocumentHandler.Handle(updateDocumentCommand, CancellationToken.None);
+
+            //Assert
+            mediatorMock.Verify(x => x.Send(It.IsAny<UpdateFinanceByDocumentCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+
+        }
+    }
 }

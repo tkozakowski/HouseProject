@@ -45,7 +45,7 @@ namespace Application.Projects.Command.Update
                 return Result<Unit>.Failure("Failed to update project");
             }
 
-            await _mediator.Send(new UpdateByProjectCommand());
+            await _mediator.Send(new UpdateFinanceByProjectCommand());
 
             return Result<Unit>.Success(Unit.Value);
 

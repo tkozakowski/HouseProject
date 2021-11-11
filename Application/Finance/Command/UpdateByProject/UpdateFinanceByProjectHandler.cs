@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Application.Finance.Command.UpdateByProject
 {
-    class UpdateByProjectHandler : IRequestHandler<UpdateByProjectCommand, Unit>
+    class UpdateFinanceByProjectHandler : IRequestHandler<UpdateFinanceByProjectCommand, Unit>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
 
-        public UpdateByProjectHandler(IHouseProjectDbContext houseProjectDbContext)
+        public UpdateFinanceByProjectHandler(IHouseProjectDbContext houseProjectDbContext)
         {
             _houseProjectDbContext = houseProjectDbContext;
         }
 
-        public async Task<Unit> Handle(UpdateByProjectCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateFinanceByProjectCommand request, CancellationToken cancellationToken)
         {
             var finance = await _houseProjectDbContext.Finances.FirstOrDefaultAsync();
 

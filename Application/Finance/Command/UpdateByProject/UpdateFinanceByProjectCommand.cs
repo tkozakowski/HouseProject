@@ -2,7 +2,7 @@
 
 namespace Application.Finance.Command.UpdateByProject
 {
-    public class UpdateByProjectCommand: IRequest<Unit>
+    public class UpdateFinanceByProjectCommand: IRequest<Unit>
     {
     }
 }

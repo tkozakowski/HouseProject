@@ -1,4 +1,5 @@
 ﻿using Application.Documents.Command.CreateDocument;
+using Application.Finance.Command.UpdateByDocument;
 using AutoMapper;
 using Domain.Entities;
 using FluentAssertions;
@@ -25,7 +26,7 @@ namespace UnitTests.Handlers.Documents
         }
 
         [Fact]
-        public async Task CreateDocumentHandler_GivenValidRequest_ShouldAddDocument()
+        public async Task Handler_ForValidDocument_ShouldAddDocumentToDb()
         {
             //Arrange
             var factory = new ConnectionFactory();
@@ -60,7 +61,8 @@ namespace UnitTests.Handlers.Documents
 
             //Assert
             var documentsInMemory = await context.Documents.ToListAsync();
-            Assert.Single(documentsInMemory);
+
+            documentsInMemory.Should().NotBeEmpty();
 
             var addedDocument = documentsInMemory.Last();
             addedDocument.Should().NotBeNull();
@@ -70,9 +72,51 @@ namespace UnitTests.Handlers.Documents
             addedDocument.Cost.Value.Should().BeGreaterOrEqualTo(0);
 
             //Check names
-            var singleDocument = context.Documents.FirstOrDefault(x => x.Id == 1);
-            Assert.Equal(singleDocument.Name, document.Name);
+            var singleDocument = context.Documents.FirstOrDefault();
+
+            singleDocument.Name.Should().BeEquivalentTo(document.Name);
         }
 
+
+        [Fact]
+        public async Task Handler_ForValidDocument_SuccessSaveToDbShouldInvokeUpdateByDocumentCommand()
+        {
+            //Arrange
+            var factory = new ConnectionFactory();
+
+            var context = factory.CreateContextForInMemory();
+
+
+            var createDocumentDto = new CreateDocumentDto()
+            {
+                Name = "test name",
+                ReceivedAt = new DateTime(2021, 10, 6),
+                Cost = "10",
+                Description = "test description",
+            };
+
+            var document = new Document()
+            {
+                Name = createDocumentDto.Name,
+                ReceivedAt = createDocumentDto.ReceivedAt,
+                Cost = decimal.Parse(createDocumentDto.Cost),
+                Description = createDocumentDto.Description
+            };
+
+            _mapperMock.Setup(x => x.Map<Document>(createDocumentDto)).Returns(document);
+
+            _mediatorMock.Setup(x => x.Send(It.IsAny<UpdateFinanceByDocumentCommand>(), It.IsAny<CancellationToken>()));
+
+
+            var createDocumentCommand = new CreateDocumentCommand { CreateDocumentDto = createDocumentDto, UserId = factory.UserId };
+
+            CreateDocumentHandler createDocumentHandler = new(_mapperMock.Object, context, _mediatorMock.Object);
+
+            //Act->add new post
+            await createDocumentHandler.Handle(createDocumentCommand, CancellationToken.None);
+
+            //Assert
+            _mediatorMock.Verify(x => x.Send(It.IsAny<UpdateFinanceByDocumentCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
     }
 }

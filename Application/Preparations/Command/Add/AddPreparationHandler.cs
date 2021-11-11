@@ -32,7 +32,7 @@ namespace Application.Preparations.Command.Add
 
             if (success)
             {
-                await _mediator.Send(new UpdateByPreparationCommand());
+                await _mediator.Send(new UpdateFinanceByPreparationCommand());
 
                 await _houseProjectDbContext.SaveChangesAsync();
                 

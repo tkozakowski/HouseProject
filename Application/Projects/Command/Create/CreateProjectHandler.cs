@@ -31,7 +31,7 @@ namespace Application.Projects.Command.CreateProject
 
             if (!success) return Result<Unit>.Failure("Failed to create project");
 
-            await _mediator.Send(new UpdateByProjectCommand());
+            await _mediator.Send(new UpdateFinanceByProjectCommand());
 
             return Result<Unit>.Success(Unit.Value);
         }
