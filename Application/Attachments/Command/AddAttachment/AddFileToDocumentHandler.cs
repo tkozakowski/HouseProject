@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace Application.Attachments.Command.AddAttachment
 {
-    public class AddFileToApplicationHandler : IRequestHandler<AddFileToApplicationCommand, Result<Unit>>
+    public class AddFileToDocumentHandler : IRequestHandler<AddFileToDocumentCommand, Result<Unit>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
 
-        public AddFileToApplicationHandler(IHouseProjectDbContext houseProjectDbContext)
+        public AddFileToDocumentHandler(IHouseProjectDbContext houseProjectDbContext)
         {
             _houseProjectDbContext = houseProjectDbContext;
         }
 
-        public async Task<Result<Unit>> Handle(AddFileToApplicationCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(AddFileToDocumentCommand request, CancellationToken cancellationToken)
         {
             var document = await _houseProjectDbContext.Documents.FirstOrDefaultAsync(x => x.Id == request.DocumentId);
 

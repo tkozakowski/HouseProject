@@ -44,13 +44,10 @@ namespace HouseProject.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HouseProject.Api v1"));
             }
-            else
-            {
-                app.UseHsts();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HouseProject.Api v1"));
+
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
 

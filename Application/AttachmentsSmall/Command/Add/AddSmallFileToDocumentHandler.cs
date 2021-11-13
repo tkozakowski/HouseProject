@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace Application.AttachmentsSmall.Command.Add
 {
-    public class AddSmallFileToApplicationHandler : IRequestHandler<AddSmallFileToApplicationCommand, Result<Unit>>
+    public class AddSmallFileToDocumentHandler : IRequestHandler<AddSmallFileToDocumentCommand, Result<Unit>>
     {
         private readonly IHouseProjectDbContext _houseProjectDbContext;
 
-        public AddSmallFileToApplicationHandler(IHouseProjectDbContext houseProjectDbContext)
+        public AddSmallFileToDocumentHandler(IHouseProjectDbContext houseProjectDbContext)
         {
             _houseProjectDbContext = houseProjectDbContext;
         }
 
-        public async Task<Result<Unit>> Handle(AddSmallFileToApplicationCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(AddSmallFileToDocumentCommand request, CancellationToken cancellationToken)
         {
             var attachmentSmall = new AttachmentSmall
             {

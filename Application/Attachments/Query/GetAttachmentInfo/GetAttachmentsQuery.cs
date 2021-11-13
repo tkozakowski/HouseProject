@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Application.Attachments.Query.GetAttachmentInfo
 {
-    public record GetApplicatedAttachmentQuery(int documentId) : IRequest<Result<List<GetApplicatedAttachmentsDto>>>
+    public record GetApplicatedAttachmentQuery(int documentId) : IRequest<Result<List<GetAttachmentsByDocumentIdDto>>>
     {
     }
 }

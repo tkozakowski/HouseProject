@@ -7,7 +7,6 @@ using Application.AttachmentsSmall.Command.DeleteFromDb;
 using Application.AttachmentsSmall.Query.GetAll;
 using Application.AttachmentsSmall.Query.GetDetail;
 using Application.Dto.Attachments;
-using Application.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -23,10 +22,10 @@ namespace Api.Controllers.V1
     public class AttachmentsController : BaseApiController
     {
 
-        [HttpGet("[action]/{applicationId}")]
-        public async Task<ActionResult<IEnumerable<SmallFileDto>>> GetSmallFilesAsync(int applicationId)
+        [HttpGet("[action]/{documentId}")]
+        public async Task<ActionResult<IEnumerable<SmallFileDto>>> GetSmallFilesAsync(int documentId)
         {
-            return HandleResult(await Mediator.Send(new GetSmallFilesQuery(applicationId)));
+            return HandleResult(await Mediator.Send(new GetSmallFilesQuery(documentId)));
         }
 
         [HttpGet("[action]/{fileId}")]
@@ -56,22 +55,22 @@ namespace Api.Controllers.V1
         /// <summary>
         /// Writes file in HD, in db there is a link to disc location
         /// </summary>
-        /// <param name="applicationId"></param>
+        /// <param name="documentId"></param>
         /// <param name="formFile"></param>
         /// <returns></returns>
-        [HttpPost("[action]/{applicationId}")]
-        public async Task<ActionResult> AddFileAsync(int applicationId, IFormFile formFile)
+        [HttpPost("[action]/{documentId}")]
+        public async Task<ActionResult> AddFileAsync(int documentId, IFormFile formFile)
         {
-            return HandleResult(await Mediator.Send(new AddFileToApplicationCommand { DocumentId = applicationId, 
+            return HandleResult(await Mediator.Send(new AddFileToDocumentCommand { DocumentId = documentId, 
                 File = formFile }));
         }
 
-        [HttpPost("[action]/{applicationId}")]
-        public async Task<ActionResult> AddSmallFileAsync(int applicationId, IFormFile formFile)
+        [HttpPost("[action]/{documentId}")]
+        public async Task<ActionResult> AddSmallFileAsync(int documentId, IFormFile formFile)
         {
-            return HandleResult(await Mediator.Send(new AddSmallFileToApplicationCommand
+            return HandleResult(await Mediator.Send(new AddSmallFileToDocumentCommand
             {
-                DocumentId = applicationId,
+                DocumentId = documentId,
                 FormFile = formFile
             }));
         }
